@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">obes</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="login">LOGIN</string>
+    <string name="cadastre_se">CADASTRE-SE</string>
+</resources>

@@ -1,0 +1,16 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+plugins {
+    id("com.android.application") version "8.1.1" apply false
+}
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+}
+dependencies {
+    "com.google.android.material:material:1.5.0"
+}
+
