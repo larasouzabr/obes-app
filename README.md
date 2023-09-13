@@ -11,4 +11,8 @@ Nosso produto contribui para a formação de uma sociedade mais instruída e cr�
 508653 – Victor Anthony Pereira Alves - Engenharia de Software
 509278 – Vinícius Lemos Araújo - Engenharia de Software
 
+## Artefatos
+
+Todos os artefatos do projeto estão disponíveis acima no diretório docs/
+
 
