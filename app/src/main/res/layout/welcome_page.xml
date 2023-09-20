@@ -7,6 +7,44 @@
     android:layout_height="match_parent"
     android:background="#DECFFB">
 
+    <ImageView
+        android:id="@+id/image_welcome_page"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:scaleType="center"
+        android:src="@drawable/image_welcome_page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    
+    <ImageView
+        android:id="@+id/background_degrade_welcome_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/degrade_welcome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/image_welcome_page"/>
+
+    <ImageView
+        android:id="@+id/obes_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/background_degrade_welcome_page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/obes_logo_2" />
+
+    <ImageView
+        android:id="@+id/obes_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/obes_logo"
+        app:srcCompat="@drawable/obes_logo_name"
+        android:layout_marginTop="20dp"/>
+
     <Button
         android:id="@+id/sign_in"
         android:layout_width="250dp"
@@ -15,9 +53,10 @@
         android:backgroundTint="#432876"
         android:text="@string/login"
         app:cornerRadius="@dimen/button_corner_radius"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/obes_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"/>
 
     <Button
         android:id="@+id/sign_out"
@@ -29,39 +68,8 @@
         app:cornerRadius="@dimen/button_corner_radius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sign_in"
         app:strokeColor="#1C0C38"
         tools:layout_editor_absoluteY="636dp" />
-
-    <ImageView
-        android:id="@+id/image_welcome_page"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/image_welcome_page"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-2dp" />
-
-    <ImageView
-        android:id="@+id/backgrround_degrade_welcome_page"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/degrade_welcome"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="372dp" />
-
-    <ImageView
-        android:id="@+id/obes_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/obes_logo_2"
-        tools:layout_editor_absoluteX="155dp"
-        tools:layout_editor_absoluteY="388dp" />
-
-    <ImageView
-        android:id="@+id/obes_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/obes_logo_name"
-        tools:layout_editor_absoluteX="122dp"
-        tools:layout_editor_absoluteY="497dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
