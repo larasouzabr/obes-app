@@ -5,4 +5,8 @@
     <string name="title_notifications">Notifications</string>
     <string name="login">LOGIN</string>
     <string name="cadastre_se">CADASTRE-SE</string>
+    <string name="content_desc_background_welcome">background_welcome</string>
+    <string name="content_desc_background_degrade">background_degrade</string>
+    <string name="content_desc_logo_obes">logo_obes</string>
+    <string name="content_desc_name_obes">name_obes</string>
 </resources>
