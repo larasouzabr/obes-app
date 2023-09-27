@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterPage"
+    android:background="@color/purple_150">
+
+    <ImageView
+        android:id="@+id/background_degrade_login_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/content_desc_background_degrade"
+        android:src="@drawable/degrade_login_cadastro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/obes_logo"
+        android:contentDescription="@string/content_desc_logo_obes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/obes_logo_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/background_degrade_login_page"
+        app:layout_constraintBottom_toBottomOf="@id/background_degrade_login_page"/>
+
+    <ImageView
+        android:id="@+id/obes_name"
+        android:contentDescription="@string/content_desc_name_obes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/obes_logo_name"
+        app:layout_constraintTop_toBottomOf="@id/obes_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/register_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Primeiramente, nos informe quem é você:"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/obes_name"
+        app:layout_constraintBottom_toTopOf="@id/form_login"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/form_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/register_description"
+        android:layout_marginTop="50dp"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp">
+
+        <RadioGroup
+            android:id="@+id/radioGroup_register_institution"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal">
+            <RadioButton
+                android:id="@+id/rb_pessoa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sou uma pessoa" />
+            <RadioButton
+                android:id="@+id/rb_instituicao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sou uma instituição"/>
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/form_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp">
+
+        <Button
+            android:id="@+id/back_page"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:backgroundTint="@color/purple_50"
+            android:text="VOLTAR"
+            android:textColor="@color/purple"
+            app:cornerRadius="@dimen/button_corner_radius"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"/>
+
+        <Button
+            android:id="@+id/sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:backgroundTint="@color/purple_800"
+            android:text="PRÓXIMO"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/button_corner_radius"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

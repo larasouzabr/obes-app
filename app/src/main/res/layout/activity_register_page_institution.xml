@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterPageInstitution"
+    android:background="@color/purple_150">
+
+    <ImageView
+        android:id="@+id/background_degrade_cadastro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/content_desc_background_degrade"
+        android:src="@drawable/degrade_cadastro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/obes_logo"
+        android:contentDescription="@string/content_desc_logo_obes"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/obes_logo_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/background_degrade_cadastro"
+        app:layout_constraintBottom_toBottomOf="@id/background_degrade_cadastro"/>
+
+    <LinearLayout
+        android:id="@+id/form_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/obes_logo"
+        android:paddingTop="60dp"
+        android:paddingBottom="30dp"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp">
+
+        <!-- INPUT NOME COMPLETO -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="0dp"
+            android:layout_marginStart="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NOME COMPLETO"
+                android:textColor="@color/purple_700"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_background"
+            android:inputType="text"
+            android:autofillHints="emailAddress"
+            android:hint="Digite seu nome completo"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"/>
+
+        <!-- INPUT E-MAIL -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="0dp"
+            android:layout_marginStart="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E-MAIL"
+                android:textColor="@color/purple_700"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_background"
+            android:inputType="textEmailAddress"
+            android:autofillHints="emailAddress"
+            android:hint="Digite seu e-mail"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TIPO DE INSTITUIÇÃO"
+            android:textSize="12dp"
+            android:textColor="@color/black"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroup_register_institution"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rb_pessoa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Escola" />
+            <RadioButton
+                android:id="@+id/rb_instituicao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Biblioteca"/>
+
+        </RadioGroup>
+
+        <!-- INPUT SENHA -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="0dp"
+            android:layout_marginStart="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SENHA"
+                android:textColor="@color/purple_700"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_background"
+            android:inputType="textPassword"
+            android:autofillHints="emailAddress"
+            android:hint="Digite sua senha"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"/>
+
+        <!-- INPUT CONFIRMAÇÃO DE SENHA -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="0dp"
+            android:layout_marginStart="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONFIRMAÇÃO DE SENHA"
+                android:textColor="@color/purple_700"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_background"
+            android:inputType="textPassword"
+            android:autofillHints="emailAddress"
+            android:hint="Digite sua senha novamente"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ao seguir com o cadastro, você concorda com os Termos de Uso e Políticas de Privacidade."
+            android:textAlignment="center"
+            android:textColor="@color/purple_900"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/form_register"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/button_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:backgroundTint="@color/purple_50"
+            android:text="CANCELAR"
+            android:textColor="@color/purple"
+            app:cornerRadius="@dimen/button_corner_radius"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"/>
+
+        <Button
+            android:id="@+id/sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:backgroundTint="@color/purple_800"
+            android:text="CRIAR CONTA"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/button_corner_radius"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
