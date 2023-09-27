@@ -18,6 +18,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/obes_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="10dp"/>
+
+    <ImageView
         android:id="@+id/obes_logo"
         android:contentDescription="@string/content_desc_logo_obes"
         android:layout_width="wrap_content"
@@ -118,6 +128,7 @@
             app:cornerRadius="@dimen/button_corner_radius"/>
 
         <TextView
+            android:id="@+id/register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Não tem uma conta? Cadastre-se"
