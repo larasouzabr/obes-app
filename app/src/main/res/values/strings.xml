@@ -9,4 +9,6 @@
     <string name="content_desc_background_degrade">background_degrade</string>
     <string name="content_desc_logo_obes">logo_obes</string>
     <string name="content_desc_name_obes">name_obes</string>
+    <string name="input_email">E-MAIL</string>
+    <string name="input_senha">SENHA</string>
 </resources>

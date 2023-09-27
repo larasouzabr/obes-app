@@ -22,6 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         // setContentView(binding.getRoot());
-        setContentView(R.layout.welcome_page);
+        setContentView(R.layout.activity_login);
     }
 }
