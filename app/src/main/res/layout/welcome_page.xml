@@ -9,15 +9,16 @@
 
     <ImageView
         android:id="@+id/image_welcome_page"
-        android:contentDescription="@string/content_desc_background_welcome"
         android:layout_width="wrap_content"
-        android:layout_height="400dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/content_desc_background_welcome"
         android:scaleType="center"
         android:src="@drawable/image_welcome_page"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    
+
     <ImageView
         android:id="@+id/background_degrade_welcome_page"
         android:contentDescription="@string/content_desc_background_degrade"
@@ -30,12 +31,13 @@
 
     <ImageView
         android:id="@+id/obes_logo"
-        android:contentDescription="@string/content_desc_logo_obes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/background_degrade_welcome_page"
+        android:contentDescription="@string/content_desc_logo_obes"
+        app:layout_constraintBottom_toBottomOf="@+id/image_welcome_page"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_welcome_page"
         app:srcCompat="@drawable/obes_logo_2" />
 
     <ImageView
