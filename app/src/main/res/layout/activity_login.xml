@@ -122,7 +122,7 @@
                 android:textColorHint="@color/black"/>
 
             <Button
-                android:id="@+id/sign_in"
+                android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="5dp"
