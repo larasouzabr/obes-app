@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_150"
+    tools:context=".BookSalePage">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar_fixed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+        <include
+            android:id="@+id/menu_top"
+            layout="@layout/menu_top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/pic_and_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_rounded"
+                    app:srcCompat="@drawable/cover_book1" />
+
+                <LinearLayout
+                    android:layout_width="249dp"
+                    android:layout_height="189dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/bookTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="O alienista"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textColor="@color/purple_850"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Machado de Assis"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/purple_800" />
+
+                    <LinearLayout
+                        android:layout_width="211dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        android:textAlignment="textEnd">
+
+                        <TextView
+                            android:id="@+id/bookPrice"
+                            android:layout_width="111dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/border"
+                            android:text="R$ 9,90"
+                            android:textAlignment="center"
+                            android:textColor="@color/purple_700"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="73dp"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            app:srcCompat="@drawable/ic_favorite" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/button3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Adicionar ao carrinho"
+                        android:textSize="12sp"
+                        app:cornerRadius="10dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:text="Descrição"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/purple_850"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/description_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Seu protagonista é Simão Bacamarte, médico que, após conquistar respeito na Europa, retorna à sua cidade natal, Itaguaí. Lá, ele aprofunda seus estudos de psiquiatria e empreende uma busca sobre os caminhos da mente e as patologias cerebrais. Livro em perfeito estado foi usado apenas por 1 semana"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/purple_900"
+                    android:typeface="normal" />
+
+                <LinearLayout
+                    android:layout_width="234dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/sold_by"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Vendido por:"
+                        android:textColor="@color/purple_700"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="92dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageView5"
+                            android:layout_width="84dp"
+                            android:layout_height="84dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_rounded"
+                            android:contentDescription="foto do usuário"
+                            android:fadeScrollbars="false"
+                            android:src="@tools:sample/avatars" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textView9"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:text="@string/username"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:textColor="@color/purple_950"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <RatingBar
+                                android:id="@+id/ratingBar2"
+                                style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:numStars="5"
+                                android:rating="4.5" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
