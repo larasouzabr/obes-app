@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/ivCover"
             android:scaleType="center"
-            android:src="@drawable/item"
+            android:src="@drawable/cover_book1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

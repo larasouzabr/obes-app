@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.obes.model.Book;
+
 import java.util.ArrayList;
 
 public class HomePage extends AppCompatActivity {
@@ -19,7 +21,8 @@ public class HomePage extends AppCompatActivity {
     ArrayList<Book> dataResource;
     LinearLayoutManager linearLayoutManagerSale;
     LinearLayoutManager linearLayoutManagerDonate;
-    MyRvAdapter myRvAdapter;
+    MyRvAdapter saleAdapter;
+    MyRvAdapter donateAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +33,34 @@ public class HomePage extends AppCompatActivity {
         this.rv_donate = findViewById(R.id.books_donate);
 
         dataResource = new ArrayList<>();
-        dataResource.add(new Book("Book 1", R.drawable.item, "Machado de Assis", 10, "Seu protagonista é Simão Bacamarte."));
-        dataResource.add(new Book("Book 2", R.drawable.item_other, "Isaac Asimov", 0, "Seu protagonista é Bacamarte."));
-        dataResource.add(new Book("Book 3", R.drawable.item, "Machado de Assis", 10, "Seu protagonista é Simão Bacamarte."));
-        dataResource.add(new Book("Book 3", R.drawable.item, "Machado de Assis", 10, "Seu protagonista é Simão Bacamarte."));
+        dataResource.add(new Book(1, "Book 1", "Book 1 Seu protagonista é Simão Bacamarte.", "Ficção", true, R.drawable.cover_book1, "Machado de Assis", 0));
+        dataResource.add(new Book(2, "Book 2", "Book 2 Seu protagonista é Simão Bacamarte.", "Ficção", true, R.drawable.cover_book2, "Machado de Assis", 0));
+        dataResource.add(new Book(3, "Book 3", "Book 3 Seu protagonista é Simão Bacamarte.", "Ficção", true, R.drawable.cover_book2, "Machado de Assis", 0));
+        dataResource.add(new Book(4, "Book 4", "Book 4 Seu protagonista é Simão Bacamarte.", "Ficção", true, R.drawable.cover_book2, "Machado de Assis", 19.99));
+        dataResource.add(new Book(5, "Book 5", "Book 5 Seu protagonista é Simão Bacamarte.", "Ficção", true, R.drawable.cover_book1, "Machado de Assis", 11.99));
 
         linearLayoutManagerSale = new LinearLayoutManager(HomePage.this, LinearLayoutManager.HORIZONTAL, false);
         linearLayoutManagerDonate = new LinearLayoutManager(HomePage.this, LinearLayoutManager.HORIZONTAL, false);
-        myRvAdapter = new MyRvAdapter(dataResource);
+
+        ArrayList<Book> booksForSale = new ArrayList<>();
+        ArrayList<Book> booksForDonate = new ArrayList<>();
+
+        for (Book book : dataResource) {
+            if (book.getPrice() > 0) {
+                booksForSale.add(book);
+            } else if (book.getPrice() == 0) {
+                booksForDonate.add(book);
+            }
+        }
+
+        saleAdapter = new MyRvAdapter(booksForSale);
+        donateAdapter = new MyRvAdapter(booksForDonate);
 
         rv_sale.setLayoutManager(linearLayoutManagerSale);
-        rv_sale.setAdapter(myRvAdapter);
+        rv_sale.setAdapter(saleAdapter);
 
         rv_donate.setLayoutManager(linearLayoutManagerDonate);
-        rv_donate.setAdapter(myRvAdapter);
+        rv_donate.setAdapter(donateAdapter);
     }
 
     class MyRvAdapter extends RecyclerView.Adapter<MyRvAdapter.MyHolder> {
