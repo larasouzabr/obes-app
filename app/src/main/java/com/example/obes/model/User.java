@@ -1,20 +1,42 @@
 package com.example.obes.model;
 
+import com.example.obes.dao.BookDAO;
+import com.example.obes.dao.IBookDAO;
+
 public class User {
     private int id;
     private String name;
     private String contact;
     private String email;
     private String password;
-    private String type;
+    private boolean isUserCommon;
+    private IBookDAO bookDAO;
 
-    public User(int id, String name, String contact, String email, String password, String type) {
+    public User(int id, String name, String contact, String email, String password, boolean isUserCommon, IBookDAO bookDAO) {
         this.id = id;
         this.name = name;
         this.contact = contact;
         this.email = email;
         this.password = password;
-        this.type = type;
+        this.isUserCommon = isUserCommon;
+        this.bookDAO = bookDAO;
+    }
+
+    public boolean donateABook(Book book) {
+        if(this.isUserCommon) {
+            if (bookDAO != null) {
+                bookDAO.addBook(book);
+                return true;
+            } else {
+                throw new IllegalStateException("O DAO de livros não está configurado.");
+            }
+        } else {
+            throw new IllegalStateException("Apenas usuários comuns podem doar livros.");
+        }
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -49,11 +71,7 @@ public class User {
         this.password = password;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public boolean getIsUserCommon() {
+        return this.isUserCommon;
     }
 }
