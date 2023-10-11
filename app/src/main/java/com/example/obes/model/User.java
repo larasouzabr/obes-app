@@ -10,19 +10,19 @@ public class User {
     private String email;
     private String password;
     private boolean isUserCommon;
-    private IBookDAO bookDAO;
 
-    public User(int id, String name, String contact, String email, String password, boolean isUserCommon, IBookDAO bookDAO) {
+    public User(int id, String name, String contact, String email, String password, boolean isUserCommon) {
         this.id = id;
         this.name = name;
         this.contact = contact;
         this.email = email;
         this.password = password;
         this.isUserCommon = isUserCommon;
-        this.bookDAO = bookDAO;
     }
 
     public boolean donateABook(Book book) {
+        BookDAO bookDAO = BookDAO.getInstance();
+
         if(this.isUserCommon) {
             if (bookDAO != null) {
                 bookDAO.addBook(book);

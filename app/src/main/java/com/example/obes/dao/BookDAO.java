@@ -7,26 +7,18 @@ import com.example.obes.model.Book;
 import java.util.ArrayList;
 
 public class BookDAO implements IBookDAO {
-    static ArrayList<Book> listBooks;
-    static Context context;
+    private ArrayList<Book> listBooks;
+    private static BookDAO instance;
 
-    private static BookDAO bookDAO;
-
-    private BookDAO(Context context) {
-        BookDAO.context = context;
-        BookDAO.listBooks = new ArrayList<Book>();
+    private BookDAO() {
+        this.listBooks = new ArrayList<Book>();
     }
 
-    public static IBookDAO getInstance( Context context ) {
-
-        if( BookDAO.bookDAO == null ){
-            BookDAO.bookDAO = new BookDAO( context );
+    public static BookDAO getInstance() {
+        if(instance == null) {
+            instance = new BookDAO();
         }
-        return BookDAO.bookDAO;
-    }
-
-    public boolean init(){
-        return true;
+        return instance;
     }
 
     public ArrayList<Book> getListBooks() {
@@ -34,7 +26,7 @@ public class BookDAO implements IBookDAO {
     }
 
     public boolean addBook(Book book) {
-        listBooks.add(book);
+        this.listBooks.add(book);
         return true;
     }
 
@@ -84,7 +76,7 @@ public class BookDAO implements IBookDAO {
     public Book getBookById(int idBook) {
         Book book = null;
 
-        for(Book b : listBooks){
+        for(Book b : this.listBooks){
             if( b.getId() == idBook ){
                 book = b;
                 break;

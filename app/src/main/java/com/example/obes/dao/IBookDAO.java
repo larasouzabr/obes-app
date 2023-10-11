@@ -10,6 +10,4 @@ public interface IBookDAO {
     public boolean editBook(Book book);
     public Book getBookById(int idBook);
     public ArrayList<Book> getListBooks();
-
-    public boolean init();
 }
