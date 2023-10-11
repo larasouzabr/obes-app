@@ -21,8 +21,9 @@ public class RegisterPageInstitution extends AppCompatActivity {
         this.button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterPageInstitution.this, MainActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(RegisterPageInstitution.this, MainActivity.class);
+                //startActivity(intent);
+                finish();
             }
         });
     }

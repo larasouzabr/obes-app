@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,6 +81,22 @@ public class HomePage extends AppCompatActivity {
         public void onBindViewHolder(@NonNull MyHolder holder, int position) {
             Book book = data.get(position);
             holder.ivCover.setImageResource(book.getCoverResourceId());
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(HomePage.this, BookSalePage.class);
+
+                    intent.putExtra("book_id", book.getId());
+                    intent.putExtra("book_cover", book.getCoverResourceId());
+                    intent.putExtra("book_title", book.getTitle());
+                    intent.putExtra("book_author", book.getAuthor());
+                    intent.putExtra("book_price", book.getPrice());
+                    intent.putExtra("book_description", book.getDescription());
+
+                    startActivity(intent);
+                }
+            });
         }
 
         @Override

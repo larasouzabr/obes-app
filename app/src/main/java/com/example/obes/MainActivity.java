@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        // setContentView(R.layout.activity_login);
+        // setContentView(R.layout.activity_book_sale_page);
 
         startComponents();
 

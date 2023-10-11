@@ -10,6 +10,7 @@ import android.widget.Button;
 public class RegisterPagePerson extends AppCompatActivity {
 
     private Button button_cancel;
+    private Button sign_in;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +26,18 @@ public class RegisterPagePerson extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        this.sign_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterPagePerson.this, Login.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void startComponents() {
         this.button_cancel = findViewById(R.id.button_cancel);
+        this.sign_in = findViewById(R.id.sign_in);
     }
 }

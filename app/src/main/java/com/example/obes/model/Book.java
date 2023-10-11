@@ -26,6 +26,10 @@ public class Book {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -54,11 +58,11 @@ public class Book {
         return available;
     }
 
-    public boolean getAvailable() {
-        return this.available;
-    }
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+    public boolean getAvailable() {
+        return this.available;
     }
 
     public int getCoverResourceId() {
@@ -71,6 +75,10 @@ public class Book {
 
     public String getAuthor() {
         return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public double getPrice() {
