@@ -32,14 +32,11 @@ public class UserCommon extends User {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public UserCommon(int id, String name, String contact, String email, String password, String cpf, String dateOfBirth) {
+    public UserCommon(int id, String name, String email, String password) {
         this.id = id;
         this.name = name;
-        this.contact = contact;
         this.email = email;
         this.password = password;
-        this.cpf = cpf;
-        this.dateOfBirth = dateOfBirth;
 
         this.listBooksAvailable = new ArrayList<Book>();
     }
