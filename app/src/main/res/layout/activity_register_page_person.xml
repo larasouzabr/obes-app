@@ -59,6 +59,7 @@
             </androidx.cardview.widget.CardView>
 
             <EditText
+                android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/edit_text_background"
@@ -89,6 +90,7 @@
             </androidx.cardview.widget.CardView>
 
             <EditText
+                android:id="@+id/user_email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/edit_text_background"
@@ -119,6 +121,7 @@
             </androidx.cardview.widget.CardView>
 
             <EditText
+                android:id="@+id/user_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/edit_text_background"
@@ -149,6 +152,7 @@
             </androidx.cardview.widget.CardView>
 
             <EditText
+                android:id="@+id/user_confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/edit_text_background"
