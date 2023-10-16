@@ -1,7 +1,7 @@
 package com.example.obes.model.user;
 
 import com.example.obes.dao.BookDAO;
-import com.example.obes.model.Book;
+import com.example.obes.model.Book.Book;
 
 import java.util.ArrayList;
 

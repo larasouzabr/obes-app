@@ -1,5 +1,4 @@
-package com.example.obes.model;
-
+package com.example.obes.model.Book;
 
 public class Book {
     private int id;
@@ -10,8 +9,9 @@ public class Book {
     private int coverResourceId;
     private String author;
     private double price;
+    private String condition;
 
-    public Book(int id, String title, String description, String category, boolean available, int coverResourceId, String author, double price) {
+    public Book(int id, String title, String description, String category, boolean available, int coverResourceId, String author, double price, String condition) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -20,6 +20,7 @@ public class Book {
         this.coverResourceId = coverResourceId;
         this.author = author;
         this.price = price;
+        this.condition = condition;
     }
 
     public int getId() {
@@ -88,5 +89,12 @@ public class Book {
     public void setPrice(double price) {
         this.price = price;
     }
-}
 
+    public String getCondition() {
+        return this.condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+}

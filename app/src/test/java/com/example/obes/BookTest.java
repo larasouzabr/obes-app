@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
-import com.example.obes.model.Book;
+import com.example.obes.model.Book.Book;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -19,7 +19,7 @@ public class BookTest {
     }
     @Test
     public void testGetters() {
-        Book book = new Book(1, "Title", "Description", "Category", true, 123, "Author", 19.99);
+        Book book = new Book(1, "Title", "Description","Category", true, 123,"Author", 19.99, "novo");
 
         assertEquals(1, book.getId());
         assertEquals("Title", book.getTitle());
@@ -32,7 +32,7 @@ public class BookTest {
     }
     @Test
     public void testSetters() {
-        Book book = new Book(1, "Title", "Description", "Category", true, 123, "Author", 19.99);
+        Book book = new Book(1, "title", "description","Category", true, 123,"author", 19.99, "novo");
 
         book.setTitle("New Title");
         book.setDescription("New Description");

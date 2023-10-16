@@ -1,8 +1,6 @@
 package com.example.obes.dao;
 
-import android.content.Context;
-
-import com.example.obes.model.Book;
+import com.example.obes.model.Book.Book;
 
 import java.util.ArrayList;
 
