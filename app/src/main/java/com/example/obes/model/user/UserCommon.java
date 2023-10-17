@@ -1,6 +1,7 @@
 package com.example.obes.model.user;
 
 import com.example.obes.dao.BookDAO;
+import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.model.Book.Book;
 
 import java.util.ArrayList;
@@ -51,7 +52,21 @@ public class UserCommon extends User {
 
             return true;
         } else {
-            throw new IllegalStateException("O DAO de livros não está configurado.");
+            throw new IllegalStateException("O DAO de livros para doação não está configurado.");
+        }
+    }
+
+    public boolean sellABook(Book book) {
+        BookSaleDAO bookSaleDAO = BookSaleDAO.getInstance();
+
+        if (bookSaleDAO != null) {
+            bookSaleDAO.addBook(book);
+
+            this.listBooksAvailable.add(book);
+
+            return true;
+        } else {
+            throw new IllegalStateException("O DAO de livros para venda não está configurado.");
         }
     }
 
