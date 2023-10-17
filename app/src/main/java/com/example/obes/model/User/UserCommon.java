@@ -46,11 +46,12 @@ public class UserCommon extends User {
 
     public boolean donateABook(Book book) {
         BookDAO bookDAO = BookDAO.getInstance();
+        UserRegisteredBookDonateDAO userRegisteredBookDonateDAO = UserRegisteredBookDonateDAO.getInstance();
 
         if (bookDAO != null) {
             bookDAO.addBook(book);
 
-            this.listBooksAvailable.add(book);
+            userRegisteredBookDonateDAO.addUserBook(this.getId(), book.getId());
 
             return true;
         } else {
