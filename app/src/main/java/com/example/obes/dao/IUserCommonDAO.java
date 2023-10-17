@@ -1,6 +1,6 @@
 package com.example.obes.dao;
 
-import com.example.obes.model.user.UserCommon;
+import com.example.obes.model.User.UserCommon;
 
 import java.util.ArrayList;
 
