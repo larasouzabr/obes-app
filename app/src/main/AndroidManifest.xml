@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Obes"
         tools:targetApi="31">
         <activity
+            android:name=".formDonate.DonatePreview"
+            android:exported="false" />
+        <activity
+            android:name=".formDonate.DonateFormPage"
+            android:exported="false" />
+        <activity
             android:name=".DonateSalePage"
             android:exported="false" />
         <activity
