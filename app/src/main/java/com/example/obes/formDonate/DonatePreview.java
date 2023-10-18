@@ -9,7 +9,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.obes.R;
+import com.example.obes.dao.BookDAO;
+import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.LoginSessionManager;
+import com.example.obes.dao.UserCommonDAO;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.User.UserCommon;
 
@@ -42,6 +45,13 @@ public class DonatePreview extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        this.button_donate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getUserLogged().donateABook(bookPreview);
             }
         });
     }
