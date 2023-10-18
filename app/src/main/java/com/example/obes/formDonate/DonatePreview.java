@@ -2,9 +2,11 @@ package com.example.obes.formDonate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -52,6 +54,8 @@ public class DonatePreview extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getUserLogged().donateABook(bookPreview);
+
+                showModal();
             }
         });
     }
@@ -93,5 +97,29 @@ public class DonatePreview extends AppCompatActivity {
     private UserCommon getUserLogged() {
         UserCommon user = loginSessionManager.getCurrentUserCommon();
         return user;
+    }
+
+    private void showModal() {
+        final Dialog modal = new Dialog(DonatePreview.this);
+
+        modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        modal.setCancelable(true);
+        modal.setContentView(R.layout.custom_modal);
+
+        final TextView tvTitleModal = modal.findViewById(R.id.title_modal);
+        final TextView tvTextModal = modal.findViewById(R.id.text_modal);
+        TextView tvButtonModal = modal.findViewById(R.id.button_modal);
+
+        tvTitleModal.setText("Obrigado por doar no Obes");
+        tvTextModal.setText("Você receberá um e-mail quando alguém solicitar a doação. Atente-se ao seu telefone e realize a entrega com responsabilidade!");
+
+        tvButtonModal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Vai para a página de perfil do usuário");
+            }
+        });
+
+        modal.show();
     }
 }
