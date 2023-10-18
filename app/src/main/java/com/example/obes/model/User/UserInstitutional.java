@@ -1,6 +1,6 @@
 package com.example.obes.model.User;
 
-import com.example.obes.model.Book;
+import com.example.obes.model.Book.Book;
 
 import java.util.ArrayList;
 
