@@ -109,6 +109,8 @@ public class UserCommon extends User {
     }
 
     public ArrayList<Book> getListBooksAvailable() {
+        this.listBooksAvailable = new ArrayList<Book>();
+
         UserRegisteredBookSaleDAO userRegisteredBookSaleDAO = UserRegisteredBookSaleDAO.getInstance();
         UserRegisteredBookDonateDAO userRegisteredBookDonateDAO = UserRegisteredBookDonateDAO.getInstance();
 

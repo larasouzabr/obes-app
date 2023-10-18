@@ -62,6 +62,9 @@ public class HomePage extends AppCompatActivity {
 
         rv_donate.setLayoutManager(linearLayoutManagerDonate);
         rv_donate.setAdapter(donateAdapter);
+
+        BottomMenuHandler bottomMenuHandler = new BottomMenuHandler(this);
+        bottomMenuHandler.setupBottomMenu();
     }
 
     class MyRvAdapter extends RecyclerView.Adapter<MyRvAdapter.MyHolder> {
