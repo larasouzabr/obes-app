@@ -7,11 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.obes.dao.UserCommonDAO;
-import com.example.obes.model.user.UserCommon;
+import com.example.obes.model.User.UserCommon;
 //import com.example.obes.model.user.UserInstitutional;
 
 import java.util.ArrayList;

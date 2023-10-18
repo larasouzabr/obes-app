@@ -1,4 +1,4 @@
-package com.example.obes.model.user;
+package com.example.obes.model.User;
 
 import com.example.obes.dao.BookDAO;
 import com.example.obes.model.Book;

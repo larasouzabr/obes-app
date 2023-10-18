@@ -12,7 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.obes.dao.UserInstitutionalDAO;
-import com.example.obes.model.user.UserInstitutional;
+import com.example.obes.model.User.UserInstitutional;
 
 import java.util.ArrayList;
 
