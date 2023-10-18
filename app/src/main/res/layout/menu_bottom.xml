@@ -19,6 +19,7 @@
             android:layout_marginLeft="40dp">
 
             <ImageView
+                android:id="@+id/home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_home"
@@ -30,12 +31,14 @@
         </androidx.cardview.widget.CardView>
 
         <ImageView
+            android:id="@+id/donate_sale"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/obes_logo_2"
             android:layout_gravity="center"/>
 
         <ImageView
+            android:id="@+id/cart"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_cart"
