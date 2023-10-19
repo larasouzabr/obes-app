@@ -16,6 +16,7 @@ import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.model.Book.Book;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DonateFormPage extends AppCompatActivity {
     private EditText etTitle;
@@ -96,17 +97,27 @@ public class DonateFormPage extends AppCompatActivity {
     }
 
     public int countId() {
+        ArrayList<Book> listAllBooks = new ArrayList<Book>();
         ArrayList<Book> listBooksSale = this.bookSaleDAO.getListBooks();
-        ArrayList<Book> listAllBooks = this.bookDonateDAO.getListBooks();
+        ArrayList<Book> listBooksDonate = this.bookDonateDAO.getListBooks();
+
         listAllBooks.addAll(listBooksSale);
+        listAllBooks.addAll(listBooksDonate);
+
+        ArrayList<Integer> listIds = new ArrayList<Integer>();
+
+        for (Book book : listAllBooks) {
+            if (!listIds.contains(book.getId())) {
+                listIds.add(book.getId());
+            }
+        }
 
         int id = 1;
 
         int amountBooks = listAllBooks.size();
 
         if (amountBooks > 0) {
-            Book lastBook = listAllBooks.get(amountBooks - 1);
-            id = lastBook.getId() + 1;
+            id = Collections.max(listIds) + 1;
         }
 
         return id;
