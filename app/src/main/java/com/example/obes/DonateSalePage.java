@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.formDonate.DonateFormPage;
+import com.example.obes.formSale.SaleFormPage;
 
 public class DonateSalePage extends AppCompatActivity {
     private TextView button_donate;
@@ -34,6 +35,18 @@ public class DonateSalePage extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     Toast.makeText(DonateSalePage.this, "Somente usuários comuns podem doar livros", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        this.button_sell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkedUserTypeCommon()) {
+                    Intent intent = new Intent(DonateSalePage.this, SaleFormPage.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(DonateSalePage.this, "Somente usuários comuns podem vender livros", Toast.LENGTH_SHORT).show();
                 }
             }
         });
