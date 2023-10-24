@@ -1,17 +1,13 @@
 package com.example.obes;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.model.Book.Book;
 
 import java.util.ArrayList;
@@ -22,8 +18,10 @@ public class HomePage extends AppCompatActivity {
     ArrayList<Book> dataResource;
     LinearLayoutManager linearLayoutManagerSale;
     LinearLayoutManager linearLayoutManagerDonate;
-    MyRvAdapter saleAdapter;
-    MyRvAdapter donateAdapter;
+    MyAdapterRecyclerView saleAdapter;
+    MyAdapterRecyclerView donateAdapter;
+    private ImageView foto_perfil;
+    private LoginSessionManager loginSessionManager = LoginSessionManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +52,8 @@ public class HomePage extends AppCompatActivity {
             }
         }
 
-        saleAdapter = new MyRvAdapter(booksForSale);
-        donateAdapter = new MyRvAdapter(booksForDonate);
+        saleAdapter = new MyAdapterRecyclerView(this, booksForSale);
+        donateAdapter = new MyAdapterRecyclerView(this, booksForDonate);
 
         rv_sale.setLayoutManager(linearLayoutManagerSale);
         rv_sale.setAdapter(saleAdapter);
@@ -65,54 +63,15 @@ public class HomePage extends AppCompatActivity {
 
         BottomMenuHandler bottomMenuHandler = new BottomMenuHandler(this);
         bottomMenuHandler.setupBottomMenu();
+
+
     }
 
-    class MyRvAdapter extends RecyclerView.Adapter<MyRvAdapter.MyHolder> {
-        ArrayList<Book> data;
-        public MyRvAdapter(ArrayList<Book> data) {
-            this.data = data;
-        }
-
-        @NonNull
-        @Override
-        public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(HomePage.this).inflate(R.layout.book_item, parent, false);
-            return new MyHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-            Book book = data.get(position);
-            holder.ivCover.setImageResource(book.getCoverResourceId());
-
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(HomePage.this, BookSalePage.class);
-
-                    intent.putExtra("book_id", book.getId());
-                    intent.putExtra("book_cover", book.getCoverResourceId());
-                    intent.putExtra("book_title", book.getTitle());
-                    intent.putExtra("book_author", book.getAuthor());
-                    intent.putExtra("book_price", book.getPrice());
-                    intent.putExtra("book_description", book.getDescription());
-
-                    startActivity(intent);
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return data.size();
-        }
-
-        class MyHolder extends RecyclerView.ViewHolder {
-            ImageView ivCover;
-            public MyHolder(@NonNull View itemView) {
-                super(itemView);
-                ivCover = itemView.findViewById(R.id.ivCover);
-            }
+    private boolean checkedUserLoggedIsCommon() {
+        if (loginSessionManager.getCurrentUserCommon() != null) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
