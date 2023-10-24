@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "982122296481",
+    "project_id": "obes-e414e",
+    "storage_bucket": "obes-e414e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982122296481:android:1ead7c77a6a014d1722ce0",
+        "android_client_info": {
+          "package_name": "com.example.obes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEjpKxsI-QmwdFxEcXvt2t5RhY-f3vh9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
