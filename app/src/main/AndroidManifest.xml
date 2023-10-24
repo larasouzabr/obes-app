@@ -13,10 +13,10 @@
         android:theme="@style/Theme.Obes"
         tools:targetApi="31">
         <activity
-            android:name=".activity_sale_preview"
+            android:name=".formSale.SalePreview"
             android:exported="false" />
         <activity
-            android:name=".activity_sale_form_page"
+            android:name=".formSale.SaleFormPage"
             android:exported="false" />
         <activity
             android:name=".formDonate.DonatePreview"
