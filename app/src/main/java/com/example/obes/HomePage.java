@@ -1,14 +1,21 @@
 package com.example.obes;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.model.Book.Book;
+import com.example.obes.model.User.User;
+import com.example.obes.perfil.PerfilUserCommon;
 
 import java.util.ArrayList;
 
@@ -64,7 +71,25 @@ public class HomePage extends AppCompatActivity {
         BottomMenuHandler bottomMenuHandler = new BottomMenuHandler(this);
         bottomMenuHandler.setupBottomMenu();
 
+        // =========================
 
+        foto_perfil = findViewById(R.id.foto_perfil);
+
+        foto_perfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean userLoggedIsCommon = checkedUserLoggedIsCommon();
+
+                if (userLoggedIsCommon) {
+                    Intent intent = new Intent(HomePage.this, PerfilUserCommon.class);
+                    startActivity(intent);
+                } else {
+                    System.out.println("Vai para o perfil de usuário institucional");
+                }
+            }
+        });
+
+        // =================
     }
 
     private boolean checkedUserLoggedIsCommon() {
