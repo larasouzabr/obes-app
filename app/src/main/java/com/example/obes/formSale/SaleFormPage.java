@@ -112,7 +112,7 @@ public class SaleFormPage extends AppCompatActivity {
         String description = this.etDescription.getText().toString();
         String category = this.etCategory.getText().toString();
         boolean available = true;
-        int coverResourceId = 1;
+        int coverResourceId = R.drawable.cover_book1;
         String author = this.etAuthor.getText().toString();
         double price = 0.0;
         String condition = this.etCondition.getText().toString();

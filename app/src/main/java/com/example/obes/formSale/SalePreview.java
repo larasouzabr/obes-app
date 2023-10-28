@@ -16,6 +16,7 @@ import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.User.UserCommon;
+import com.example.obes.perfil.PerfilUserCommon;
 
 public class SalePreview extends AppCompatActivity {
     private TextView tvTitlePage;
@@ -115,7 +116,8 @@ public class SalePreview extends AppCompatActivity {
         tvButtonModal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Vai para a página de perfil do usuário");
+                Intent intent = new Intent(SalePreview.this, PerfilUserCommon.class);
+                startActivity(intent);
             }
         });
 
