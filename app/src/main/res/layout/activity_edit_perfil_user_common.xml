@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".perfil.EditPerfilUserCommon"
+    android:background="@color/purple_50">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/background_edit_perfil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="189dp"
+                    android:contentDescription="background_edit_perfil"
+                    android:scaleType="center"
+                    android:src="@drawable/background_perfil"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/foto_edit_perfil"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:contentDescription="foto_edit_perfil"
+                    android:src="@drawable/ic_foto_perfil"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/background_edit_perfil"
+                    app:layout_constraintBottom_toBottomOf="@+id/background_edit_perfil"
+                    android:layout_marginStart="20dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dados Pessoais"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="10dp"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="0dp"
+                    android:layout_marginStart="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NOME COMPLETO"
+                        android:textColor="@color/purple_700"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"/>
+                </androidx.cardview.widget.CardView>
+
+                <EditText
+                    android:id="@+id/user_name_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edit_text_background"
+                    android:inputType="text"
+                    android:autofillHints="name"
+                    android:hint="Digite seu nome completo"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="30dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="0dp"
+                    android:layout_marginStart="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CONTATO"
+                        android:textColor="@color/purple_700"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"/>
+                </androidx.cardview.widget.CardView>
+
+                <EditText
+                    android:id="@+id/user_contact_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edit_text_background"
+                    android:inputType="text"
+                    android:autofillHints="phone"
+                    android:hint="(00) 00000-0000"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="30dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="0dp"
+                    android:layout_marginStart="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CPF"
+                        android:textColor="@color/purple_700"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"/>
+                </androidx.cardview.widget.CardView>
+
+                <EditText
+                    android:id="@+id/user_cpf_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edit_text_background"
+                    android:inputType="text"
+                    android:autofillHints="name"
+                    android:hint="000.000.000-00"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="30dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dados da Conta"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="10dp"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="0dp"
+                    android:layout_marginStart="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="E-MAIL"
+                        android:textColor="@color/purple_700"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"/>
+                </androidx.cardview.widget.CardView>
+
+                <EditText
+                    android:id="@+id/user_email_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edit_text_background"
+                    android:inputType="text"
+                    android:autofillHints="name"
+                    android:hint="user@mail.com"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="30dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="0dp"
+                    android:layout_marginStart="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PASSWORD"
+                        android:textColor="@color/purple_700"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"/>
+                </androidx.cardview.widget.CardView>
+
+                <EditText
+                    android:id="@+id/user_password_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edit_text_background"
+                    android:inputType="text"
+                    android:autofillHints="name"
+                    android:hint="Digite sua nova senha"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="30dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"/>
+
+            </LinearLayout>
+
+            <View
+                style="@style/LinhaHorizontal" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
+
+                <Button
+                    android:id="@+id/button_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/purple_50"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp"
+                    android:text="Cancelar"
+                    android:textAllCaps="false"
+                    android:textColor="@color/purple"
+                    app:cornerRadius="@dimen/button_corner_radius" />
+
+                <Button
+                    android:id="@+id/button_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:backgroundTint="@color/purple_800"
+                    android:text="Salvar"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:cornerRadius="@dimen/button_corner_radius"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

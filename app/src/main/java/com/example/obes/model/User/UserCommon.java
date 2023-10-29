@@ -2,6 +2,7 @@ package com.example.obes.model.User;
 
 import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.BookSaleDAO;
+import com.example.obes.dao.UserCommonDAO;
 import com.example.obes.dao.UserRegisteredBookDonateDAO;
 import com.example.obes.dao.UserRegisteredBookSaleDAO;
 import com.example.obes.model.Book.Book;
@@ -70,6 +71,11 @@ public class UserCommon extends User {
         } else {
             throw new IllegalStateException("O DAO de livros para venda não está configurado.");
         }
+    }
+
+    public void editUser(UserCommon user) {
+        UserCommonDAO userCommonDAO = UserCommonDAO.getInstance();
+        userCommonDAO.editUser(user);
     }
 
     public int getId() {

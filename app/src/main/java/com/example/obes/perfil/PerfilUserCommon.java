@@ -3,7 +3,13 @@ package com.example.obes.perfil;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.obes.BottomMenuHandler;
@@ -18,16 +24,20 @@ public class PerfilUserCommon extends AppCompatActivity {
     private ViewPager2 vpTabReviews;
     private TabLayout tlBooks;
     private ViewPager2 vpTabBooks;
+    private ImageView ivButtonEdit;
     private MyViewPageAdapterReview myViewPageAdapter;
     private MyViewPageAdapterBooks myViewPageAdapterBooks;
     private LoginSessionManager loginSessionManager;
+    private UserCommon userLogged;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_user_common);
-
         this.startComponents();
-        this.setInfUser();
+
+        userLogged = this.getUserLogged();
+
+        this.setInfUser(userLogged);
 
         BottomMenuHandler bottomMenuHandler = new BottomMenuHandler(this);
         bottomMenuHandler.setupBottomMenu();
@@ -35,6 +45,14 @@ public class PerfilUserCommon extends AppCompatActivity {
         this.showTabLayoutReviews();
 
         this.showTabLayoutBooks();
+
+        this.ivButtonEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PerfilUserCommon.this, EditPerfilUserCommon.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void startComponents() {
@@ -46,12 +64,11 @@ public class PerfilUserCommon extends AppCompatActivity {
         this.vpTabBooks = findViewById(R.id.layout_tab_books_available);
         this.myViewPageAdapterBooks = new MyViewPageAdapterBooks(this);
         this.loginSessionManager = LoginSessionManager.getInstance();
+        this.ivButtonEdit = findViewById(R.id.button_edit);
     }
 
-    private void setInfUser() {
-        UserCommon userLogged = this.getUserLogged();
-
-        this.tvUserName.setText(userLogged.getName());
+    private void setInfUser(UserCommon user) {
+        this.tvUserName.setText(user.getName());
     }
 
     private UserCommon getUserLogged() {
