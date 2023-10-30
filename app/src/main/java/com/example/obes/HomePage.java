@@ -16,6 +16,7 @@ import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.User.User;
 import com.example.obes.perfil.PerfilUserCommon;
+import com.example.obes.perfil.PerfilUserInstitutional;
 
 import java.util.ArrayList;
 
@@ -84,7 +85,8 @@ public class HomePage extends AppCompatActivity {
                     Intent intent = new Intent(HomePage.this, PerfilUserCommon.class);
                     startActivity(intent);
                 } else {
-                    System.out.println("Vai para o perfil de usuário institucional");
+                    Intent intent = new Intent(HomePage.this, PerfilUserInstitutional.class);
+                    startActivity(intent);
                 }
             }
         });
