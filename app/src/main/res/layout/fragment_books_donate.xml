@@ -5,11 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".perfil.fragments.BooksDonate">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_books_donate"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Doando"
-        android:textSize="24sp"
-        android:layout_centerInParent="true"/>
+        android:scrollbars="horizontal" />
 
 </RelativeLayout>

@@ -15,8 +15,10 @@ import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.dao.UserCommonDAO;
+import com.example.obes.formSale.SalePreview;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.User.UserCommon;
+import com.example.obes.perfil.PerfilUserCommon;
 
 public class DonatePreview extends AppCompatActivity {
     private TextView tvTitle;
@@ -116,7 +118,8 @@ public class DonatePreview extends AppCompatActivity {
         tvButtonModal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Vai para a página de perfil do usuário");
+                Intent intent = new Intent(DonatePreview.this, PerfilUserCommon.class);
+                startActivity(intent);
             }
         });
 
