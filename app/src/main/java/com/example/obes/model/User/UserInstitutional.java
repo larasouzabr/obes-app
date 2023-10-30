@@ -11,6 +11,7 @@ public class UserInstitutional extends User {
     private String email;
     private String password;
     private String type;
+    private String about;
 
     private ArrayList<Book> listMyBooks;
 
@@ -21,6 +22,7 @@ public class UserInstitutional extends User {
         this.email = email;
         this.password = password;
         this.type = type;
+        this.about = "";
 
         this.listMyBooks = new ArrayList<Book>();
     }
@@ -71,5 +73,12 @@ public class UserInstitutional extends User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getAbout() {
+        return this.about;
+    }
+    public void setAbout(String about) {
+        this.about = about;
     }
 }
