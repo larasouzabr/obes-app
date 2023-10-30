@@ -10,11 +10,11 @@ import android.widget.EditText;
 
 import com.example.obes.R;
 import com.example.obes.dao.LoginSessionManager;
-import com.example.obes.model.User.User;
 import com.example.obes.model.User.UserCommon;
 
 public class EditPerfilUserCommon extends AppCompatActivity {
     private EditText etUserNameEdit;
+    private EditText etAbout;
     private EditText etContactEdit;
     private EditText etCpfEdit;
     private EditText etEmailEdit;
@@ -47,8 +47,15 @@ public class EditPerfilUserCommon extends AppCompatActivity {
                 String newName = etUserNameEdit.getText().toString();
                 String newEmail = etEmailEdit.getText().toString();
                 String newPassword = etPasswordEdit.getText().toString();
+                String newAbout = etAbout.getText().toString();
+                String newContact = etContactEdit.getText().toString();
+                String newCpf = etCpfEdit.getText().toString();
 
                 UserCommon newUser = new UserCommon(userLogged.getId(), newName, newEmail, newPassword);
+                newUser.setAbout(newAbout);
+                newUser.setContact(newContact);
+                newUser.setCpf(newCpf);
+
                 userLogged.editUser(newUser);
 
                 Intent intent = new Intent(EditPerfilUserCommon.this, PerfilUserCommon.class);
@@ -58,6 +65,7 @@ public class EditPerfilUserCommon extends AppCompatActivity {
     }
     private void startComponents() {
         this.etUserNameEdit = findViewById(R.id.user_name_edit);
+        this.etAbout = findViewById(R.id.user_about_edit);
         this.etContactEdit = findViewById(R.id.user_contact_edit);
         this.etCpfEdit = findViewById(R.id.user_cpf_edit);
         this.etEmailEdit = findViewById(R.id.user_email_edit);
@@ -72,6 +80,7 @@ public class EditPerfilUserCommon extends AppCompatActivity {
     }
     private void setInfUser() {
         this.etUserNameEdit.setText(this.userLogged.getName());
+        this.etAbout.setText(this.userLogged.getAbout());
         this.etContactEdit.setText(this.userLogged.getContact());
         this.etCpfEdit.setText(this.userLogged.getCpf());
         this.etEmailEdit.setText(this.userLogged.getEmail());

@@ -18,7 +18,27 @@ public class UserCommon extends User {
     private String cpf;
     private String dateOfBirth;
 
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    private String about;
+
     private ArrayList<Book> listBooksAvailable;
+
+    public UserCommon(int id, String name, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.about = "";
+
+        this.listBooksAvailable = new ArrayList<Book>();
+    }
 
     public String getCpf() {
         return cpf;
@@ -34,15 +54,6 @@ public class UserCommon extends User {
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public UserCommon(int id, String name, String email, String password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-
-        this.listBooksAvailable = new ArrayList<Book>();
     }
 
     public boolean donateABook(Book book) {

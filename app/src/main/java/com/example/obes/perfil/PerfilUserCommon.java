@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class PerfilUserCommon extends AppCompatActivity {
     private TextView tvUserName;
+    private TextView tvUserAbout;
     private TabLayout tlReviews;
     private ViewPager2 vpTabReviews;
     private TabLayout tlBooks;
@@ -57,6 +58,7 @@ public class PerfilUserCommon extends AppCompatActivity {
 
     private void startComponents() {
         this.tvUserName = findViewById(R.id.user_name);
+        this.tvUserAbout = findViewById(R.id.user_about);
         this.tlReviews = findViewById(R.id.tab_reviews);
         this.vpTabReviews = findViewById(R.id.layout_tab_reviews);
         this.myViewPageAdapter = new MyViewPageAdapterReview(this);
@@ -69,6 +71,12 @@ public class PerfilUserCommon extends AppCompatActivity {
 
     private void setInfUser(UserCommon user) {
         this.tvUserName.setText(user.getName());
+
+        if(this.userLogged.getAbout().isEmpty()) {
+            this.tvUserAbout.setText("Olá! Sou apaixonado por doar livros e compartilhar conhecimento.");
+        } else {
+            this.tvUserAbout.setText(this.userLogged.getAbout());
+        }
     }
 
     private UserCommon getUserLogged() {

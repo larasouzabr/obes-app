@@ -30,15 +30,46 @@
                     app:layout_constraintTop_toTopOf="parent"/>
 
                 <ImageView
-                    android:id="@+id/foto_edit_perfil"
+                    android:id="@+id/user_background_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/ic_pencil"
+                    android:background="@drawable/border_rounded"
+                    android:padding="15dp"
+                    android:alpha="0.8"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:contentDescription="foto_edit_perfil"
-                    android:src="@drawable/ic_foto_perfil"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/background_edit_perfil"
                     app:layout_constraintBottom_toBottomOf="@+id/background_edit_perfil"
-                    android:layout_marginStart="20dp"/>
+                    android:layout_marginStart="20dp">
+
+                    <ImageView
+                        android:id="@+id/foto_edit_perfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="foto_edit_perfil"
+                        android:src="@drawable/ic_foto_perfil"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/user_foto_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_pencil_perfil"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -82,6 +113,37 @@
                     android:inputType="text"
                     android:autofillHints="name"
                     android:hint="Digite seu nome completo"
+
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="30dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="0dp"
+                    android:layout_marginStart="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SOBRE"
+                        android:textColor="@color/purple_700"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"/>
+                </androidx.cardview.widget.CardView>
+
+                <EditText
+                    android:id="@+id/user_about_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edit_text_background"
+                    android:inputType="textLongMessage"
+                    android:autofillHints="name"
+                    android:hint="Conte-nos mais sobre você"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:paddingTop="15dp"
