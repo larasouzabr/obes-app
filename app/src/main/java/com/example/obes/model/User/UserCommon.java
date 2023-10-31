@@ -89,6 +89,20 @@ public class UserCommon extends User {
         userCommonDAO.editUser(user);
     }
 
+    public void deleteBook(Book book) {
+        BookDAO bookDAO = BookDAO.getInstance();
+        boolean deleted = bookDAO.deleteBook(book);
+
+        if (deleted) {
+            UserRegisteredBookDonateDAO.getInstance().deleteUserBook(this.getId(), book.getId());
+        } else {
+            BookSaleDAO bookSaleDAO = BookSaleDAO.getInstance();
+            bookSaleDAO.deleteBook(book);
+
+            UserRegisteredBookSaleDAO.getInstance().deleteUserBook(this.getId(), book.getId());
+        }
+    }
+
     public int getId() {
         return id;
     }
