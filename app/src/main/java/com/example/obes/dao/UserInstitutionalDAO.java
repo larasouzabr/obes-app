@@ -67,6 +67,7 @@ public class UserInstitutionalDAO implements IUserInstitutionalDAO {
             userEdit.setPassword(user.getPassword());
             userEdit.setType(user.getType());
             userEdit.setContact(user.getContact());
+            userEdit.setAbout(user.getAbout());
         }
 
         return edited;
