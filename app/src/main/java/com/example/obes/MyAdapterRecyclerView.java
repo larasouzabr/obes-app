@@ -15,7 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.obes.dao.BookDAO;
+import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.model.Book.Book;
+import com.example.obes.model.User.UserCommon;
 import com.example.obes.perfil.PerfilUserCommon;
 
 import java.util.ArrayList;
@@ -65,6 +67,43 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
         });
 
         if (this.isEditBook) {
+            holder.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Dialog modal = new Dialog(context);
+
+                    modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    modal.setCancelable(true);
+                    modal.setContentView(R.layout.modal_delete_book);
+
+                    Button buttonCancel = modal.findViewById(R.id.button_cancel);
+                    Button buttonDelete = modal.findViewById(R.id.button_delete);
+
+                    buttonCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            modal.dismiss();
+                        }
+                    });
+
+                    buttonDelete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            LoginSessionManager loginSessionManager = LoginSessionManager.getInstance();
+
+                            UserCommon userLogged = loginSessionManager.getCurrentUserCommon();
+
+                            userLogged.deleteBook(book);
+
+                            Intent intent = new Intent(context, PerfilUserCommon.class);
+                            context.startActivity(intent);
+                        }
+                    });
+
+                    modal.show();
+                }
+            });
+
             holder.edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
