@@ -60,8 +60,8 @@ public class HomePage extends AppCompatActivity {
             }
         }
 
-        saleAdapter = new MyAdapterRecyclerView(this, booksForSale);
-        donateAdapter = new MyAdapterRecyclerView(this, booksForDonate);
+        saleAdapter = new MyAdapterRecyclerView(this, booksForSale, false);
+        donateAdapter = new MyAdapterRecyclerView(this, booksForDonate, false);
 
         rv_sale.setLayoutManager(linearLayoutManagerSale);
         rv_sale.setAdapter(saleAdapter);

@@ -40,7 +40,7 @@ public class BooksSale extends Fragment {
             }
         }
 
-        saleAdapter = new MyAdapterRecyclerView(getContext(), booksForSale);
+        saleAdapter = new MyAdapterRecyclerView(getContext(), booksForSale, true);
 
         this.rvBookSale.setLayoutManager(linearLayoutManagerSale);
         this.rvBookSale.setAdapter(saleAdapter);

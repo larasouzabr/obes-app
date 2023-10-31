@@ -1,6 +1,7 @@
 <resources>
     <color name="black">#353940</color>
     <color name="white">#ECE6F0</color>
+    <color name="red">#E91E63</color>
     <color name="teal_origin">#FF03DAC5</color>
     <color name="teal_200">#6750A4</color>
     <color name="teal_700">#FF018786</color>
