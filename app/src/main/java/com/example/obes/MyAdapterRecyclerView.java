@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.obes.dao.BookDAO;
+import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.User.UserCommon;
@@ -111,7 +112,14 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
 
                     modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     modal.setCancelable(true);
-                    modal.setContentView(R.layout.modal_edit_book_donate);
+                    if (book.getPrice() == 0) {
+                        modal.setContentView(R.layout.modal_edit_book_donate);
+                    } else {
+                        modal.setContentView(R.layout.modal_edit_book_sale);
+
+                        EditText tvPrice = modal.findViewById(R.id.book_price);
+                        tvPrice.setText(Double.toString(book.getPrice()));
+                    }
 
                     EditText tvTitle = modal.findViewById(R.id.book_title);
                     EditText tvDescription = modal.findViewById(R.id.book_description);
@@ -131,17 +139,28 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                     buttonSave.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            BookDAO bookDAO = BookDAO.getInstance();
-
                             String newTitle = tvTitle.getText().toString();
                             String newDescription = tvDescription.getText().toString();
                             String newCategory = tvCategory.getText().toString();
                             String newAuthor = tvAuthor.getText().toString();
                             String newCondition = tvCondition.getText().toString();
 
-                            Book newBook = new Book(book.getId(), newTitle, newDescription, newCategory, book.getAvailable(), book.getCoverResourceId(), newAuthor, book.getPrice(), newCondition);
+                            Book newBook;
 
-                            bookDAO.editBook(newBook);
+                            if (book.getPrice() == 0) {
+                                newBook = new Book(book.getId(), newTitle, newDescription, newCategory, book.getAvailable(), book.getCoverResourceId(), newAuthor, book.getPrice(), newCondition);
+
+                                BookDAO bookDAO = BookDAO.getInstance();
+                                bookDAO.editBook(newBook);
+                            } else {
+                                EditText tvPrice = modal.findViewById(R.id.book_price);
+                                double newPrice = Double.parseDouble(String.valueOf(tvPrice.getText()));
+
+                                newBook = new Book(book.getId(), newTitle, newDescription, newCategory, book.getAvailable(), book.getCoverResourceId(), newAuthor, newPrice, newCondition);
+
+                                BookSaleDAO bookSaleDAO = BookSaleDAO.getInstance();
+                                bookSaleDAO.editBook(newBook);
+                            }
 
                             modal.dismiss();
                         }
