@@ -2,6 +2,7 @@ package com.example.obes.model.User;
 
 import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.BookSaleDAO;
+import com.example.obes.dao.UserCommonDAO;
 import com.example.obes.dao.UserRegisteredBookDonateDAO;
 import com.example.obes.dao.UserRegisteredBookSaleDAO;
 import com.example.obes.model.Book.Book;
@@ -17,7 +18,27 @@ public class UserCommon extends User {
     private String cpf;
     private String dateOfBirth;
 
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    private String about;
+
     private ArrayList<Book> listBooksAvailable;
+
+    public UserCommon(int id, String name, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.about = "";
+
+        this.listBooksAvailable = new ArrayList<Book>();
+    }
 
     public String getCpf() {
         return cpf;
@@ -33,15 +54,6 @@ public class UserCommon extends User {
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public UserCommon(int id, String name, String email, String password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-
-        this.listBooksAvailable = new ArrayList<Book>();
     }
 
     public boolean donateABook(Book book) {
@@ -69,6 +81,25 @@ public class UserCommon extends User {
             return true;
         } else {
             throw new IllegalStateException("O DAO de livros para venda não está configurado.");
+        }
+    }
+
+    public void editUser(UserCommon user) {
+        UserCommonDAO userCommonDAO = UserCommonDAO.getInstance();
+        userCommonDAO.editUser(user);
+    }
+
+    public void deleteBook(Book book) {
+        BookDAO bookDAO = BookDAO.getInstance();
+        boolean deleted = bookDAO.deleteBook(book);
+
+        if (deleted) {
+            UserRegisteredBookDonateDAO.getInstance().deleteUserBook(this.getId(), book.getId());
+        } else {
+            BookSaleDAO bookSaleDAO = BookSaleDAO.getInstance();
+            bookSaleDAO.deleteBook(book);
+
+            UserRegisteredBookSaleDAO.getInstance().deleteUserBook(this.getId(), book.getId());
         }
     }
 

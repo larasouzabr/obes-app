@@ -66,6 +66,7 @@ public class BookDAO implements IBookDAO {
             bookEdit.setCategory(book.getCategory());
             bookEdit.setAvailable(book.getAvailable());
             bookEdit.setCoverResourceId(book.getCoverResourceId());
+            bookEdit.setAuthor(book.getAuthor());
             bookEdit.setCondition(book.getCondition());
         }
 

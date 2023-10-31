@@ -1,5 +1,6 @@
 package com.example.obes.model.User;
 
+import com.example.obes.dao.UserInstitutionalDAO;
 import com.example.obes.model.Book.Book;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class UserInstitutional extends User {
     private String email;
     private String password;
     private String type;
+    private String about;
 
     private ArrayList<Book> listMyBooks;
 
@@ -21,8 +23,14 @@ public class UserInstitutional extends User {
         this.email = email;
         this.password = password;
         this.type = type;
+        this.about = "";
 
         this.listMyBooks = new ArrayList<Book>();
+    }
+
+    public void editUser(UserInstitutional user) {
+        UserInstitutionalDAO userInstitutionalDAO = UserInstitutionalDAO.getInstance();
+        userInstitutionalDAO.editUser(user);
     }
 
     public int getId() {
@@ -71,5 +79,12 @@ public class UserInstitutional extends User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getAbout() {
+        return this.about;
+    }
+    public void setAbout(String about) {
+        this.about = about;
     }
 }

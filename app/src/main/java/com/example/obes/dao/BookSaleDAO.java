@@ -62,6 +62,7 @@ public class BookSaleDAO implements IBookDAO {
 
         if(edited){
             bookEdit.setTitle(book.getTitle());
+            bookEdit.setAuthor(book.getAuthor());
             bookEdit.setDescription(book.getDescription());
             bookEdit.setCategory(book.getCategory());
             bookEdit.setAvailable(book.getAvailable());

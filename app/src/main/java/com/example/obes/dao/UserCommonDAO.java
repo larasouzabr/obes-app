@@ -61,6 +61,7 @@ public class UserCommonDAO {
 
         if(edited){
             userEdit.setName(user.getName());
+            userEdit.setAbout(user.getAbout());
             userEdit.setContact(user.getContact());
             userEdit.setEmail(user.getEmail());
             userEdit.setPassword(user.getPassword());
@@ -83,4 +84,3 @@ public class UserCommonDAO {
         return user;
     }
 }
-

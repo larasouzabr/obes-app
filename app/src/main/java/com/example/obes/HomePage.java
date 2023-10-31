@@ -12,7 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.model.Book.Book;
+import com.example.obes.model.User.User;
+import com.example.obes.perfil.PerfilUserCommon;
+import com.example.obes.perfil.PerfilUserInstitutional;
 
 import java.util.ArrayList;
 
@@ -22,8 +26,10 @@ public class HomePage extends AppCompatActivity {
     ArrayList<Book> dataResource;
     LinearLayoutManager linearLayoutManagerSale;
     LinearLayoutManager linearLayoutManagerDonate;
-    MyRvAdapter saleAdapter;
-    MyRvAdapter donateAdapter;
+    MyAdapterRecyclerView saleAdapter;
+    MyAdapterRecyclerView donateAdapter;
+    private ImageView foto_perfil;
+    private LoginSessionManager loginSessionManager = LoginSessionManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +60,8 @@ public class HomePage extends AppCompatActivity {
             }
         }
 
-        saleAdapter = new MyRvAdapter(booksForSale);
-        donateAdapter = new MyRvAdapter(booksForDonate);
+        saleAdapter = new MyAdapterRecyclerView(this, booksForSale, false);
+        donateAdapter = new MyAdapterRecyclerView(this, booksForDonate, false);
 
         rv_sale.setLayoutManager(linearLayoutManagerSale);
         rv_sale.setAdapter(saleAdapter);
@@ -65,54 +71,34 @@ public class HomePage extends AppCompatActivity {
 
         BottomMenuHandler bottomMenuHandler = new BottomMenuHandler(this);
         bottomMenuHandler.setupBottomMenu();
-    }
 
-    class MyRvAdapter extends RecyclerView.Adapter<MyRvAdapter.MyHolder> {
-        ArrayList<Book> data;
-        public MyRvAdapter(ArrayList<Book> data) {
-            this.data = data;
-        }
+        // =========================
 
-        @NonNull
-        @Override
-        public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(HomePage.this).inflate(R.layout.book_item, parent, false);
-            return new MyHolder(view);
-        }
+        foto_perfil = findViewById(R.id.foto_perfil);
 
-        @Override
-        public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-            Book book = data.get(position);
-            holder.ivCover.setImageResource(book.getCoverResourceId());
+        foto_perfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean userLoggedIsCommon = checkedUserLoggedIsCommon();
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(HomePage.this, BookSalePage.class);
-
-                    intent.putExtra("book_id", book.getId());
-                    intent.putExtra("book_cover", book.getCoverResourceId());
-                    intent.putExtra("book_title", book.getTitle());
-                    intent.putExtra("book_author", book.getAuthor());
-                    intent.putExtra("book_price", book.getPrice());
-                    intent.putExtra("book_description", book.getDescription());
-
+                if (userLoggedIsCommon) {
+                    Intent intent = new Intent(HomePage.this, PerfilUserCommon.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(HomePage.this, PerfilUserInstitutional.class);
                     startActivity(intent);
                 }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return data.size();
-        }
-
-        class MyHolder extends RecyclerView.ViewHolder {
-            ImageView ivCover;
-            public MyHolder(@NonNull View itemView) {
-                super(itemView);
-                ivCover = itemView.findViewById(R.id.ivCover);
             }
+        });
+
+        // =================
+    }
+
+    private boolean checkedUserLoggedIsCommon() {
+        if (loginSessionManager.getCurrentUserCommon() != null) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
