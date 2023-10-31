@@ -31,7 +31,8 @@ public class PerfilUserInstitutional extends AppCompatActivity {
         this.ivButtonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Vai para a tela de edit do usuário institucional");
+                Intent intent = new Intent(PerfilUserInstitutional.this, EditPerfilUserInstitutional.class);
+                startActivity(intent);
             }
         });
     }
