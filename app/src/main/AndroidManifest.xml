@@ -13,6 +13,20 @@
         android:theme="@style/Theme.Obes"
         tools:targetApi="31">
         <activity
+            android:name=".perfil.EditPerfilUserInstitutional"
+            android:exported="false" />
+        <activity
+            android:name=".perfil.PerfilUserInstitutional"
+            android:exported="false" />
+        <activity
+            android:name=".perfil.EditPerfilUserCommon"
+            android:exported="false"
+            android:label="@string/title_activity_edit_perfil_user_common"
+            android:theme="@style/Theme.Obes" />
+        <activity
+            android:name=".perfil.PerfilUserCommon"
+            android:exported="false" />
+        <activity
             android:name=".formSale.SalePreview"
             android:exported="false" />
         <activity
