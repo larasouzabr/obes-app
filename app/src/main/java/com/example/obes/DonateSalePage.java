@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.obes.dao.AddressDAO;
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.formDonate.DonateFormPage;
 import com.example.obes.formSale.SaleFormPage;
+import com.example.obes.model.Address.Address;
 
 public class DonateSalePage extends AppCompatActivity {
     private TextView button_donate;
@@ -31,7 +33,14 @@ public class DonateSalePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (checkedUserTypeCommon()) {
-                    Intent intent = new Intent(DonateSalePage.this, DonateFormPage.class);
+                    Intent intent;
+                    if (checkedAddressUser()) {
+                        intent = new Intent(DonateSalePage.this, DonateFormPage.class);
+
+                    } else {
+                        intent = new Intent(DonateSalePage.this, InformationUserPage.class);
+                    }
+
                     startActivity(intent);
                 } else {
                     Toast.makeText(DonateSalePage.this, "Somente usuários comuns podem doar livros", Toast.LENGTH_SHORT).show();
@@ -43,7 +52,14 @@ public class DonateSalePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (checkedUserTypeCommon()) {
-                    Intent intent = new Intent(DonateSalePage.this, SaleFormPage.class);
+                    Intent intent;
+                    if (checkedAddressUser()) {
+                        intent = new Intent(DonateSalePage.this, SaleFormPage.class);
+
+                    } else {
+                        intent = new Intent(DonateSalePage.this, InformationUserPage.class);
+                    }
+
                     startActivity(intent);
                 } else {
                     Toast.makeText(DonateSalePage.this, "Somente usuários comuns podem vender livros", Toast.LENGTH_SHORT).show();
@@ -64,4 +80,17 @@ public class DonateSalePage extends AppCompatActivity {
 
         return true;
     }
+
+    private boolean checkedAddressUser() {
+        AddressDAO addressDAO = AddressDAO.getInstance();
+
+        Address address =  addressDAO.getAddressByIdUser(loginSessionManager.getCurrentUserCommon().getId());
+
+        if (address == null) {
+            return false;
+        }
+
+        return true;
+    }
+
 }
