@@ -7,19 +7,16 @@ public class Address {
     private String estado;
     private String cidade;
     private String bairro;
-    private String endereco;
     private String complemento;
     private int numero;
 
-    public Address(int idAddress, int idUser, String cep, String estado, String cidade, String bairro, String endereco, String complemento, int numero) {
+    public Address(int idAddress, int idUser, String cep, String estado, String cidade, String bairro, int numero) {
         this.idAddress = idAddress;
         this.idUser = idUser;
         this.cep = cep;
         this.estado = estado;
         this.cidade = cidade;
         this.bairro = bairro;
-        this.endereco = endereco;
-        this.complemento = complemento;
         this.numero = numero;
     }
 
@@ -61,14 +58,6 @@ public class Address {
 
     public void setBairro(String bairro) {
         this.bairro = bairro;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
     }
 
     public String getComplemento() {

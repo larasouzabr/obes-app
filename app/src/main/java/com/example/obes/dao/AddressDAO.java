@@ -63,7 +63,6 @@ public class AddressDAO {
             addressEdit.setEstado(address.getEstado());
             addressEdit.setCidade(address.getCidade());
             addressEdit.setBairro(address.getBairro());
-            addressEdit.setEndereco(address.getEndereco());
             addressEdit.setComplemento(address.getComplemento());
             addressEdit.setNumero(address.getNumero());
 

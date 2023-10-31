@@ -2,6 +2,7 @@ package com.example.obes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +10,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.obes.dao.AddressDAO;
 import com.example.obes.dao.LoginSessionManager;
+import com.example.obes.dao.UserCommonDAO;
+import com.example.obes.formDonate.DonateFormPage;
+import com.example.obes.formSale.SaleFormPage;
+import com.example.obes.model.Address.Address;
 import com.example.obes.model.User.UserCommon;
 
 public class InformationUserPage extends AppCompatActivity {
@@ -53,7 +59,41 @@ public class InformationUserPage extends AppCompatActivity {
                 if (checkedFieldsEmpty()) {
                     Toast.makeText(InformationUserPage.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
                 } else {
-                    System.out.println("Salva os dados e vai para a outra página");
+                    UserCommon newUser = new UserCommon(userLogged.getId(), userLogged.getName(), userLogged.getEmail(), userLogged.getPassword());
+                    newUser.setDateOfBirth(etDate.getText().toString());
+                    newUser.setCpf(etCpf.getText().toString());
+                    newUser.setContact(etPhone.getText().toString());
+
+                    UserCommonDAO.getInstance().editUser(newUser);
+
+                    AddressDAO addressDAO = AddressDAO.getInstance();
+
+                    String cep = etCep.getText().toString();
+                    String state = etState.getText().toString();
+                    String city = etCity.getText().toString();
+                    String neighborhood = etNeighborhood.getText().toString();
+                    int number = Integer.parseInt(etNumber.getText().toString());
+
+                    Address newAddress = new Address(countIdAddress(), userLogged.getId(), cep, state, city, neighborhood, number);
+
+                    if (addressDAO.getAddressByIdUser(userLogged.getId()) == null) {
+                        addressDAO.addAddress(newAddress);
+                    } else {
+                        addressDAO.editAddress(newAddress);
+                    }
+
+                    Intent intentExtra = getIntent();
+                    String nextPage = intentExtra.getStringExtra("next_page");
+
+                    Intent intent;
+
+                    if (nextPage.equals("formDonate")) {
+                        intent = new Intent(InformationUserPage.this, DonateFormPage.class);
+                    } else {
+                        intent = new Intent(InformationUserPage.this, SaleFormPage.class);
+                    }
+
+                    startActivity(intent);
                 }
             }
         });
@@ -90,5 +130,16 @@ public class InformationUserPage extends AppCompatActivity {
         }
 
         return someEmpty;
+    }
+    private int countIdAddress() {
+        int idAddress = 1;
+
+        int amountAddress = AddressDAO.getInstance().getListAddress().size();
+
+        if (amountAddress > 0) {
+            idAddress = AddressDAO.getInstance().getListAddress().get(amountAddress - 1).getIdAddress() + 1;
+        }
+
+        return idAddress;
     }
 }

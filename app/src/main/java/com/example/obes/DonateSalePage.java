@@ -36,9 +36,9 @@ public class DonateSalePage extends AppCompatActivity {
                     Intent intent;
                     if (checkedAddressUser()) {
                         intent = new Intent(DonateSalePage.this, DonateFormPage.class);
-
                     } else {
                         intent = new Intent(DonateSalePage.this, InformationUserPage.class);
+                        intent.putExtra("next_page", "formDonate");
                     }
 
                     startActivity(intent);
@@ -58,6 +58,7 @@ public class DonateSalePage extends AppCompatActivity {
 
                     } else {
                         intent = new Intent(DonateSalePage.this, InformationUserPage.class);
+                        intent.putExtra("next_page", "formSale");
                     }
 
                     startActivity(intent);
