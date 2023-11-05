@@ -39,6 +39,25 @@ public class CartToUserDAO {
         return cartUser;
     }
 
+    public boolean addCartToUser(int idCart, int idUser) {
+        CartToUser newCartToUser = new CartToUser(idCart, idUser);
+
+        this.listCartUser.add(newCartToUser);
+
+        return true;
+    }
+
+    public boolean deleteCartToUser(int idUser) {
+        for (CartToUser cartToUser : this.listCartUser) {
+            if (cartToUser.getIdUser() == idUser) {
+                this.listCartUser.remove(cartToUser);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     class CartToUser {
         private int idCart;
         private int idUser;

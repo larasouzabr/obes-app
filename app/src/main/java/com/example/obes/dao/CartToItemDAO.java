@@ -37,13 +37,32 @@ public class CartToItemDAO {
         return listItems;
     }
 
-    public boolean addCartItem(CartToItem cartItem) {
-        listCartsItems.add(cartItem);
+    public boolean addCartItem(int idCart, int idItem) {
+        CartToItem newCartToItem = new CartToItem(idCart, idItem);
+
+        listCartsItems.add(newCartToItem);
         return true;
     }
-    public boolean deleteCartItem(CartToItem cartItem) {
-        listCartsItems.remove(cartItem);
-        return true;
+    public boolean deleteCartItem(int idCart, int idItem) {
+        CartToItem cartToItemDeleted = null;
+        boolean deleted = false;
+
+        for (CartToItem ci : this.listCartsItems) {
+            if (ci.getIdCart() == idCart) {
+                if (ci.getIdItem() == idItem) {
+                    cartToItemDeleted = ci;
+                    break;
+                }
+            }
+        }
+
+        if (cartToItemDeleted != null) {
+            listCartsItems.remove(cartToItemDeleted);
+            deleted = true;
+        }
+
+
+        return deleted;
     }
 
     class CartToItem {
