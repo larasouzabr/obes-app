@@ -1,13 +1,13 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" app:cardCornerRadius="5dp">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="wrap_content" app:cardCornerRadius="5dp" android:layout_marginBottom="10dp">
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:background="@color/purple_200">
-        <RadioGroup android:id="@+id/rg_item_cart" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="5dp" android:layout_marginBottom="5dp" android:paddingEnd="15dp" android:paddingStart="15dp">
-            <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center"/>
+        <LinearLayout android:id="@+id/rg_item_cart" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:background="@color/purple_200" android:layout_marginTop="5dp" android:layout_marginBottom="5dp" android:paddingEnd="15dp" android:paddingStart="15dp">
+            <CheckBox android:id="@+id/item_cart" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center"/>
             <ImageView android:id="@+id/cover_book" android:layout_width="54dp" android:layout_height="71dp" android:src="@drawable/cover_book1"/>
             <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginStart="15dp" android:layout_gravity="center" android:layout_weight="1">
                 <TextView android:id="@+id/title_book" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Eu, Robô" android:textSize="12sp" android:textColor="@color/black" android:textStyle="bold"/>
                 <TextView android:id="@+id/author_book" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Isaac Asimov" android:textSize="11sp" android:textColor="@color/black"/>
             </LinearLayout>
             <TextView android:id="@+id/price_book" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="R$ 15.90" android:textSize="22sp" android:textColor="@color/purple_800"/>
-        </RadioGroup>
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
