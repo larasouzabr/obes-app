@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.obes.dao.CartDAO;
 import com.example.obes.dao.CartToItemDAO;
 import com.example.obes.dao.CartToUserDAO;
+import com.example.obes.dao.ItemCartDAO;
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.Cart.Cart;
@@ -24,6 +26,8 @@ import java.util.ArrayList;
 public class CartPage extends AppCompatActivity {
     private TextView tvTitlePage;
     private ImageView button_back_arrow;
+    private Button button_clean;
+    private TextView tvPriceTotal;
     private RecyclerView rv_items;
     private LoginSessionManager loginSessionManager;
     private User userLogged;
@@ -71,13 +75,38 @@ public class CartPage extends AppCompatActivity {
 
         rv_items.setLayoutManager(linearLayoutManagerItems);
         rv_items.setAdapter(recyclerViewAdapter);
+
+        this.button_clean.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CartToUserDAO cartToUserDAO = CartToUserDAO.getInstance();
+                Cart cartUserLogged = cartToUserDAO.getCartByIdUser(userLogged.getId());
+
+                CartToItemDAO cartToItemDAO = CartToItemDAO.getInstance();
+                ArrayList<ItemCart> itemsUserLogged = cartToItemDAO.getItemsByIdCart(cartUserLogged.getId());
+
+                ItemCartDAO itemCartDAO = ItemCartDAO.getInstance();
+                for (ItemCart item : itemsUserLogged) {
+                    itemCartDAO.deleteItemCart(item);
+                    cartToItemDAO.deleteCartItem(cartUserLogged.getId(), item.getId());
+                }
+
+                listBooks.clear();
+
+                recyclerViewAdapter.notifyDataSetChanged();
+
+                tvPriceTotal.setText("R$ 0.00");
+            }
+        });
     }
 
     public void startComponents() {
         this.tvTitlePage = findViewById(R.id.title_page);
         this.button_back_arrow = findViewById(R.id.back_arrow);
+        this.button_clean = findViewById(R.id.button_clean);
         this.rv_items = findViewById(R.id.items);
         this.loginSessionManager = LoginSessionManager.getInstance();
+        this.tvPriceTotal = findViewById(R.id.price_total);
     }
     private User getUserLogged() {
         User userLogged;
