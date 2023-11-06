@@ -14,7 +14,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.obes.dao.CartToItemDAO;
+import com.example.obes.dao.ItemCartDAO;
 import com.example.obes.model.Book.Book;
+import com.example.obes.model.Cart.ItemCart;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -87,11 +90,45 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
                 tvPriceTotal.setText(newPriceTotal);
             }
         });
+
+        holder.ivDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ItemCartDAO itemCartDAO = ItemCartDAO.getInstance();
+
+                int itemPosition = data.indexOf(book);
+
+                if (itemPosition != -1) {
+                    data.remove(itemPosition);
+
+                    notifyItemRemoved(itemPosition);
+
+                    priceTotal = countPriceTotal(book.getPrice() * -1);
+
+                    updatePriceTotalInUI();
+
+                    ItemCart item = itemCartDAO.getItemByIdBook(book.getId());
+                    if (item != null) {
+                        itemCartDAO.deleteItemCart(item);
+                        int idCart = CartToItemDAO.getInstance().getIdCartByIdItem(item.getId());
+                        CartToItemDAO.getInstance().deleteCartItem(idCart, item.getId());
+                    }
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    private void updatePriceTotalInUI() {
+        Activity activity = (Activity) context;
+        TextView tvPriceTotal = activity.findViewById(R.id.price_total);
+        DecimalFormat df = new DecimalFormat("#.00");
+        String newPriceTotal = "R$ " + (priceTotal > 0 ? df.format(priceTotal) : "0.00");
+        tvPriceTotal.setText(newPriceTotal);
     }
 
     class MyHolder extends RecyclerView.ViewHolder {
@@ -100,6 +137,7 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
         TextView tvTitleBook;
         TextView tvAuthorBook;
         TextView tvPriceBook;
+        ImageView ivDelete;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -108,6 +146,7 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
             tvTitleBook = itemView.findViewById(R.id.title_book);
             tvAuthorBook = itemView.findViewById(R.id.author_book);
             tvPriceBook = itemView.findViewById(R.id.price_book);
+            ivDelete = itemView.findViewById(R.id.delete);
         }
     }
 

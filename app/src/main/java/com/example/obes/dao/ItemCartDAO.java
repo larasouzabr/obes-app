@@ -54,6 +54,20 @@ public class ItemCartDAO {
         for (ItemCart item : this.listItensCart) {
             if (item.getId() == idItem) {
                 itemCart = item;
+                break;
+            }
+        }
+
+        return itemCart;
+    }
+
+    public ItemCart getItemByIdBook(int idBook) {
+        ItemCart itemCart = null;
+
+        for (ItemCart item : this.listItensCart) {
+            if (item.getItem().getId() == idBook) {
+                itemCart = item;
+                break;
             }
         }
 

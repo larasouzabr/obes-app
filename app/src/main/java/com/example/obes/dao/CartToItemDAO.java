@@ -37,6 +37,19 @@ public class CartToItemDAO {
         return listItems;
     }
 
+    public int getIdCartByIdItem(int idItem) {
+        int idCart = 0;
+
+        for (CartToItem ci : this.listCartsItems) {
+            if (ci.getIdItem() == idItem) {
+                idCart = ci.getIdCart();
+                break;
+            }
+        }
+
+        return idCart;
+    }
+
     public boolean addCartItem(int idCart, int idItem) {
         CartToItem newCartToItem = new CartToItem(idCart, idItem);
 
