@@ -25,7 +25,7 @@ import com.example.obes.model.User.User;
 import com.example.obes.perfil.PerfilUserCommon;
 
 public class BookSalePage extends AppCompatActivity {
-
+    private TextView tvTitlePage;
     private TextView titleTextView;
     private ImageView coverImageView;
     private TextView authorTextView;
@@ -52,6 +52,7 @@ public class BookSalePage extends AppCompatActivity {
 
         this.startComponets();
 
+        this.tvTitlePage.setText(bookTitle);
         titleTextView.setText(bookTitle);
         coverImageView.setImageResource(bookCoverResourceId);
         authorTextView.setText(bookAuthor);
@@ -88,6 +89,7 @@ public class BookSalePage extends AppCompatActivity {
     }
 
     private void startComponets() {
+        this.tvTitlePage = findViewById(R.id.title_page);
         this.titleTextView = findViewById(R.id.title);
         this.coverImageView = findViewById(R.id.ivCover);
         this.authorTextView = findViewById(R.id.author);
