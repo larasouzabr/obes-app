@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.User.User;
@@ -39,6 +40,7 @@ public class HomePage extends AppCompatActivity {
         this.rv_sale = findViewById(R.id.books_sale);
         this.rv_donate = findViewById(R.id.books_donate);
 
+        //
         dataResource = new ArrayList<>();
         dataResource.add(new Book(1, "Book 1", "Book 1 Seu protagonista é Simão Bacamarte.", "Ficção", true, R.drawable.cover_book1, "Machado de Assis", 0, "Usado"));
         dataResource.add(new Book(2, "Book 2", "Book 2 Seu protagonista é Simão Bacamarte.", "Ficção", true, R.drawable.cover_book2, "Machado de Assis", 0, "Usado"));
@@ -58,7 +60,9 @@ public class HomePage extends AppCompatActivity {
             } else if (book.getPrice() == 0) {
                 booksForDonate.add(book);
             }
+            BookDAO.getInstance().addBook(book);
         }
+        //
 
         saleAdapter = new MyAdapterRecyclerView(this, booksForSale, false);
         donateAdapter = new MyAdapterRecyclerView(this, booksForDonate, false);
