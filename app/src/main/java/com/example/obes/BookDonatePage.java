@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.obes.dao.LoginSessionManager;
 
 public class BookDonatePage extends AppCompatActivity {
+    private TextView tvTitlePage;
     private TextView titleTextView;
     private ImageView coverImageView;
     private TextView authorTextView;
@@ -31,6 +32,7 @@ public class BookDonatePage extends AppCompatActivity {
         double bookPrice = intent.getDoubleExtra("book_price", 0.0);
         String bookDescription = intent.getStringExtra("book_description");
 
+        this.tvTitlePage.setText(bookTitle);
         titleTextView.setText(bookTitle);
         coverImageView.setImageResource(bookCoverResourceId);
         authorTextView.setText(bookAuthor);
@@ -44,6 +46,7 @@ public class BookDonatePage extends AppCompatActivity {
         });
     }
     private void startComponents() {
+        this.tvTitlePage = findViewById(R.id.title_page);
         this.titleTextView = findViewById(R.id.title);
         this.coverImageView = findViewById(R.id.ivCover);
         this.authorTextView = findViewById(R.id.author);
