@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.obes.dao.BookDAO;
@@ -92,6 +93,16 @@ public class HomePage extends AppCompatActivity {
                     Intent intent = new Intent(HomePage.this, PerfilUserInstitutional.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+        Button buttonWishlist = findViewById(R.id.button_wishlist);
+
+        buttonWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomePage.this, WishlistPage.class);
+                startActivity(intent);
             }
         });
 
