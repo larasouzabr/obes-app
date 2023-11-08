@@ -5,18 +5,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.example.obes.model.Book.Book;
+import com.example.obes.model.Wishlist.ItemWishlist;
+import com.example.obes.model.Wishlist.Wishlist;
 
 import java.util.ArrayList;
 
 public class WishlistPage extends AppCompatActivity {
     private RecyclerView rv_items;
+
+    private TextView tvTitlePage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishlist_page);
         this.startComponents();
+
+        this.tvTitlePage.setText("Lista de Desejos");
 
         LinearLayoutManager linearLayoutManagerItems = new LinearLayoutManager(WishlistPage.this, LinearLayoutManager.VERTICAL, false);
 
@@ -29,6 +36,8 @@ public class WishlistPage extends AppCompatActivity {
         dataResource.add(new Book(5, "Book 5", "Book 5 Seu protagonista é Simão Bacamarte.", "Ficção", true, R.drawable.cover_book1, "Machado de Assis", 11.99, "Usado"));
         //
 
+
+
         MyAdapterRecyclerViewCart recyclerViewAdapter = new MyAdapterRecyclerViewCart(this, dataResource, false);
 
         rv_items.setLayoutManager(linearLayoutManagerItems);
@@ -36,5 +45,6 @@ public class WishlistPage extends AppCompatActivity {
     }
     private void startComponents() {
         this.rv_items = findViewById(R.id.items);
+        this.tvTitlePage = findViewById(R.id.title_page);
     }
 }
