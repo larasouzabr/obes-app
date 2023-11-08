@@ -17,12 +17,20 @@ import com.example.obes.dao.CartToItemDAO;
 import com.example.obes.dao.CartToUserDAO;
 import com.example.obes.dao.ItemCartDAO;
 import com.example.obes.dao.LoginSessionManager;
+import com.example.obes.dao.Wishlist.ItemWishlistDAO;
+import com.example.obes.dao.Wishlist.WishlistDAO;
+import com.example.obes.dao.Wishlist.WishlistToItemDAO;
+import com.example.obes.dao.Wishlist.WishlistToUserDAO;
 import com.example.obes.formSale.SalePreview;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.Cart.Cart;
 import com.example.obes.model.Cart.ItemCart;
 import com.example.obes.model.User.User;
+import com.example.obes.model.Wishlist.ItemWishlist;
+import com.example.obes.model.Wishlist.Wishlist;
 import com.example.obes.perfil.PerfilUserCommon;
+
+import java.util.ArrayList;
 
 public class BookSalePage extends AppCompatActivity {
     private TextView tvTitlePage;
@@ -33,8 +41,11 @@ public class BookSalePage extends AppCompatActivity {
     private TextView descriptionTextView;
     private ImageView button_back_arrow;
     private Button button_add_cart;
+    private ImageView ivIcFavorite;
+    private boolean isFavorite;
     private LoginSessionManager loginSessionManager;
     private User userLogged;
+    private Wishlist wishlistUserLogged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +97,47 @@ public class BookSalePage extends AppCompatActivity {
                 showModal();
             }
         });
+
+        if (wishlistUserLogged == null) {
+            this.ivIcFavorite.setImageResource(R.drawable.ic_favorite);
+        } else if(this.bookIsFavorite(bookId, this.userLogged.getId())) {
+            this.ivIcFavorite.setImageResource(R.drawable.ic_favorite_selected);
+            this.isFavorite = true;
+        } else {
+            this.ivIcFavorite.setImageResource(R.drawable.ic_favorite);
+        }
+
+        this.ivIcFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (wishlistUserLogged == null) {
+                    wishlistUserLogged = addWishToUser();
+                }
+
+                if (!isFavorite) {
+                    ItemWishlist newItemWishlist = new ItemWishlist(countIdItemWish(), BookDAO.getInstance().getBookById(bookId));
+
+                    wishlistUserLogged.addItem(newItemWishlist);
+
+                    ivIcFavorite.setImageResource(R.drawable.ic_favorite_selected);
+
+                    isFavorite = true;
+                } else {
+                    ArrayList<ItemWishlist> items = WishlistToItemDAO.getInstance().getItemsByIdWish(wishlistUserLogged.getId());
+
+                    for (ItemWishlist item : items) {
+                        if (item.getItem().getId() == bookId) {
+                            wishlistUserLogged.deleteItem(item);
+                            break;
+                        }
+                    }
+
+                    ivIcFavorite.setImageResource(R.drawable.ic_favorite);
+
+                    isFavorite = false;
+                }
+            }
+        });
     }
 
     private void startComponets() {
@@ -97,8 +149,13 @@ public class BookSalePage extends AppCompatActivity {
         this.descriptionTextView = findViewById(R.id.description);
         this.button_back_arrow = findViewById(R.id.back_arrow);
         this.button_add_cart = findViewById(R.id.add_cart);
+        this.ivIcFavorite = findViewById(R.id.ic_favorite);
         this.loginSessionManager = LoginSessionManager.getInstance();
         this.userLogged = this.getUserLogged();
+        this.isFavorite = false;
+
+        WishlistToUserDAO wishlistToUserDAO = WishlistToUserDAO.getInstance();
+        wishlistUserLogged = wishlistToUserDAO.getWishByIdUser(userLogged.getId());
     }
 
     private User getUserLogged() {
@@ -172,5 +229,64 @@ public class BookSalePage extends AppCompatActivity {
         });
 
         modal.show();
+    }
+    private boolean bookIsFavorite(int idBook, int idUser) {
+        ItemWishlist item = null;
+
+        for (ItemWishlist i : ItemWishlistDAO.getInstance().getListItems()) {
+            if (i.getItem().getId() == idBook) {
+                item = i;
+                break;
+            }
+        }
+
+        if (item == null) {
+            return false;
+        }
+
+        int idWishItem = WishlistToItemDAO.getInstance().getIdWishByIdItem(item.getId());
+
+        Wishlist wishUser = WishlistToUserDAO.getInstance().getWishByIdUser(idUser);
+
+        if (idWishItem == wishUser.getId()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private Wishlist addWishToUser() {
+        WishlistToUserDAO wishlistToUserDAO = WishlistToUserDAO.getInstance();
+        WishlistDAO wishlistDAO = WishlistDAO.getInstance();
+
+        int id = 1;
+
+        int amountWish = wishlistDAO.getWishlists().size();
+
+        if (amountWish > 0) {
+            id = wishlistDAO.getWishlists().get(amountWish - 1).getId() + 1;
+        }
+
+        Wishlist newWishlist = new Wishlist(id);
+
+        wishlistDAO.addWishlist(newWishlist);
+
+        wishlistToUserDAO.addWishToUser(newWishlist.getId(), this.userLogged.getId());
+
+        return wishlistToUserDAO.getWishByIdUser(this.userLogged.getId());
+    }
+
+    private int countIdItemWish() {
+        ItemWishlistDAO itemWishlistDAO = ItemWishlistDAO.getInstance();
+
+        int id = 1;
+
+        int amountItems = itemWishlistDAO.getListItems().size();
+
+        if (amountItems > 0) {
+            id = itemWishlistDAO.getListItems().get(amountItems - 1).getId() + 1;
+        }
+
+        return id;
     }
 }
