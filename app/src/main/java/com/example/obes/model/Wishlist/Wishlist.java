@@ -2,6 +2,7 @@ package com.example.obes.model.Wishlist;
 
 import com.example.obes.dao.Wishlist.ItemWishlistDAO;
 import com.example.obes.dao.Wishlist.WishlistToItemDAO;
+import com.example.obes.dao.Wishlist.WishlistToUserDAO;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,9 @@ public class Wishlist {
     }
 
     public ArrayList<ItemWishlist> getListItems() {
-        return this.listItems;
+        WishlistToItemDAO wishlistToItemDAO = WishlistToItemDAO.getInstance();
+
+        return wishlistToItemDAO.getItemsByIdWish(this.getId());
     }
 
     public int getId() {
