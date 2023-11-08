@@ -62,6 +62,7 @@
                         android:layout_marginLeft="5dp">
 
                         <TextView
+                            android:id="@+id/title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Memórias Póstumas de Brás Cubas"
@@ -71,6 +72,7 @@
                             android:layout_marginBottom="6dp"/>
 
                         <TextView
+                            android:id="@+id/author"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Machado de Assis"
@@ -122,6 +124,7 @@
                         android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Seu protagonista é Simão Bacamarte, médico que, após conquistar respeito na Europa, retorna à sua cidade natal, Itaguaí. Lá, ele aprofunda seus estudos de psiquiatria e empreende uma busca sobre os caminhos da mente e as patologias cerebrais. Livro em perfeito estado foi usado apenas por 1 semana"
