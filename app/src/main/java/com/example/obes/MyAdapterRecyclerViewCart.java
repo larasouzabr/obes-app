@@ -16,8 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.obes.dao.CartToItemDAO;
 import com.example.obes.dao.ItemCartDAO;
+import com.example.obes.dao.Wishlist.ItemWishlistDAO;
+import com.example.obes.dao.Wishlist.WishlistToItemDAO;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.Cart.ItemCart;
+import com.example.obes.model.Wishlist.ItemWishlist;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -122,6 +125,14 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
                             int idCart = CartToItemDAO.getInstance().getIdCartByIdItem(item.getId());
                             CartToItemDAO.getInstance().deleteCartItem(idCart, item.getId());
                         }
+                    } else {
+                        ItemWishlistDAO itemWishlistDAO = ItemWishlistDAO.getInstance();
+
+                        ItemWishlist itemWish = itemWishlistDAO.getItemByIdBook(book.getId());
+
+                        itemWishlistDAO.deleteItemWishlist(itemWish);
+                        int idWish = WishlistToItemDAO.getInstance().getIdWishByIdItem(itemWish.getId());
+                        WishlistToItemDAO.getInstance().deleteWishItem(idWish, itemWish.getId());
                     }
                 }
             }
