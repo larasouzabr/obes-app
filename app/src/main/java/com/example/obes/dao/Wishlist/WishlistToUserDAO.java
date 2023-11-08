@@ -1,5 +1,7 @@
 package com.example.obes.dao.Wishlist;
 
+import com.example.obes.model.Wishlist.Wishlist;
+
 import java.util.ArrayList;
 
 public class WishlistToUserDAO {
@@ -19,6 +21,21 @@ public class WishlistToUserDAO {
 
     public ArrayList<WishToUser> getListWishUser() {
         return this.listWishUser;
+    }
+
+    public Wishlist getWishByIdUser(int idUser) {
+        WishlistDAO wishlistDAO = WishlistDAO.getInstance();
+
+        Wishlist wishUser = null;
+
+        for (WishToUser wishToUser : this.listWishUser) {
+            if (wishToUser.getIdUser() == idUser) {
+                wishUser = wishlistDAO.getWishlistById(wishToUser.getIdWish());
+                break;
+            }
+        }
+
+        return wishUser;
     }
 
     public boolean addWishToUser(int idWish, int idUser) {

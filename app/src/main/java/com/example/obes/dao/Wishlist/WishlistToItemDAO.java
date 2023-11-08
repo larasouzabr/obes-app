@@ -41,7 +41,7 @@ public class WishlistToItemDAO {
         int idWish = 0;
 
         for (WishToItem wi : this.listWishItem) {
-            if (wi.getIdWish() == idItem) {
+            if (wi.getIdItem() == idItem) {
                 idWish = wi.getIdWish();
                 break;
             }

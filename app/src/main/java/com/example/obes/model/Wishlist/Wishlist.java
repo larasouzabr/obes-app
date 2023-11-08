@@ -1,5 +1,8 @@
 package com.example.obes.model.Wishlist;
 
+import com.example.obes.dao.Wishlist.ItemWishlistDAO;
+import com.example.obes.dao.Wishlist.WishlistToItemDAO;
+
 import java.util.ArrayList;
 
 public class Wishlist {
@@ -12,11 +15,13 @@ public class Wishlist {
     }
 
     public void addItem(ItemWishlist item) {
-        this.listItems.add(item);
+        ItemWishlistDAO.getInstance().addItemWishlist(item);
+        WishlistToItemDAO.getInstance().addWishItem(this.getId(), item.getId());
     }
 
     public void deleteItem(ItemWishlist item) {
-        this.listItems.remove(item);
+        ItemWishlistDAO.getInstance().deleteItemWishlist(item);
+        WishlistToItemDAO.getInstance().deleteWishItem(this.getId(), item.getId());
     }
 
     public ArrayList<ItemWishlist> getListItems() {
