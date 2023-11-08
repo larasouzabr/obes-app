@@ -16,8 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.obes.dao.CartToItemDAO;
 import com.example.obes.dao.ItemCartDAO;
+import com.example.obes.dao.Wishlist.ItemWishlistDAO;
+import com.example.obes.dao.Wishlist.WishlistToItemDAO;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.Cart.ItemCart;
+import com.example.obes.model.Wishlist.ItemWishlist;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -42,7 +45,7 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
         if (this.isShoppingCart) {
             view = LayoutInflater.from(context).inflate(R.layout.item_cart, parent, false);
         } else {
-            view = LayoutInflater.from(context).inflate(R.layout.item_cart, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.item_wishlist, parent, false);
         }
         return new MyAdapterRecyclerViewCart.MyHolder(view);
     }
@@ -59,7 +62,13 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
         holder.ivCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, BookSalePage.class);
+                Intent intent;
+
+                if (book.getPrice() > 0) {
+                    intent = new Intent(context, BookSalePage.class);
+                } else {
+                    intent = new Intent(context, BookDonatePage.class);
+                }
 
                 intent.putExtra("book_id", book.getId());
                 intent.putExtra("book_cover", book.getCoverResourceId());
@@ -72,24 +81,26 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
             }
         });
 
-        holder.ItemCart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Activity activity = (Activity) context;
-                TextView tvPriceTotal = activity.findViewById(R.id.price_total);
-                DecimalFormat df = new DecimalFormat("#.00");
-                String newPriceTotal;
+        if (this.isShoppingCart) {
+            holder.ItemCart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    Activity activity = (Activity) context;
+                    TextView tvPriceTotal = activity.findViewById(R.id.price_total);
+                    DecimalFormat df = new DecimalFormat("#.00");
+                    String newPriceTotal;
 
-                if (isChecked) {
-                    priceTotal = countPriceTotal(book.getPrice());
-                } else {
-                    priceTotal = countPriceTotal(book.getPrice() * -1);
+                    if (isChecked) {
+                        priceTotal = countPriceTotal(book.getPrice());
+                    } else {
+                        priceTotal = countPriceTotal(book.getPrice() * -1);
+                    }
+
+                    newPriceTotal = "R$ " + (priceTotal > 0 ? df.format(priceTotal) : "0.00");
+                    tvPriceTotal.setText(newPriceTotal);
                 }
-
-                newPriceTotal = "R$ " + (priceTotal > 0 ? df.format(priceTotal) : "0.00");
-                tvPriceTotal.setText(newPriceTotal);
-            }
-        });
+            });
+        }
 
         holder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,15 +114,25 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
 
                     notifyItemRemoved(itemPosition);
 
-                    priceTotal = countPriceTotal(book.getPrice() * -1);
+                    if (isShoppingCart) {
+                        priceTotal = countPriceTotal(book.getPrice() * -1);
 
-                    updatePriceTotalInUI();
+                        updatePriceTotalInUI();
 
-                    ItemCart item = itemCartDAO.getItemByIdBook(book.getId());
-                    if (item != null) {
-                        itemCartDAO.deleteItemCart(item);
-                        int idCart = CartToItemDAO.getInstance().getIdCartByIdItem(item.getId());
-                        CartToItemDAO.getInstance().deleteCartItem(idCart, item.getId());
+                        ItemCart item = itemCartDAO.getItemByIdBook(book.getId());
+                        if (item != null) {
+                            itemCartDAO.deleteItemCart(item);
+                            int idCart = CartToItemDAO.getInstance().getIdCartByIdItem(item.getId());
+                            CartToItemDAO.getInstance().deleteCartItem(idCart, item.getId());
+                        }
+                    } else {
+                        ItemWishlistDAO itemWishlistDAO = ItemWishlistDAO.getInstance();
+
+                        ItemWishlist itemWish = itemWishlistDAO.getItemByIdBook(book.getId());
+
+                        itemWishlistDAO.deleteItemWishlist(itemWish);
+                        int idWish = WishlistToItemDAO.getInstance().getIdWishByIdItem(itemWish.getId());
+                        WishlistToItemDAO.getInstance().deleteWishItem(idWish, itemWish.getId());
                     }
                 }
             }

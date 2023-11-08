@@ -54,7 +54,13 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
         holder.ivCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, BookSalePage.class);
+                Intent intent;
+
+                if (book.getPrice() > 0) {
+                    intent = new Intent(context, BookSalePage.class);
+                } else {
+                    intent = new Intent(context, BookDonatePage.class);
+                }
 
                 intent.putExtra("book_id", book.getId());
                 intent.putExtra("book_cover", book.getCoverResourceId());
