@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.obes.dao.UserCommonDAO;
+import com.example.obes.dao.UserInstitutionalDAO;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         // setContentView(R.layout.activity_book_sale_page);
+
+        //
+        if (UserCommonDAO.getInstance().getListUsers().size() == 0 || UserInstitutionalDAO.getInstance().getListUsers().size() == 0) {
+            FakeData.generateFakeUsers();
+        }
+        //
 
         startComponents();
 

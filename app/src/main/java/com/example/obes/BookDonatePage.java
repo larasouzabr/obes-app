@@ -57,7 +57,7 @@ public class BookDonatePage extends AppCompatActivity {
         descriptionTextView.setText(bookDescription);
 
         UserCommon userDonating = UserRegisteredBookDonateDAO.getInstance().getUserByIdBook(bookId);
-        this.ivPhotoUserDonating.setImageResource(bookCoverResourceId);
+        this.ivPhotoUserDonating.setImageResource(R.drawable.ic_foto_perfil);
         this.tvNameUserDonating.setText(userDonating.getName());
 
         this.button_back_arrow.setOnClickListener(new View.OnClickListener() {

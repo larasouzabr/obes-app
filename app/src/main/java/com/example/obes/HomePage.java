@@ -14,7 +14,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.obes.dao.BookDAO;
+import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.LoginSessionManager;
+import com.example.obes.dao.UserCommonDAO;
+import com.example.obes.dao.UserInstitutionalDAO;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.User.User;
 import com.example.obes.perfil.PerfilUserCommon;
@@ -41,32 +44,11 @@ public class HomePage extends AppCompatActivity {
         this.rv_sale = findViewById(R.id.books_sale);
         this.rv_donate = findViewById(R.id.books_donate);
 
-        //
-        dataResource = new ArrayList<>();
-        dataResource.add(new Book(1, "Book 1", "Book 1 Seu protagonista é Simão Bacamarte.", "Ficção", true, R.drawable.cover_book1, "Machado de Assis", 0, "Usado"));
-        dataResource.add(new Book(2, "Book 2", "Book 2 Seu protagonista é Simão Bacamarte.", "Ficção", true, R.drawable.cover_book2, "Machado de Assis", 0, "Usado"));
-        dataResource.add(new Book(3, "Book 3", "Book 3 Seu protagonista é Simão Bacamarte.", "Ficção", true, R.drawable.cover_book2, "Machado de Assis", 0, "Usado"));
-        dataResource.add(new Book(4, "Book 4", "Book 4 Seu protagonista é Simão Bacamarte.", "Ficção", true, R.drawable.cover_book2, "Machado de Assis", 19.99, "Usado"));
-        dataResource.add(new Book(5, "Book 5", "Book 5 Seu protagonista é Simão Bacamarte.", "Ficção", true, R.drawable.cover_book1, "Machado de Assis", 11.99, "Usado"));
-
         linearLayoutManagerSale = new LinearLayoutManager(HomePage.this, LinearLayoutManager.HORIZONTAL, false);
         linearLayoutManagerDonate = new LinearLayoutManager(HomePage.this, LinearLayoutManager.HORIZONTAL, false);
 
-        ArrayList<Book> booksForSale = new ArrayList<>();
-        ArrayList<Book> booksForDonate = new ArrayList<>();
-
-        for (Book book : dataResource) {
-            if (book.getPrice() > 0) {
-                booksForSale.add(book);
-            } else if (book.getPrice() == 0) {
-                booksForDonate.add(book);
-            }
-            BookDAO.getInstance().addBook(book);
-        }
-        //
-
-        saleAdapter = new MyAdapterRecyclerView(this, booksForSale, false);
-        donateAdapter = new MyAdapterRecyclerView(this, booksForDonate, false);
+        saleAdapter = new MyAdapterRecyclerView(this, BookSaleDAO.getInstance().getListBooks(), false);
+        donateAdapter = new MyAdapterRecyclerView(this, BookDAO.getInstance().getListBooks(), false);
 
         rv_sale.setLayoutManager(linearLayoutManagerSale);
         rv_sale.setAdapter(saleAdapter);
