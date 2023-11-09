@@ -141,7 +141,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Vendido por:"
+                        android:text="Doado por:"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp"/>
@@ -152,6 +152,7 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            android:id="@+id/photo_user_donate"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:src="@drawable/ic_foto_perfil"/>
@@ -163,6 +164,7 @@
                             android:layout_marginLeft="16dp">
 
                             <TextView
+                                android:id="@+id/name_user_donate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Rafaella Santos"

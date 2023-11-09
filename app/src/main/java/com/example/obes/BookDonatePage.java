@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.LoginSessionManager;
+import com.example.obes.dao.UserRegisteredBookDonateDAO;
 import com.example.obes.dao.Wishlist.ItemWishlistDAO;
 import com.example.obes.dao.Wishlist.WishlistDAO;
 import com.example.obes.dao.Wishlist.WishlistToItemDAO;
 import com.example.obes.dao.Wishlist.WishlistToUserDAO;
 import com.example.obes.model.User.User;
+import com.example.obes.model.User.UserCommon;
 import com.example.obes.model.Wishlist.ItemWishlist;
 import com.example.obes.model.Wishlist.Wishlist;
 
@@ -29,6 +31,8 @@ public class BookDonatePage extends AppCompatActivity {
     private ImageView button_back_arrow;
     private ImageView ivIcFavorite;
     private boolean isFavorite;
+    private TextView tvNameUserDonating;
+    private ImageView ivPhotoUserDonating;
     private LoginSessionManager loginSessionManager;
     private User userLogged;
     private Wishlist wishlistUserLogged;
@@ -51,6 +55,10 @@ public class BookDonatePage extends AppCompatActivity {
         coverImageView.setImageResource(bookCoverResourceId);
         authorTextView.setText(bookAuthor);
         descriptionTextView.setText(bookDescription);
+
+        UserCommon userDonating = UserRegisteredBookDonateDAO.getInstance().getUserByIdBook(bookId);
+        this.ivPhotoUserDonating.setImageResource(bookCoverResourceId);
+        this.tvNameUserDonating.setText(userDonating.getName());
 
         this.button_back_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +120,8 @@ public class BookDonatePage extends AppCompatActivity {
         this.loginSessionManager = LoginSessionManager.getInstance();
         this.userLogged = this.getUserLogged();
         this.isFavorite = false;
+        this.tvNameUserDonating = findViewById(R.id.name_user_donate);
+        this.ivPhotoUserDonating = findViewById(R.id.photo_user_donate);
 
         WishlistToUserDAO wishlistToUserDAO = WishlistToUserDAO.getInstance();
         wishlistUserLogged = wishlistToUserDAO.getWishByIdUser(userLogged.getId());
