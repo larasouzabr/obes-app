@@ -30,4 +30,8 @@ public abstract class User {
     public void donationRequest(Request request, ItemRequest item, int idUserMaking, int idUserReceiving) {
         DonationRequestManager.donationRequest(request, item, idUserMaking, idUserReceiving);
     }
+
+    public void cancelDonationRequest(Request request, int idUserMaking, int idUserReceiving) {
+        DonationRequestManager.cancelDonationRequest(request, idUserMaking, idUserReceiving);
+    }
 }

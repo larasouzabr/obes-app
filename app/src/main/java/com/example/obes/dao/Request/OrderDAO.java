@@ -38,6 +38,15 @@ public class OrderDAO {
         return requestsUser;
     }
 
+    public int getIdUserByIdRequest(int idRequest) {
+        for (RequestToUser ru : this.listRequestUser) {
+            if (ru.getIdRequest() == idRequest) {
+                return ru.getIdUser();
+            }
+        }
+        return 0;
+    }
+
     public boolean addRequestToUser(int idRequest, int idUser) {
         RequestToUser newRequestToUser = new RequestToUser(idRequest, idUser);
 
