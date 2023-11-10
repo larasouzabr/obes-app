@@ -148,6 +148,9 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                                 ItemRequest item = itemRequestDAO.getItemByIdBook(book.getId());
                                 item.setStatus("Cancelado");
                                 DonationRequestManager.updateStatusItemRequest(item);
+
+                                int request = RequestToItemDAO.getInstance().getIdRequestByIdItem(item.getId());
+                                OrderDAO.getInstance().deleteRequestToUser(request, userLogged.getId());
                             }
 
                             Intent intent = new Intent(context, PerfilUserCommon.class);
