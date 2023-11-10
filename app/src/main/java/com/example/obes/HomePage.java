@@ -47,8 +47,23 @@ public class HomePage extends AppCompatActivity {
         linearLayoutManagerSale = new LinearLayoutManager(HomePage.this, LinearLayoutManager.HORIZONTAL, false);
         linearLayoutManagerDonate = new LinearLayoutManager(HomePage.this, LinearLayoutManager.HORIZONTAL, false);
 
-        saleAdapter = new MyAdapterRecyclerView(this, BookSaleDAO.getInstance().getListBooks(), false);
-        donateAdapter = new MyAdapterRecyclerView(this, BookDAO.getInstance().getListBooks(), false);
+        ArrayList<Book> booksSale = new ArrayList<Book>();
+        ArrayList<Book> booksDonate = new ArrayList<Book>();
+
+        for (Book book : BookSaleDAO.getInstance().getListBooks()) {
+            if (book.getAvailable()) {
+                booksSale.add(book);
+            }
+        }
+
+        for (Book book : BookDAO.getInstance().getListBooks()) {
+            if (book.getAvailable()) {
+                booksDonate.add(book);
+            }
+        }
+
+        saleAdapter = new MyAdapterRecyclerView(this, booksSale, false);
+        donateAdapter = new MyAdapterRecyclerView(this, booksDonate, false);
 
         rv_sale.setLayoutManager(linearLayoutManagerSale);
         rv_sale.setAdapter(saleAdapter);
