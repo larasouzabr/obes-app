@@ -49,4 +49,8 @@ public class DonationRequestManager {
         OrderDAO orderDAO = OrderDAO.getInstance();
         orderDAO.deleteRequestToUser(request.getId(), idUserReceiving);
     }
+
+    public static void updateStatusRequest(Request newRequest) {
+        RequestDAO.getInstance().editRequest(newRequest);
+    }
 }

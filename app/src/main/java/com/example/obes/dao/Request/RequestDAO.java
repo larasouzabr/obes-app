@@ -37,6 +37,26 @@ public class RequestDAO {
         return request;
     }
 
+    public boolean editRequest(Request request) {
+        Request requestEdit = null;
+        boolean edited = false;
+
+        for (Request r : this.listRequests) {
+            if (r.getId() == request.getId()) {
+                requestEdit = r;
+                break;
+            }
+        }
+
+        if (requestEdit != null) {
+            requestEdit.setStatus(request.getStatus());
+
+            edited = true;
+        }
+
+        return edited;
+    }
+
     public boolean addRequest(Request request) {
         this.listRequests.add(request);
         return true;

@@ -34,4 +34,8 @@ public abstract class User {
     public void cancelDonationRequest(Request request, int idUserMaking, int idUserReceiving) {
         DonationRequestManager.cancelDonationRequest(request, idUserMaking, idUserReceiving);
     }
+
+    public void confirmDonationRequest(Request request) {
+        DonationRequestManager.updateStatusRequest(request);
+    }
 }
