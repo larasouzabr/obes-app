@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.obes.perfil.fragments.BooksDonate;
+import com.example.obes.perfil.fragments.BooksOrder;
 import com.example.obes.perfil.fragments.BooksRequest;
 import com.example.obes.perfil.fragments.BooksSale;
 
@@ -21,8 +22,10 @@ public class MyViewPageAdapterBooks extends FragmentStateAdapter {
             case 0:
                 return new BooksRequest();
             case 1:
-                return new BooksSale();
+                return new BooksOrder();
             case 2:
+                return new BooksSale();
+            case 3:
                 return new BooksDonate();
             default:
                 return new BooksRequest();
@@ -31,6 +34,6 @@ public class MyViewPageAdapterBooks extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }

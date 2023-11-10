@@ -4,336 +4,227 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".perfil.EditPerfilUserCommon"
+    android:orientation="vertical"
+    tools:context=".perfil.PerfilUserCommon"
     android:background="@color/purple_50">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/background_edit_perfil"
-                    android:layout_width="wrap_content"
-                    android:layout_height="189dp"
-                    android:contentDescription="background_edit_perfil"
-                    android:scaleType="center"
-                    android:src="@drawable/background_perfil"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+            <ImageView
+                android:id="@+id/background_perfil"
+                android:layout_width="wrap_content"
+                android:layout_height="189dp"
+                android:contentDescription="background_perfil"
+                android:scaleType="center"
+                android:src="@drawable/background_perfil"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/user_background_edit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_pencil"
-                    android:background="@drawable/border_rounded"
-                    android:padding="15dp"
-                    android:alpha="0.8"/>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/background_edit_perfil"
-                    app:layout_constraintBottom_toBottomOf="@+id/background_edit_perfil"
-                    android:layout_marginStart="20dp">
-
-                    <ImageView
-                        android:id="@+id/foto_edit_perfil"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="foto_edit_perfil"
-                        android:src="@drawable/ic_foto_perfil"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                    <ImageView
-                        android:id="@+id/user_foto_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_pencil_perfil"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dados Pessoais"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_marginBottom="10dp"/>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="0dp"
-                    android:layout_marginStart="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="NOME COMPLETO"
-                        android:textColor="@color/purple_700"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"/>
-                </androidx.cardview.widget.CardView>
-
-                <EditText
-                    android:id="@+id/user_name_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/edit_text_background"
-                    android:inputType="text"
-                    android:autofillHints="name"
-                    android:hint="Digite seu nome completo"
-
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:layout_marginBottom="30dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"/>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="0dp"
-                    android:layout_marginStart="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SOBRE"
-                        android:textColor="@color/purple_700"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"/>
-                </androidx.cardview.widget.CardView>
-
-                <EditText
-                    android:id="@+id/user_about_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/edit_text_background"
-                    android:inputType="textLongMessage"
-                    android:autofillHints="name"
-                    android:hint="Conte-nos mais sobre você"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:layout_marginBottom="30dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"/>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="0dp"
-                    android:layout_marginStart="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="CONTATO"
-                        android:textColor="@color/purple_700"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"/>
-                </androidx.cardview.widget.CardView>
-
-                <EditText
-                    android:id="@+id/user_contact_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/edit_text_background"
-                    android:inputType="text"
-                    android:autofillHints="phone"
-                    android:hint="(00) 00000-0000"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:layout_marginBottom="30dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"/>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="0dp"
-                    android:layout_marginStart="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="CPF"
-                        android:textColor="@color/purple_700"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"/>
-                </androidx.cardview.widget.CardView>
-
-                <EditText
-                    android:id="@+id/user_cpf_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/edit_text_background"
-                    android:inputType="text"
-                    android:autofillHints="name"
-                    android:hint="000.000.000-00"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:layout_marginBottom="30dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:layout_marginBottom="20dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dados da Conta"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_marginBottom="10dp"/>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="0dp"
-                    android:layout_marginStart="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="E-MAIL"
-                        android:textColor="@color/purple_700"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"/>
-                </androidx.cardview.widget.CardView>
-
-                <EditText
-                    android:id="@+id/user_email_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/edit_text_background"
-                    android:inputType="text"
-                    android:autofillHints="name"
-                    android:hint="user@mail.com"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:layout_marginBottom="30dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"/>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="0dp"
-                    android:layout_marginStart="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="PASSWORD"
-                        android:textColor="@color/purple_700"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"/>
-                </androidx.cardview.widget.CardView>
-
-                <EditText
-                    android:id="@+id/user_password_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/edit_text_background"
-                    android:inputType="text"
-                    android:autofillHints="name"
-                    android:hint="Digite sua nova senha"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:layout_marginBottom="30dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"/>
-
-            </LinearLayout>
-
-            <View
-                style="@style/LinhaHorizontal" />
-
-            <LinearLayout
+            <ImageView
+                android:id="@+id/button_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_pencil"
+                app:layout_constraintTop_toBottomOf="@+id/background_perfil"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/border_rounded"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"/>
 
-                <Button
-                    android:id="@+id/button_cancel"
+            <LinearLayout
+                android:id="@+id/inf_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/background_perfil"
+                android:layout_marginTop="-40dp"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp">
+
+                <ImageView
+                    android:id="@+id/foto_perfil"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:contentDescription="foto_perfil"
+                    android:src="@drawable/ic_foto_perfil"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rafaella Santos"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_weight="2"/>
+
+                    <LinearLayout
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_map"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/user_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:text="Quixadá - CE"
+                            android:textSize="14sp"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/black"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/purple_50"
-                    android:paddingStart="25dp"
-                    android:paddingEnd="25dp"
-                    android:text="Cancelar"
-                    android:textAllCaps="false"
-                    android:textColor="@color/purple"
-                    app:cornerRadius="@dimen/button_corner_radius" />
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/button_save"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/user_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="4.9"
+                        android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/user_about"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:backgroundTint="@color/purple_800"
-                    android:text="Salvar"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    app:cornerRadius="@dimen/button_corner_radius"
-                    android:paddingStart="25dp"
-                    android:paddingEnd="25dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginEnd="14dp"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Apaixonada por livros de romance e aventura!!! Escritora entusiasta."
+                    android:textSize="14sp"
+                    android:textColor="@color/black"/>
+
             </LinearLayout>
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/inf_user"
+                android:layout_marginTop="35dp">
+
+                <TextView
+                    android:id="@+id/reviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center"
+                    android:text="Avaliações"
+                    android:textSize="16sp"
+                    android:textColor="@color/purple_700"
+                    android:textStyle="bold"/>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/purple_25">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Recebidas" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Concedidas"/>
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/layout_tab_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"/>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_books_available"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/purple_25">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Solicitações" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pedidos" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Vendendo"/>
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Doando"/>
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/layout_tab_books_available"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar_menu_fixed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/menu_bottom"
+            layout="@layout/menu_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 </LinearLayout>

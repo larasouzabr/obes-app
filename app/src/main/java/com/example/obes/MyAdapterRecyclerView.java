@@ -26,22 +26,24 @@ import java.util.ArrayList;
 public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecyclerView.MyHolder> {
     private ArrayList<Book> data;
     private Context context;
-    private boolean isEditBook;
+    private String typeView;
 
-    public MyAdapterRecyclerView(Context context, ArrayList<Book> data, boolean isEditBook) {
+    public MyAdapterRecyclerView(Context context, ArrayList<Book> data, String typeView) {
         this.data = data;
         this.context = context;
-        this.isEditBook = isEditBook;
+        this.typeView = typeView;
     }
 
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        if (this.isEditBook) {
+        if (this.typeView.equals("edit")) {
             view = LayoutInflater.from(context).inflate(R.layout.book_item_edit, parent, false);
-        } else {
+        } else if (this.typeView.equals("common")){
             view = LayoutInflater.from(context).inflate(R.layout.book_item, parent, false);
+        } else {
+            view = LayoutInflater.from(context).inflate(R.layout.book_item_request, parent, false);
         }
         return new MyHolder(view);
     }
@@ -73,7 +75,7 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
             }
         });
 
-        if (this.isEditBook) {
+        if (this.typeView.equals("edit")) {
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
