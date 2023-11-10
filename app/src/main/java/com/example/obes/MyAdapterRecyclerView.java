@@ -78,10 +78,14 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
             public void onClick(View v) {
                 Intent intent;
 
-                if (book.getPrice() > 0) {
-                    intent = new Intent(context, BookSalePage.class);
+                if (typeView.equals("request")) {
+                    intent = new Intent(context, BookRequestPage.class);
                 } else {
-                    intent = new Intent(context, BookDonatePage.class);
+                    if (book.getPrice() > 0) {
+                        intent = new Intent(context, BookSalePage.class);
+                    } else {
+                        intent = new Intent(context, BookDonatePage.class);
+                    }
                 }
 
                 intent.putExtra("book_id", book.getId());

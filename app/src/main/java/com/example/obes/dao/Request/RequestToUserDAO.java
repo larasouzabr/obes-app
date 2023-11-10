@@ -1,8 +1,12 @@
+
 package com.example.obes.dao.Request;
 
+import com.example.obes.dao.UserCommonDAO;
+import com.example.obes.dao.UserInstitutionalDAO;
 import com.example.obes.dao.Wishlist.WishlistDAO;
 import com.example.obes.dao.Wishlist.WishlistToUserDAO;
 import com.example.obes.model.Request.Request;
+import com.example.obes.model.User.User;
 import com.example.obes.model.Wishlist.Wishlist;
 
 import java.util.ArrayList;
@@ -38,6 +42,22 @@ public class RequestToUserDAO {
         }
 
         return requestsUser;
+    }
+
+    public User getUserByIdRequest(int idRequest) {
+        User user = null;
+
+        for (RequestToUser ru : this.listRequestUser) {
+            if (ru.getIdRequest() == idRequest) {
+                user = UserCommonDAO.getInstance().getUserById(ru.getIdUser());
+                if (user == null) {
+                    user = UserInstitutionalDAO.getInstance().getUserById(ru.getIdUser());
+                }
+                break;
+            }
+        }
+
+        return user;
     }
 
     public boolean addRequestToUser(int idRequest, int idUser) {
