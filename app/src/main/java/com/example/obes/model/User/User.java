@@ -1,5 +1,9 @@
 package com.example.obes.model.User;
 
+import com.example.obes.dao.Request.DonationRequestManager;
+import com.example.obes.model.Request.ItemRequest;
+import com.example.obes.model.Request.Request;
+
 public abstract class User {
     public abstract int getId();
 
@@ -22,4 +26,8 @@ public abstract class User {
     public abstract String getAbout();
 
     public abstract void setAbout(String about);
+
+    public void donationRequest(Request request, ItemRequest item, int idUserMaking, int idUserReceiving) {
+        DonationRequestManager.donationRequest(request, item, idUserMaking, idUserReceiving);
+    }
 }

@@ -96,7 +96,7 @@
                         </LinearLayout>
 
                         <Button
-                            android:id="@+id/add_cart"
+                            android:id="@+id/button_request_donation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/purple_800"
