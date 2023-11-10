@@ -27,6 +27,7 @@ import com.example.obes.dao.Request.RequestToItemDAO;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.Request.ItemRequest;
 import com.example.obes.model.Request.Request;
+import com.example.obes.model.User.User;
 import com.example.obes.model.User.UserCommon;
 import com.example.obes.perfil.PerfilUserCommon;
 
@@ -36,6 +37,7 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
     private ArrayList<Book> data;
     private Context context;
     private String typeView;
+    private User userLogged;
 
     public MyAdapterRecyclerView(Context context, ArrayList<Book> data, String typeView) {
         this.data = data;
@@ -63,6 +65,13 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         Book book = data.get(position);
         holder.ivCover.setImageResource(book.getCoverResourceId());
+
+        LoginSessionManager loginSessionManager = LoginSessionManager.getInstance();
+
+        userLogged = loginSessionManager.getCurrentUserCommon();
+        if (userLogged == null) {
+            userLogged = loginSessionManager.getCurrentUserInstitutional();
+        }
 
         holder.ivCover.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +110,50 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
             }
         }
 
+        if (this.typeView.equals("request")) {
+            holder.confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Dialog modal = new Dialog(context);
+
+                    modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    modal.setCancelable(true);
+                    modal.setContentView(R.layout.modal_delete_book);
+
+                    Button buttonCancel = modal.findViewById(R.id.button_cancel);
+                    Button buttonDelete = modal.findViewById(R.id.button_delete);
+                    TextView tvDescription = modal.findViewById(R.id.description);
+
+                    tvDescription.setText("Tem certeza que deseja confirmar o pedido deste item?");
+                    buttonDelete.setText("Confirmar");
+
+                    buttonCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            modal.dismiss();
+                        }
+                    });
+
+                    buttonDelete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ItemRequest item = ItemRequestDAO.getInstance().getItemByIdBook(book.getId());
+
+                            userLogged.confirmDonationRequest(item);
+
+                            int itemPosition = data.indexOf(book);
+                            data.remove(itemPosition);
+                            notifyItemRemoved(itemPosition);
+
+                            modal.dismiss();
+                        }
+                    });
+
+                    modal.show();
+                }
+            });
+        }
+
         if (!this.typeView.equals("common")) {
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -127,12 +180,12 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                     buttonDelete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            LoginSessionManager loginSessionManager = LoginSessionManager.getInstance();
 
-                            UserCommon userLogged = loginSessionManager.getCurrentUserCommon();
 
                             if (typeView.equals("edit")) {
-                                userLogged.deleteBook(book);
+                                if (loginSessionManager.getCurrentUserCommon() != null) {
+                                    loginSessionManager.getCurrentUserCommon().deleteBook(book);
+                                }
                             } else if (typeView.equals("myRequest")){
                                 ItemRequest item = ItemRequestDAO.getInstance().getItemByIdBook(book.getId());
                                 int idRequest = RequestToItemDAO.getInstance().getIdRequestByIdItem(item.getId());
@@ -153,8 +206,11 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                                 OrderDAO.getInstance().deleteRequestToUser(request, userLogged.getId());
                             }
 
-                            Intent intent = new Intent(context, PerfilUserCommon.class);
-                            context.startActivity(intent);
+                            int itemPosition = data.indexOf(book);
+                            data.remove(itemPosition);
+                            notifyItemRemoved(itemPosition);
+
+                            modal.dismiss();
                         }
                     });
 
@@ -252,6 +308,7 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
         ImageView edit;
         ImageView delete;
         TextView status;
+        ImageView confirm;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -259,6 +316,7 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
             edit = itemView.findViewById(R.id.edit);
             delete = itemView.findViewById(R.id.delete);
             status = itemView.findViewById(R.id.status);
+            confirm = itemView.findViewById(R.id.confirm);
         }
     }
 }

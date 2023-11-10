@@ -1,8 +1,11 @@
 package com.example.obes.dao.Request;
 
 import com.example.obes.dao.BookDAO;
+import com.example.obes.dao.UserCommonDAO;
 import com.example.obes.model.Request.ItemRequest;
 import com.example.obes.model.Request.Request;
+import com.example.obes.model.User.User;
+import com.example.obes.model.User.UserCommon;
 
 import java.util.ArrayList;
 
@@ -51,6 +54,15 @@ public class DonationRequestManager {
 
         OrderDAO orderDAO = OrderDAO.getInstance();
         orderDAO.deleteRequestToUser(request.getId(), idUserReceiving);
+    }
+
+    public static void confirmDonationRequest(ItemRequest item, int idUserReceiving) {
+        item.setStatus("Confirmado");
+        updateStatusItemRequest(item);
+
+        int idRequest = RequestToItemDAO.getInstance().getIdRequestByIdItem(item.getId());
+
+        OrderDAO.getInstance().deleteRequestToUser(idRequest, idUserReceiving);
     }
 
     public static void updateStatusRequest(Request newRequest) {
