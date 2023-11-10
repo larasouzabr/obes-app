@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.LoginSessionManager;
+import com.example.obes.dao.Request.DonationRequestManager;
 import com.example.obes.dao.Request.ItemRequestDAO;
 import com.example.obes.dao.Request.OrderDAO;
 import com.example.obes.dao.Request.RequestDAO;
@@ -140,7 +141,13 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
 
                                 userLogged.cancelDonationRequest(request, userLogged.getId(), idUserReceiving);
                             } else if (typeView.equals("request")) {
-                                System.out.println("cancela a solicitação de pedido");
+                                book.setAvailable(true);
+                                BookDAO.getInstance().editBook(book);
+
+                                ItemRequestDAO itemRequestDAO = ItemRequestDAO.getInstance();
+                                ItemRequest item = itemRequestDAO.getItemByIdBook(book.getId());
+                                item.setStatus("Cancelado");
+                                DonationRequestManager.updateStatusItemRequest(item);
                             }
 
                             Intent intent = new Intent(context, PerfilUserCommon.class);
@@ -224,6 +231,10 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                         modal.show();
                     }
                 });
+            }
+
+            if (typeView.equals("request")) {
+
             }
         }
     }

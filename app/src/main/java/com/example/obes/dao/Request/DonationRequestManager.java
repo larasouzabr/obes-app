@@ -56,4 +56,8 @@ public class DonationRequestManager {
     public static void updateStatusRequest(Request newRequest) {
         RequestDAO.getInstance().editRequest(newRequest);
     }
+
+    public static void updateStatusItemRequest(ItemRequest newItem) {
+        ItemRequestDAO.getInstance().editItemRequest(newItem);
+    }
 }
