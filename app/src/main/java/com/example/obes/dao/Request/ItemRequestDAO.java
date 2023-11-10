@@ -49,6 +49,26 @@ public class ItemRequestDAO {
         return removed;
     }
 
+    public boolean editItemRequest(ItemRequest item) {
+        ItemRequest itemEdited = null;
+        boolean edited = false;
+
+        for (ItemRequest i : this.listItemRequests) {
+            if (i.getId() == item.getId()) {
+                itemEdited = i;
+                break;
+            }
+        }
+
+        if (itemEdited != null) {
+            itemEdited.setStatus(item.getStatus());
+
+            edited = true;
+        }
+
+        return edited;
+    }
+
     public ItemRequest getItemById(int idItem) {
         ItemRequest itemRequest = null;
 

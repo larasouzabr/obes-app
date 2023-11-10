@@ -34,7 +34,6 @@ public class RequestToUserDAO {
         for (RequestToUser requestToUser : this.listRequestUser) {
             if (requestToUser.getIdUser() == idUser) {
                 requestsUser.add(requestDAO.getRequestById(requestToUser.getIdRequest()));
-                break;
             }
         }
 

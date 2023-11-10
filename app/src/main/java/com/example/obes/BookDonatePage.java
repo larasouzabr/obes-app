@@ -128,7 +128,7 @@ public class BookDonatePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Request newRequest = new Request(countIdRequest(), getCurrentDate(), "Pendente");
-                ItemRequest newItem = new ItemRequest(countIdItemRequest(), 1, BookDAO.getInstance().getBookById(bookId));
+                ItemRequest newItem = new ItemRequest(countIdItemRequest(), 1, BookDAO.getInstance().getBookById(bookId), "Pendente");
 
                 userLogged.donationRequest(newRequest, newItem, userLogged.getId(), userDonating.getId());
 

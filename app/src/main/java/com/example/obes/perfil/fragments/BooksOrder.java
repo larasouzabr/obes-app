@@ -44,7 +44,7 @@ public class BooksOrder extends Fragment {
             }
         }
 
-        this.orderAdapter = new MyAdapterRecyclerView(getContext(), booksRequest, "request");
+        this.orderAdapter = new MyAdapterRecyclerView(getContext(), booksRequest, "myRequest");
 
         this.rvBookOrder.setLayoutManager(this.linearLayoutManagerOrder);
         this.rvBookOrder.setAdapter(this.orderAdapter);

@@ -7,12 +7,14 @@ public class ItemRequest {
     private int amount;
     private double price;
     private Book item;
+    private String status;
 
-    public ItemRequest(int id, int amount, Book item) {
+    public ItemRequest(int id, int amount, Book item, String status) {
         this.id = id;
         this.amount = amount;
         this.price = item.getPrice();
         this.item = item;
+        this.status = status;
     }
 
     public double calcSubTotal() {
@@ -21,6 +23,14 @@ public class ItemRequest {
 
     public int getId() {
         return id;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getAmount() {

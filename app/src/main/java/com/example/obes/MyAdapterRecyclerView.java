@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.obes.dao.BookDAO;
@@ -49,8 +50,10 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
             view = LayoutInflater.from(context).inflate(R.layout.book_item_edit, parent, false);
         } else if (this.typeView.equals("common")){
             view = LayoutInflater.from(context).inflate(R.layout.book_item, parent, false);
-        } else {
+        } else if (this.typeView.equals("request")){
             view = LayoutInflater.from(context).inflate(R.layout.book_item_request, parent, false);
+        } else {
+            view = LayoutInflater.from(context).inflate(R.layout.book_item_my_request, parent, false);
         }
         return new MyHolder(view);
     }
@@ -81,6 +84,21 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                 context.startActivity(intent);
             }
         });
+
+        if (this.typeView.equals("myRequest")) {
+            ItemRequest item = ItemRequestDAO.getInstance().getItemByIdBook(book.getId());
+            int color;
+
+            if (item.getStatus().equals("Confirmado")) {
+                holder.status.setText("Confirmado");
+                color = ContextCompat.getColor(context, R.color.teal_origin);
+                holder.status.setBackgroundColor(color);
+            } else if (item.getStatus().equals("Cancelado")){
+                holder.status.setText("Cancelado");
+                color = ContextCompat.getColor(context, R.color.red);
+                holder.status.setBackgroundColor(color);
+            }
+        }
 
         if (!this.typeView.equals("common")) {
             holder.delete.setOnClickListener(new View.OnClickListener() {
@@ -114,13 +132,15 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
 
                             if (typeView.equals("edit")) {
                                 userLogged.deleteBook(book);
-                            } else {
+                            } else if (typeView.equals("myRequest")){
                                 ItemRequest item = ItemRequestDAO.getInstance().getItemByIdBook(book.getId());
                                 int idRequest = RequestToItemDAO.getInstance().getIdRequestByIdItem(item.getId());
                                 Request request = RequestDAO.getInstance().getRequestById(idRequest);
                                 int idUserReceiving = OrderDAO.getInstance().getIdUserByIdRequest(idRequest);
 
                                 userLogged.cancelDonationRequest(request, userLogged.getId(), idUserReceiving);
+                            } else if (typeView.equals("request")) {
+                                System.out.println("cancela a solicitação de pedido");
                             }
 
                             Intent intent = new Intent(context, PerfilUserCommon.class);
@@ -132,77 +152,79 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                 }
             });
 
-            holder.edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final Dialog modal = new Dialog(context);
+            if (typeView.equals("edit")) {
+                holder.edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Dialog modal = new Dialog(context);
 
-                    modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    modal.setCancelable(true);
-                    if (book.getPrice() == 0) {
-                        modal.setContentView(R.layout.modal_edit_book_donate);
-                    } else {
-                        modal.setContentView(R.layout.modal_edit_book_sale);
+                        modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        modal.setCancelable(true);
+                        if (book.getPrice() == 0) {
+                            modal.setContentView(R.layout.modal_edit_book_donate);
+                        } else {
+                            modal.setContentView(R.layout.modal_edit_book_sale);
 
-                        EditText tvPrice = modal.findViewById(R.id.book_price);
-                        tvPrice.setText(Double.toString(book.getPrice()));
-                    }
+                            EditText tvPrice = modal.findViewById(R.id.book_price);
+                            tvPrice.setText(Double.toString(book.getPrice()));
+                        }
 
-                    EditText tvTitle = modal.findViewById(R.id.book_title);
-                    EditText tvDescription = modal.findViewById(R.id.book_description);
-                    EditText tvCategory = modal.findViewById(R.id.book_category);
-                    EditText tvAuthor = modal.findViewById(R.id.book_author);
-                    EditText tvCondition = modal.findViewById(R.id.book_condition);
+                        EditText tvTitle = modal.findViewById(R.id.book_title);
+                        EditText tvDescription = modal.findViewById(R.id.book_description);
+                        EditText tvCategory = modal.findViewById(R.id.book_category);
+                        EditText tvAuthor = modal.findViewById(R.id.book_author);
+                        EditText tvCondition = modal.findViewById(R.id.book_condition);
 
-                    tvTitle.setText(book.getTitle());
-                    tvDescription.setText(book.getDescription());
-                    tvCategory.setText(book.getCategory());
-                    tvAuthor.setText((book.getAuthor()));
-                    tvCondition.setText(book.getCondition());
+                        tvTitle.setText(book.getTitle());
+                        tvDescription.setText(book.getDescription());
+                        tvCategory.setText(book.getCategory());
+                        tvAuthor.setText((book.getAuthor()));
+                        tvCondition.setText(book.getCondition());
 
-                    Button buttonSave = modal.findViewById(R.id.button_save);
-                    Button buttonCancel = modal.findViewById(R.id.button_cancel);
+                        Button buttonSave = modal.findViewById(R.id.button_save);
+                        Button buttonCancel = modal.findViewById(R.id.button_cancel);
 
-                    buttonSave.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            String newTitle = tvTitle.getText().toString();
-                            String newDescription = tvDescription.getText().toString();
-                            String newCategory = tvCategory.getText().toString();
-                            String newAuthor = tvAuthor.getText().toString();
-                            String newCondition = tvCondition.getText().toString();
+                        buttonSave.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String newTitle = tvTitle.getText().toString();
+                                String newDescription = tvDescription.getText().toString();
+                                String newCategory = tvCategory.getText().toString();
+                                String newAuthor = tvAuthor.getText().toString();
+                                String newCondition = tvCondition.getText().toString();
 
-                            Book newBook;
+                                Book newBook;
 
-                            if (book.getPrice() == 0) {
-                                newBook = new Book(book.getId(), newTitle, newDescription, newCategory, book.getAvailable(), book.getCoverResourceId(), newAuthor, book.getPrice(), newCondition);
+                                if (book.getPrice() == 0) {
+                                    newBook = new Book(book.getId(), newTitle, newDescription, newCategory, book.getAvailable(), book.getCoverResourceId(), newAuthor, book.getPrice(), newCondition);
 
-                                BookDAO bookDAO = BookDAO.getInstance();
-                                bookDAO.editBook(newBook);
-                            } else {
-                                EditText tvPrice = modal.findViewById(R.id.book_price);
-                                double newPrice = Double.parseDouble(String.valueOf(tvPrice.getText()));
+                                    BookDAO bookDAO = BookDAO.getInstance();
+                                    bookDAO.editBook(newBook);
+                                } else {
+                                    EditText tvPrice = modal.findViewById(R.id.book_price);
+                                    double newPrice = Double.parseDouble(String.valueOf(tvPrice.getText()));
 
-                                newBook = new Book(book.getId(), newTitle, newDescription, newCategory, book.getAvailable(), book.getCoverResourceId(), newAuthor, newPrice, newCondition);
+                                    newBook = new Book(book.getId(), newTitle, newDescription, newCategory, book.getAvailable(), book.getCoverResourceId(), newAuthor, newPrice, newCondition);
 
-                                BookSaleDAO bookSaleDAO = BookSaleDAO.getInstance();
-                                bookSaleDAO.editBook(newBook);
+                                    BookSaleDAO bookSaleDAO = BookSaleDAO.getInstance();
+                                    bookSaleDAO.editBook(newBook);
+                                }
+
+                                modal.dismiss();
                             }
+                        });
 
-                            modal.dismiss();
-                        }
-                    });
+                        buttonCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                modal.dismiss();
+                            }
+                        });
 
-                    buttonCancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            modal.dismiss();
-                        }
-                    });
-
-                    modal.show();
-                }
-            });
+                        modal.show();
+                    }
+                });
+            }
         }
     }
 
@@ -215,12 +237,14 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
         ImageView ivCover;
         ImageView edit;
         ImageView delete;
+        TextView status;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             ivCover = itemView.findViewById(R.id.ivCover);
             edit = itemView.findViewById(R.id.edit);
             delete = itemView.findViewById(R.id.delete);
+            status = itemView.findViewById(R.id.status);
         }
     }
 }
