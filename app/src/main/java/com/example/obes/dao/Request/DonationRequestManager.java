@@ -41,6 +41,9 @@ public class DonationRequestManager {
         for (ItemRequest item : itemsRequest) {
             itemRequestDAO.deleteItemRequest(item);
             requestToItemDAO.deleteRequestItem(request.getId(), item.getId());
+
+            item.getItem().setAvailable(true);
+            BookDAO.getInstance().editBook(item.getItem());
         }
 
         RequestToUserDAO requestToUserDAO = RequestToUserDAO.getInstance();

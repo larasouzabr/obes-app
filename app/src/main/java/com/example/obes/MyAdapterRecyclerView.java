@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.LoginSessionManager;
+import com.example.obes.dao.Request.ItemRequestDAO;
+import com.example.obes.dao.Request.OrderDAO;
+import com.example.obes.dao.Request.RequestDAO;
+import com.example.obes.dao.Request.RequestToItemDAO;
 import com.example.obes.model.Book.Book;
+import com.example.obes.model.Request.ItemRequest;
+import com.example.obes.model.Request.Request;
 import com.example.obes.model.User.UserCommon;
 import com.example.obes.perfil.PerfilUserCommon;
 
@@ -75,7 +82,7 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
             }
         });
 
-        if (this.typeView.equals("edit")) {
+        if (!this.typeView.equals("common")) {
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -87,6 +94,9 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
 
                     Button buttonCancel = modal.findViewById(R.id.button_cancel);
                     Button buttonDelete = modal.findViewById(R.id.button_delete);
+                    TextView tvDescription = modal.findViewById(R.id.description);
+
+                    tvDescription.setText("Tem certeza que deseja cancelar o pedido deste item?");
 
                     buttonCancel.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -102,7 +112,16 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
 
                             UserCommon userLogged = loginSessionManager.getCurrentUserCommon();
 
-                            userLogged.deleteBook(book);
+                            if (typeView.equals("edit")) {
+                                userLogged.deleteBook(book);
+                            } else {
+                                ItemRequest item = ItemRequestDAO.getInstance().getItemByIdBook(book.getId());
+                                int idRequest = RequestToItemDAO.getInstance().getIdRequestByIdItem(item.getId());
+                                Request request = RequestDAO.getInstance().getRequestById(idRequest);
+                                int idUserReceiving = OrderDAO.getInstance().getIdUserByIdRequest(idRequest);
+
+                                userLogged.cancelDonationRequest(request, userLogged.getId(), idUserReceiving);
+                            }
 
                             Intent intent = new Intent(context, PerfilUserCommon.class);
                             context.startActivity(intent);
