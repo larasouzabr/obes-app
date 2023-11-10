@@ -55,6 +55,9 @@ public class BookDonatePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_donate_page);
+        BottomMenuHandler bottomMenuHandler = new BottomMenuHandler(this);
+        bottomMenuHandler.setupBottomMenu();
+
         this.startComponents();
 
         Intent intent = getIntent();
