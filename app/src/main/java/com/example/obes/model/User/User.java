@@ -1,8 +1,11 @@
 package com.example.obes.model.User;
 
 import com.example.obes.dao.Request.DonationRequestManager;
+import com.example.obes.dao.Request.SaleRequestManager;
 import com.example.obes.model.Request.ItemRequest;
 import com.example.obes.model.Request.Request;
+
+import java.util.ArrayList;
 
 public abstract class User {
     public abstract int getId();
@@ -37,5 +40,13 @@ public abstract class User {
 
     public void confirmDonationRequest(ItemRequest item) {
         DonationRequestManager.confirmDonationRequest(item, this.getId());
+    }
+
+    public void saleRequest(Request request, ArrayList<ItemRequest> items) {
+        SaleRequestManager.saleRequest(request, items, this.getId());
+    }
+
+    public void cancelSaleItemRequest(ItemRequest item) {
+        SaleRequestManager.cancelSaleItemRequest(item);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.obes.dao.Request;
 
 import com.example.obes.dao.BookDAO;
-import com.example.obes.dao.UserRegisteredBookDonateDAO;
+import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.UserRegisteredBookSaleDAO;
 import com.example.obes.model.Request.ItemRequest;
 import com.example.obes.model.Request.Request;
@@ -30,7 +30,34 @@ public class SaleRequestManager {
         }
     }
 
-    public static void cancelSaleItemRequest(ItemRequest item, int idUserMaking) {
+    public static void cancelSaleItemRequest(ItemRequest item) {
+        int idRequest = RequestToItemDAO.getInstance().getIdRequestByIdItem(item.getId());
 
+        RequestToItemDAO.getInstance().deleteRequestItem(idRequest, item.getId());
+
+        int idUserReceiving = UserRegisteredBookSaleDAO.getInstance().getIdUserByIdBook(item.getItem().getId());
+        OrderItemDAO.getInstance().deleteItemToUser(item.getId(), idUserReceiving);
+
+        item.getItem().setAvailable(true);
+        BookDAO.getInstance().editBook(item.getItem());
+    }
+
+    public static void confirmSaleItemOrder(ItemRequest item) {
+        int idUserReceiving = UserRegisteredBookSaleDAO.getInstance().getIdUserByIdBook(item.getItem().getId());
+        OrderItemDAO.getInstance().deleteItemToUser(item.getId(), idUserReceiving);
+
+        item.setStatus("Confirmado");
+        ItemRequestDAO.getInstance().editItemRequest(item);
+    }
+
+    public static void cancelSaleItemOrder(ItemRequest item) {
+        int idUserReceiving = UserRegisteredBookSaleDAO.getInstance().getIdUserByIdBook(item.getItem().getId());
+        OrderItemDAO.getInstance().deleteItemToUser(item.getId(), idUserReceiving);
+
+        item.setStatus("Cancelado");
+        ItemRequestDAO.getInstance().editItemRequest(item);
+
+        item.getItem().setAvailable(true);
+        BookSaleDAO.getInstance().editBook(item.getItem());
     }
 }
