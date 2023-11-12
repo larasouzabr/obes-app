@@ -31,6 +31,7 @@ public class ReviewPage extends AppCompatActivity {
     private RatingBar rbRating;
     private Button button_cancel;
     private Button button_save;
+    private TextView tvUserReceiving;
     private User userReceiving;
     private User userLogged;
 
@@ -54,6 +55,8 @@ public class ReviewPage extends AppCompatActivity {
             this.etComment.setText(review.getComment());
             this.rbRating.setRating((float) review.getRate());
         }
+
+        this.tvUserReceiving.setText(userReceiving.getName());
 
         this.button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +134,7 @@ public class ReviewPage extends AppCompatActivity {
         this.rbRating = findViewById(R.id.rating);
         this.button_cancel = findViewById(R.id.button_cancel);
         this.button_save = findViewById(R.id.button_save);
+        this.tvUserReceiving = findViewById(R.id.user_receiver);
     }
 
     public User getUserReceiving(int idUserReceiving) {
