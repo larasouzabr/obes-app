@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Obes"
         tools:targetApi="31">
         <activity
+            android:name=".ReviewPage"
+            android:exported="false" />
+        <activity
             android:name=".BookRequestPage"
             android:exported="false" />
         <activity
