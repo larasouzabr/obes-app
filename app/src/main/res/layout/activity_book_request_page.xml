@@ -156,6 +156,7 @@
                             android:id="@+id/photo_user_donate"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:layout_gravity="center"
                             android:src="@drawable/ic_foto_perfil"/>
 
                         <LinearLayout
@@ -173,10 +174,14 @@
                                 android:textStyle="bold"
                                 android:textColor="@color/purple_900"/>
 
-                            <ImageView
+                            <RatingBar
+                                android:id="@+id/rating"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_rate"/>
+                                android:layout_gravity="center"
+                                android:numStars="5"
+                                android:stepSize=".5"
+                                android:isIndicator="true"/>
 
                         </LinearLayout>
 

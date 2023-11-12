@@ -6,13 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.obes.dao.Request.ItemRequestDAO;
 import com.example.obes.dao.Request.RequestToItemDAO;
 import com.example.obes.dao.Request.RequestToUserDAO;
+import com.example.obes.dao.Review.UserHasReviewDAO;
 import com.example.obes.model.Request.ItemRequest;
+import com.example.obes.model.Review.Review;
 import com.example.obes.model.User.User;
+
+import java.util.ArrayList;
 
 public class BookRequestPage extends AppCompatActivity {
     private TextView tvTitlePage;
@@ -21,6 +26,7 @@ public class BookRequestPage extends AppCompatActivity {
     private TextView authorTextView;
     private TextView priceTextView;
     private TextView descriptionTextView;
+    private RatingBar rbRating;
     private ImageView button_back_arrow;
     private TextView tvNameUserRequesting;
     private ImageView ivPhotoUserRequesting;
@@ -55,6 +61,7 @@ public class BookRequestPage extends AppCompatActivity {
 
         this.ivPhotoUserRequesting.setImageResource(R.drawable.ic_foto_perfil);
         this.tvNameUserRequesting.setText(userRequesting.getName());
+        this.rbRating.setRating(this.getRatingUserRequest(userRequesting));
 
         this.button_back_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,5 +81,24 @@ public class BookRequestPage extends AppCompatActivity {
         this.button_back_arrow = findViewById(R.id.back_arrow);
         this.tvNameUserRequesting = findViewById(R.id.name_user_donate);
         this.ivPhotoUserRequesting = findViewById(R.id.photo_user_donate);
+        this.rbRating = findViewById(R.id.rating);
+    }
+
+    public float getRatingUserRequest(User userRequest) {
+        float rating = 0;
+
+        ArrayList<Review> reviewsUser = UserHasReviewDAO.getInstance().getReviewsReceivedByIdUser(userRequest.getId());
+
+        for (Review review : reviewsUser) {
+            rating += review.getRate();
+        }
+
+        int amountReviews = reviewsUser.size();
+
+        if (amountReviews > 0) {
+            rating /= amountReviews;
+        }
+
+        return rating;
     }
 }
