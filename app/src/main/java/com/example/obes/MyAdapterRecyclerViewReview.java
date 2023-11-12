@@ -1,13 +1,18 @@
 package com.example.obes;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,11 +56,12 @@ public class MyAdapterRecyclerViewReview extends RecyclerView.Adapter<MyAdapterR
 
         holder.rbRating.setRating((float) review.getRate());
 
+        User finalUserReview = userReview;
         holder.llItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isReceived) {
-                    System.out.println("Vai para a página de visualização da Review");
+                    showModalReview(finalUserReview, review);
                 } else {
                     Intent intent = new Intent(context, ReviewPage.class);
 
@@ -85,5 +91,32 @@ public class MyAdapterRecyclerViewReview extends RecyclerView.Adapter<MyAdapterR
             ivPhoto = itemView.findViewById(R.id.photo_user_sender);
             rbRating = itemView.findViewById(R.id.rating);
         }
+    }
+
+    public void showModalReview(User userSender, Review reviewSender) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.modal_review, null);
+
+        builder.setView(dialogView);
+        final AlertDialog dialog = builder.create();
+
+        TextView tvNameUserSender = dialogView.findViewById(R.id.name_user_sender);
+        TextView tvCommentUserSender = dialogView.findViewById(R.id.comment_user_sender);
+        RatingBar rbRating = dialogView.findViewById(R.id.rating);
+        Button buttonCancel = dialogView.findViewById(R.id.button_cancel);
+
+        tvNameUserSender.setText(userSender.getName());
+        tvCommentUserSender.setText(reviewSender.getComment());
+        rbRating.setRating((float) reviewSender.getRate());
+
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }
