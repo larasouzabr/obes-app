@@ -49,6 +49,16 @@ public class UserHasReviewDAO {
         return 0;
     }
 
+    public int getIdUserSenderByIdReview(int idReview) {
+        for (UserHasReview userHasReview : this.getListUserHasReview()) {
+            if (userHasReview.getReviewId() == idReview) {
+                return userHasReview.getUserSenderId();
+            }
+        }
+
+        return 0;
+    }
+
     class UserHasReview {
         private int userSenderId;
         private int userReceiverId;
