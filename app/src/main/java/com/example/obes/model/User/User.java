@@ -49,4 +49,12 @@ public abstract class User {
     public void cancelSaleItemRequest(ItemRequest item) {
         SaleRequestManager.cancelSaleItemRequest(item);
     }
+
+    public void confirmSaleItemOrder(ItemRequest item) {
+        SaleRequestManager.confirmSaleItemOrder(item);
+    }
+
+    public void cancelSaleItemOrder(ItemRequest item) {
+        SaleRequestManager.cancelSaleItemOrder(item);
+    }
 }

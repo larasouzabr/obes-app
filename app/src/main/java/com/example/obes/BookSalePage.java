@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.obes.dao.BookDAO;
+import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.CartDAO;
 import com.example.obes.dao.CartToItemDAO;
 import com.example.obes.dao.CartToUserDAO;
@@ -88,7 +89,7 @@ public class BookSalePage extends AppCompatActivity {
                     cartUserLogged = addCartToUser();
                 }
 
-                ItemCart newItemCart = new ItemCart(countIdItemCart(), 1, BookDAO.getInstance().getBookById(bookId));
+                ItemCart newItemCart = new ItemCart(countIdItemCart(), 1, BookSaleDAO.getInstance().getBookById(bookId));
 
                 ItemCartDAO.getInstance().addItemCart(newItemCart);
 
@@ -115,7 +116,7 @@ public class BookSalePage extends AppCompatActivity {
                 }
 
                 if (!isFavorite) {
-                    ItemWishlist newItemWishlist = new ItemWishlist(countIdItemWish(), BookDAO.getInstance().getBookById(bookId));
+                    ItemWishlist newItemWishlist = new ItemWishlist(countIdItemWish(), BookSaleDAO.getInstance().getBookById(bookId));
 
                     wishlistUserLogged.addItem(newItemWishlist);
 
