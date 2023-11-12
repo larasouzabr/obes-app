@@ -1,5 +1,7 @@
 package com.example.obes.dao.Review;
 
+import com.example.obes.model.Review.Review;
+
 import java.util.ArrayList;
 
 public class UserHasReviewDAO {
@@ -57,6 +59,28 @@ public class UserHasReviewDAO {
         }
 
         return 0;
+    }
+
+    public int getIdUserReceiverByIdReview(int idReview) {
+        for (UserHasReview userHasReview : this.getListUserHasReview()) {
+            if (userHasReview.getReviewId() == idReview) {
+                return userHasReview.getUserReceiverId();
+            }
+        }
+
+        return 0;
+    }
+
+    public ArrayList<Review> getReviewsSenderByIdUser(int idUser) {
+        ArrayList<Review> reviewsSenderUser = new ArrayList<Review>();
+
+        for (UserHasReview userHasReview : this.getListUserHasReview()) {
+            if (userHasReview.getUserSenderId() == idUser) {
+                reviewsSenderUser.add(ReviewDAO.getInstance().getReviewById(userHasReview.getReviewId()));
+            }
+        }
+
+        return reviewsSenderUser;
     }
 
     class UserHasReview {

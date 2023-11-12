@@ -58,6 +58,11 @@ public class MyAdapterRecyclerViewReview extends RecyclerView.Adapter<MyAdapterR
                     System.out.println("Vai para a página de visualização da Review");
                 } else {
                     Intent intent = new Intent(context, ReviewPage.class);
+
+                    int idUserReceiver = UserHasReviewDAO.getInstance().getIdUserReceiverByIdReview(review.getId());
+
+                    intent.putExtra("user_receiver_id", idUserReceiver);
+
                     context.startActivity(intent);
                 }
             }
