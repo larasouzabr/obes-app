@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.obes.BottomMenuHandler;
 import com.example.obes.R;
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.model.User.UserInstitutional;
@@ -19,8 +20,11 @@ public class PerfilUserInstitutional extends AppCompatActivity {
     private TextView tvUserAbout;
     private ImageView ivButtonEdit;
     private ViewPager2 vpTabBooks;
+    private ViewPager2 vpTabReviews;
     private TabLayout tlBooks;
+    private TabLayout tlReviews;
     private MyViewPageAdapterBooks myViewPageAdapterBooks;
+    private MyViewPageAdapterReview myViewPageAdapter;
     private LoginSessionManager loginSessionManager;
     private UserInstitutional userLogged;
     @Override
@@ -33,6 +37,10 @@ public class PerfilUserInstitutional extends AppCompatActivity {
 
         this.setInfUser(userLogged);
 
+        BottomMenuHandler bottomMenuHandler = new BottomMenuHandler(this);
+        bottomMenuHandler.setupBottomMenu();
+
+        this.showTabLayoutReviews();
         this.showTabLayoutBooks();
 
         this.ivButtonEdit.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +57,11 @@ public class PerfilUserInstitutional extends AppCompatActivity {
         this.ivButtonEdit = findViewById(R.id.button_edit);
         this.loginSessionManager = LoginSessionManager.getInstance();
         this.vpTabBooks = findViewById(R.id.layout_tab_books_available);
+        this.vpTabReviews = findViewById(R.id.layout_tab_reviews);
         this.myViewPageAdapterBooks = new MyViewPageAdapterBooks(this);
+        this.myViewPageAdapter = new MyViewPageAdapterReview(this);
         this.tlBooks = findViewById(R.id.tab_books_available);
+        this.tlReviews = findViewById(R.id.tab_reviews);
     }
     private UserInstitutional getUserLogged() {
         UserInstitutional user = loginSessionManager.getCurrentUserInstitutional();
@@ -98,5 +109,35 @@ public class PerfilUserInstitutional extends AppCompatActivity {
         });
 
         vpTabBooks.setCurrentItem(1);
+    }
+
+    private void showTabLayoutReviews() {
+        // TabLayout Reviews
+        vpTabReviews.setAdapter(this.myViewPageAdapter);
+
+        tlReviews.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                vpTabReviews.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        vpTabReviews.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                tlReviews.getTabAt(position).select();
+            }
+        });
     }
 }
