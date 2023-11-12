@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.obes.dao.BookDAO;
@@ -17,6 +18,7 @@ import com.example.obes.dao.Request.DonationRequestManager;
 import com.example.obes.dao.Request.ItemRequestDAO;
 import com.example.obes.dao.Request.OrderDAO;
 import com.example.obes.dao.Request.RequestDAO;
+import com.example.obes.dao.Review.UserHasReviewDAO;
 import com.example.obes.dao.UserRegisteredBookDonateDAO;
 import com.example.obes.dao.Wishlist.ItemWishlistDAO;
 import com.example.obes.dao.Wishlist.WishlistDAO;
@@ -24,6 +26,7 @@ import com.example.obes.dao.Wishlist.WishlistToItemDAO;
 import com.example.obes.dao.Wishlist.WishlistToUserDAO;
 import com.example.obes.model.Request.ItemRequest;
 import com.example.obes.model.Request.Request;
+import com.example.obes.model.Review.Review;
 import com.example.obes.model.User.User;
 import com.example.obes.model.User.UserCommon;
 import com.example.obes.model.Wishlist.ItemWishlist;
@@ -48,6 +51,7 @@ public class BookDonatePage extends AppCompatActivity {
     private TextView tvNameUserDonating;
     private ImageView ivPhotoUserDonating;
     private Button buttonRequestDonation;
+    private RatingBar rbRating;
     private LoginSessionManager loginSessionManager;
     private User userLogged;
     private Wishlist wishlistUserLogged;
@@ -77,6 +81,7 @@ public class BookDonatePage extends AppCompatActivity {
         UserCommon userDonating = UserRegisteredBookDonateDAO.getInstance().getUserByIdBook(bookId);
         this.ivPhotoUserDonating.setImageResource(R.drawable.ic_foto_perfil);
         this.tvNameUserDonating.setText(userDonating.getName());
+        this.rbRating.setRating(this.getRatingUserDonating(userDonating));
 
         this.button_back_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +158,7 @@ public class BookDonatePage extends AppCompatActivity {
         this.tvNameUserDonating = findViewById(R.id.name_user_donate);
         this.ivPhotoUserDonating = findViewById(R.id.photo_user_donate);
         this.buttonRequestDonation = findViewById(R.id.button_request_donation);
+        this.rbRating = findViewById(R.id.rating);
 
         WishlistToUserDAO wishlistToUserDAO = WishlistToUserDAO.getInstance();
         wishlistUserLogged = wishlistToUserDAO.getWishByIdUser(userLogged.getId());
@@ -297,5 +303,23 @@ public class BookDonatePage extends AppCompatActivity {
         });
 
         modal.show();
+    }
+
+    public float getRatingUserDonating(User userDonate) {
+        float rating = 0;
+
+        ArrayList<Review> reviewsUser = UserHasReviewDAO.getInstance().getReviewsReceivedByIdUser(userDonate.getId());
+
+        for (Review review : reviewsUser) {
+            rating += review.getRate();
+        }
+
+        int amountReviews = reviewsUser.size();
+
+        if (amountReviews > 0) {
+            rating /= amountReviews;
+        }
+
+        return rating;
     }
 }
