@@ -1,6 +1,5 @@
 package com.example.obes.dao.Request;
 
-import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.UserRegisteredBookSaleDAO;
 import com.example.obes.model.Request.ItemRequest;
@@ -26,7 +25,7 @@ public class SaleRequestManager {
             OrderItemDAO.getInstance().addItemToUser(item.getId(), idUserReceiving);
 
             item.getItem().setAvailable(false);
-            BookDAO.getInstance().editBook(item.getItem());
+            BookSaleDAO.getInstance().editBook(item.getItem());
         }
     }
 
@@ -39,7 +38,7 @@ public class SaleRequestManager {
         OrderItemDAO.getInstance().deleteItemToUser(item.getId(), idUserReceiving);
 
         item.getItem().setAvailable(true);
-        BookDAO.getInstance().editBook(item.getItem());
+        BookSaleDAO.getInstance().editBook(item.getItem());
     }
 
     public static void confirmSaleItemOrder(ItemRequest item) {

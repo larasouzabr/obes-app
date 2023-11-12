@@ -144,6 +144,7 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                             ItemRequest item = ItemRequestDAO.getInstance().getItemByIdBook(book.getId());
 
                             userLogged.confirmDonationRequest(item);
+                            userLogged.confirmSaleItemOrder(item);
 
                             int itemPosition = data.indexOf(book);
                             data.remove(itemPosition);
@@ -208,6 +209,8 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
 
                                 int request = RequestToItemDAO.getInstance().getIdRequestByIdItem(item.getId());
                                 OrderDAO.getInstance().deleteRequestToUser(request, userLogged.getId());
+
+                                userLogged.cancelSaleItemOrder(item);
                             }
 
                             int itemPosition = data.indexOf(book);

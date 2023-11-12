@@ -6,11 +6,13 @@ public class ItemCart {
     private int id;
     private int amount;
     private Book item;
+    private boolean isSelected;
 
     public ItemCart(int id, int amount, Book item) {
         this.id = id;
         this.amount = amount;
         this.item = item;
+        this.isSelected = false;
     }
 
     public double calcSubTotal() {
@@ -29,6 +31,14 @@ public class ItemCart {
         return amount;
     }
 
+    public boolean getIsSelected() {
+        return this.isSelected;
+    }
+
+    public void setIsSelected(boolean selected) {
+        this.isSelected = selected;
+    }
+
     public Book getItem() {
         return item;
     }
@@ -36,4 +46,6 @@ public class ItemCart {
     public int getId() {
         return this.id;
     }
+
+
 }

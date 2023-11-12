@@ -27,12 +27,14 @@ import java.util.ArrayList;
 
 public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRecyclerViewCart.MyHolder> {
     private ArrayList<Book> data;
+    private ArrayList<ItemCart> dataItemCart;
     private Context context;
     private boolean isShoppingCart;
     private double priceTotal;
 
-    public MyAdapterRecyclerViewCart(Context context, ArrayList<Book> data, boolean isShoppingCart) {
+    public MyAdapterRecyclerViewCart(Context context, ArrayList<Book> data, ArrayList<ItemCart> dataItemCart, boolean isShoppingCart) {
         this.data = data;
+        this.dataItemCart = dataItemCart;
         this.context = context;
         this.isShoppingCart = isShoppingCart;
         this.priceTotal = 0;
@@ -89,11 +91,26 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
                     TextView tvPriceTotal = activity.findViewById(R.id.price_total);
                     DecimalFormat df = new DecimalFormat("#.00");
                     String newPriceTotal;
+                    int indexItemCart = -1;
+
+                    for (ItemCart itemCart : dataItemCart) {
+                        if (itemCart.getItem() == book) {
+                            indexItemCart = dataItemCart.indexOf(itemCart);
+                        }
+                    }
 
                     if (isChecked) {
                         priceTotal = countPriceTotal(book.getPrice());
+
+                        if (indexItemCart >= 0) {
+                            dataItemCart.get(indexItemCart).setIsSelected(true);
+                        }
                     } else {
                         priceTotal = countPriceTotal(book.getPrice() * -1);
+
+                        if (indexItemCart >= 0) {
+                            dataItemCart.get(indexItemCart).setIsSelected(false);
+                        }
                     }
 
                     newPriceTotal = "R$ " + (priceTotal > 0 ? df.format(priceTotal) : "0.00");

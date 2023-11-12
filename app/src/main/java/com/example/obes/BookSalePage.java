@@ -11,25 +11,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.CartDAO;
 import com.example.obes.dao.CartToItemDAO;
 import com.example.obes.dao.CartToUserDAO;
 import com.example.obes.dao.ItemCartDAO;
 import com.example.obes.dao.LoginSessionManager;
+import com.example.obes.dao.UserCommonDAO;
+import com.example.obes.dao.UserRegisteredBookSaleDAO;
 import com.example.obes.dao.Wishlist.ItemWishlistDAO;
 import com.example.obes.dao.Wishlist.WishlistDAO;
 import com.example.obes.dao.Wishlist.WishlistToItemDAO;
 import com.example.obes.dao.Wishlist.WishlistToUserDAO;
-import com.example.obes.formSale.SalePreview;
-import com.example.obes.model.Book.Book;
 import com.example.obes.model.Cart.Cart;
 import com.example.obes.model.Cart.ItemCart;
 import com.example.obes.model.User.User;
+import com.example.obes.model.User.UserCommon;
 import com.example.obes.model.Wishlist.ItemWishlist;
 import com.example.obes.model.Wishlist.Wishlist;
-import com.example.obes.perfil.PerfilUserCommon;
 
 import java.util.ArrayList;
 
@@ -44,6 +43,8 @@ public class BookSalePage extends AppCompatActivity {
     private Button button_add_cart;
     private ImageView ivIcFavorite;
     private boolean isFavorite;
+    private TextView tvNameUserSelling;
+    private ImageView ivPhotoUserSelling;
     private LoginSessionManager loginSessionManager;
     private User userLogged;
     private Wishlist wishlistUserLogged;
@@ -52,6 +53,9 @@ public class BookSalePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_sale_page);
+
+        BottomMenuHandler bottomMenuHandler = new BottomMenuHandler(this);
+        bottomMenuHandler.setupBottomMenu();
 
         Intent intent = getIntent();
 
@@ -70,6 +74,11 @@ public class BookSalePage extends AppCompatActivity {
         authorTextView.setText(bookAuthor);
         priceTextView.setText("R$ " + String.format("%.2f", bookPrice));
         descriptionTextView.setText(bookDescription);
+
+        int idUserSelling = UserRegisteredBookSaleDAO.getInstance().getIdUserByIdBook(bookId);
+        UserCommon userSelling = UserCommonDAO.getInstance().getUserById(idUserSelling);
+        this.ivPhotoUserSelling.setImageResource(R.drawable.ic_foto_perfil);
+        this.tvNameUserSelling.setText(userSelling.getName());
 
         this.button_back_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +163,8 @@ public class BookSalePage extends AppCompatActivity {
         this.loginSessionManager = LoginSessionManager.getInstance();
         this.userLogged = this.getUserLogged();
         this.isFavorite = false;
+        this.tvNameUserSelling = findViewById(R.id.name_user_sale);
+        this.ivPhotoUserSelling = findViewById(R.id.photo_user_sale);
 
         WishlistToUserDAO wishlistToUserDAO = WishlistToUserDAO.getInstance();
         wishlistUserLogged = wishlistToUserDAO.getWishByIdUser(userLogged.getId());

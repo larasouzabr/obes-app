@@ -66,7 +66,7 @@ public class WishlistPage extends AppCompatActivity {
             listBooks.add(item.getItem());
         }
 
-        MyAdapterRecyclerViewCart recyclerViewAdapter = new MyAdapterRecyclerViewCart(this, listBooks, false);
+        MyAdapterRecyclerViewCart recyclerViewAdapter = new MyAdapterRecyclerViewCart(this, listBooks, null,false);
 
         rv_items.setLayoutManager(linearLayoutManagerItems);
         rv_items.setAdapter(recyclerViewAdapter);

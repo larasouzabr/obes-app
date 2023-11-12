@@ -14,6 +14,7 @@ import com.example.obes.MyAdapterRecyclerView;
 import com.example.obes.R;
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.dao.Request.OrderDAO;
+import com.example.obes.dao.Request.OrderItemDAO;
 import com.example.obes.dao.Request.RequestToItemDAO;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.Request.ItemRequest;
@@ -36,12 +37,17 @@ public class BooksRequest extends Fragment {
         this.linearLayoutManagerRequest = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
         ArrayList<Request> requestsUserLogged = OrderDAO.getInstance().getRequestsByIdUser(this.getUserLogged().getId());
+        ArrayList<ItemRequest> itemsUserLogged = OrderItemDAO.getInstance().getItemsByIdUser(this.getUserLogged().getId());
         ArrayList<Book> booksRequest = new ArrayList<Book>();
 
         for (Request request : requestsUserLogged) {
             for (ItemRequest item : RequestToItemDAO.getInstance().getItemsByIdRequest(request.getId())) {
                 booksRequest.add(item.getItem());
             }
+        }
+
+        for (ItemRequest item : itemsUserLogged) {
+            booksRequest.add(item.getItem());
         }
 
         this.requestAdapter = new MyAdapterRecyclerView(getContext(), booksRequest, "request");
