@@ -54,6 +54,7 @@ public class MyAdapterRecyclerViewReview extends RecyclerView.Adapter<MyAdapterR
             userReview = UserInstitutionalDAO.getInstance().getUserById(idUserSender);
         }
 
+        holder.tvName.setText(userReview.getName());
         holder.rbRating.setRating((float) review.getRate());
 
         User finalUserReview = userReview;
@@ -83,12 +84,14 @@ public class MyAdapterRecyclerViewReview extends RecyclerView.Adapter<MyAdapterR
     class MyHolder extends RecyclerView.ViewHolder {
         LinearLayout llItem;
         ImageView ivPhoto;
+        TextView tvName;
         RatingBar rbRating;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             llItem = itemView.findViewById(R.id.item);
             ivPhoto = itemView.findViewById(R.id.photo_user_sender);
+            tvName = itemView.findViewById(R.id.name_user_sender);
             rbRating = itemView.findViewById(R.id.rating);
         }
     }
