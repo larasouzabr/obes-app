@@ -34,6 +34,8 @@ public class Login extends AppCompatActivity {
 
         this.startComponents();
 
+        this.loginSessionManager.logout();
+
         this.button_back_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

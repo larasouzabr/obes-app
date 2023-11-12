@@ -24,6 +24,10 @@ import com.example.obes.dao.Request.ItemRequestDAO;
 import com.example.obes.dao.Request.OrderDAO;
 import com.example.obes.dao.Request.RequestDAO;
 import com.example.obes.dao.Request.RequestToItemDAO;
+import com.example.obes.dao.Review.UserHasReviewDAO;
+import com.example.obes.dao.UserCommonDAO;
+import com.example.obes.dao.UserRegisteredBookDonateDAO;
+import com.example.obes.dao.UserRegisteredBookSaleDAO;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.Request.ItemRequest;
 import com.example.obes.model.Request.Request;
@@ -107,11 +111,47 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                 holder.status.setText("Confirmado");
                 color = ContextCompat.getColor(context, R.color.teal_origin);
                 holder.status.setBackgroundColor(color);
+
+                int idUserReceiver;
+                if (book.getPrice() > 0) {
+                    idUserReceiver = UserRegisteredBookSaleDAO.getInstance().getIdUserByIdBook(book.getId());
+                } else {
+                    idUserReceiver = UserRegisteredBookDonateDAO.getInstance().getUserByIdBook(book.getId()).getId();
+                }
+
+                User userReceiver = UserCommonDAO.getInstance().getUserById(idUserReceiver);
+
+                int idReview = UserHasReviewDAO.getInstance().getIdCommentByIdUsers(userLogged.getId(), userReceiver.getId());
+
+                if (idReview == 0) {
+                    holder.buttonComment.setEnabled(true);
+                } else {
+                    holder.buttonComment.setEnabled(false);
+                    holder.buttonComment.setText("Avaliado");
+                }
             } else if (item.getStatus().equals("Cancelado")){
                 holder.status.setText("Cancelado");
                 color = ContextCompat.getColor(context, R.color.red);
                 holder.status.setBackgroundColor(color);
             }
+
+            holder.buttonComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ReviewPage.class);
+
+                    int idUserReceiver;
+                    if (book.getPrice() == 0) {
+                        idUserReceiver = UserRegisteredBookDonateDAO.getInstance().getUserByIdBook(book.getId()).getId();
+                    } else {
+                        idUserReceiver = UserRegisteredBookSaleDAO.getInstance().getIdUserByIdBook(book.getId());
+                    }
+
+                    intent.putExtra("user_receiver_id", idUserReceiver);
+
+                    context.startActivity(intent);
+                }
+            });
         }
 
         if (this.typeView.equals("request")) {
@@ -316,6 +356,7 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
         ImageView delete;
         TextView status;
         ImageView confirm;
+        Button buttonComment;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -324,6 +365,7 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
             delete = itemView.findViewById(R.id.delete);
             status = itemView.findViewById(R.id.status);
             confirm = itemView.findViewById(R.id.confirm);
+            buttonComment = itemView.findViewById(R.id.button_comment);
         }
     }
 }
