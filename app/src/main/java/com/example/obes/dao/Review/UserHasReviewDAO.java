@@ -37,6 +37,18 @@ public class UserHasReviewDAO {
         return false;
     }
 
+    public int getIdCommentByIdUsers(int idUserSender, int idUserReceiver) {
+        for (UserHasReview userHasReview : this.getListUserHasReview()) {
+            if (userHasReview.getUserSenderId() == idUserSender) {
+                if (userHasReview.getUserReceiverId() == idUserReceiver) {
+                    return userHasReview.getReviewId();
+                }
+            }
+        }
+
+        return 0;
+    }
+
     class UserHasReview {
         private int userSenderId;
         private int userReceiverId;

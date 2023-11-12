@@ -24,6 +24,8 @@ import com.example.obes.dao.Request.ItemRequestDAO;
 import com.example.obes.dao.Request.OrderDAO;
 import com.example.obes.dao.Request.RequestDAO;
 import com.example.obes.dao.Request.RequestToItemDAO;
+import com.example.obes.dao.UserRegisteredBookDonateDAO;
+import com.example.obes.dao.UserRegisteredBookSaleDAO;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.Request.ItemRequest;
 import com.example.obes.model.Request.Request;
@@ -119,6 +121,16 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ReviewPage.class);
+
+                    int idUserReceiver;
+                    if (book.getPrice() == 0) {
+                        idUserReceiver = UserRegisteredBookDonateDAO.getInstance().getUserByIdBook(book.getId()).getId();
+                    } else {
+                        idUserReceiver = UserRegisteredBookSaleDAO.getInstance().getIdUserByIdBook(book.getId());
+                    }
+
+                    intent.putExtra("user_receiver_id", idUserReceiver);
+
                     context.startActivity(intent);
                 }
             });
