@@ -107,11 +107,21 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                 holder.status.setText("Confirmado");
                 color = ContextCompat.getColor(context, R.color.teal_origin);
                 holder.status.setBackgroundColor(color);
+
+                holder.buttonComment.setEnabled(true);
             } else if (item.getStatus().equals("Cancelado")){
                 holder.status.setText("Cancelado");
                 color = ContextCompat.getColor(context, R.color.red);
                 holder.status.setBackgroundColor(color);
             }
+
+            holder.buttonComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ReviewPage.class);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         if (this.typeView.equals("request")) {
@@ -316,6 +326,7 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
         ImageView delete;
         TextView status;
         ImageView confirm;
+        Button buttonComment;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -324,6 +335,7 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
             delete = itemView.findViewById(R.id.delete);
             status = itemView.findViewById(R.id.status);
             confirm = itemView.findViewById(R.id.confirm);
+            buttonComment = itemView.findViewById(R.id.button_comment);
         }
     }
 }
