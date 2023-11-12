@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookSalePage"
+    tools:context=".BookRequestPage"
     android:background="@color/purple_150">
 
     <LinearLayout
@@ -65,20 +65,20 @@
                             android:id="@+id/title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp"
                             android:text="Memórias Póstumas de Brás Cubas"
-                            android:textSize="20sp"
                             android:textColor="@color/purple_900"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="6dp"/>
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/author"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp"
                             android:text="Machado de Assis"
                             android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:layout_marginBottom="6dp"/>
+                            android:textSize="16sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -86,25 +86,26 @@
                             android:orientation="horizontal"
                             android:layout_marginBottom="6dp">
 
-                            <ImageView
-                                android:id="@+id/ic_favorite"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_favorite"
-                                android:layout_gravity="center"/>
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/price"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/container_price"
+                                    android:paddingLeft="12dp"
+                                    android:paddingTop="6dp"
+                                    android:paddingRight="12dp"
+                                    android:paddingBottom="6dp"
+                                    android:text="R$ 9,90"
+                                    android:textColor="@color/black" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
-
-                        <Button
-                            android:id="@+id/button_request_donation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/purple_800"
-                            android:text="Solicitar Doação"
-                            android:textColor="@color/white"
-                            app:cornerRadius="@dimen/button_corner_radius"
-                            android:textAllCaps="false"
-                            android:layout_gravity="center"/>
 
                     </LinearLayout>
 
@@ -129,7 +130,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Seu protagonista é Simão Bacamarte, médico que, após conquistar respeito na Europa, retorna à sua cidade natal, Itaguaí. Lá, ele aprofunda seus estudos de psiquiatria e empreende uma busca sobre os caminhos da mente e as patologias cerebrais. Livro em perfeito estado foi usado apenas por 1 semana"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black" />
 
                 </LinearLayout>
 
@@ -141,7 +142,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Doado por:"
+                        android:text="Solicitação de:"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp"/>

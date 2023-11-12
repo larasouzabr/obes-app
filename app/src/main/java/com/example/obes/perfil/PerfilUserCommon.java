@@ -3,12 +3,9 @@ package com.example.obes.perfil;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -117,6 +114,8 @@ public class PerfilUserCommon extends AppCompatActivity {
     private void showTabLayoutBooks() {
         // TabLayout Books
         vpTabBooks.setAdapter(this.myViewPageAdapterBooks);
+
+        vpTabBooks.setUserInputEnabled(false);
 
         tlBooks.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

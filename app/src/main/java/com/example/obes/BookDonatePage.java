@@ -2,23 +2,39 @@ package com.example.obes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.LoginSessionManager;
+import com.example.obes.dao.Request.DonationRequestManager;
+import com.example.obes.dao.Request.ItemRequestDAO;
+import com.example.obes.dao.Request.OrderDAO;
+import com.example.obes.dao.Request.RequestDAO;
+import com.example.obes.dao.UserRegisteredBookDonateDAO;
 import com.example.obes.dao.Wishlist.ItemWishlistDAO;
 import com.example.obes.dao.Wishlist.WishlistDAO;
 import com.example.obes.dao.Wishlist.WishlistToItemDAO;
 import com.example.obes.dao.Wishlist.WishlistToUserDAO;
+import com.example.obes.model.Request.ItemRequest;
+import com.example.obes.model.Request.Request;
 import com.example.obes.model.User.User;
+import com.example.obes.model.User.UserCommon;
 import com.example.obes.model.Wishlist.ItemWishlist;
 import com.example.obes.model.Wishlist.Wishlist;
+import com.example.obes.perfil.PerfilUserCommon;
+import com.example.obes.perfil.PerfilUserInstitutional;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class BookDonatePage extends AppCompatActivity {
     private TextView tvTitlePage;
@@ -29,6 +45,9 @@ public class BookDonatePage extends AppCompatActivity {
     private ImageView button_back_arrow;
     private ImageView ivIcFavorite;
     private boolean isFavorite;
+    private TextView tvNameUserDonating;
+    private ImageView ivPhotoUserDonating;
+    private Button buttonRequestDonation;
     private LoginSessionManager loginSessionManager;
     private User userLogged;
     private Wishlist wishlistUserLogged;
@@ -36,6 +55,9 @@ public class BookDonatePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_donate_page);
+        BottomMenuHandler bottomMenuHandler = new BottomMenuHandler(this);
+        bottomMenuHandler.setupBottomMenu();
+
         this.startComponents();
 
         Intent intent = getIntent();
@@ -51,6 +73,10 @@ public class BookDonatePage extends AppCompatActivity {
         coverImageView.setImageResource(bookCoverResourceId);
         authorTextView.setText(bookAuthor);
         descriptionTextView.setText(bookDescription);
+
+        UserCommon userDonating = UserRegisteredBookDonateDAO.getInstance().getUserByIdBook(bookId);
+        this.ivPhotoUserDonating.setImageResource(R.drawable.ic_foto_perfil);
+        this.tvNameUserDonating.setText(userDonating.getName());
 
         this.button_back_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +126,18 @@ public class BookDonatePage extends AppCompatActivity {
                 }
             }
         });
+
+        this.buttonRequestDonation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Request newRequest = new Request(countIdRequest(), getCurrentDate(), "Pendente");
+                ItemRequest newItem = new ItemRequest(countIdItemRequest(), 1, BookDAO.getInstance().getBookById(bookId), "Pendente");
+
+                userLogged.donationRequest(newRequest, newItem, userLogged.getId(), userDonating.getId());
+
+                showModal();
+            }
+        });
     }
     private void startComponents() {
         this.tvTitlePage = findViewById(R.id.title_page);
@@ -112,6 +150,9 @@ public class BookDonatePage extends AppCompatActivity {
         this.loginSessionManager = LoginSessionManager.getInstance();
         this.userLogged = this.getUserLogged();
         this.isFavorite = false;
+        this.tvNameUserDonating = findViewById(R.id.name_user_donate);
+        this.ivPhotoUserDonating = findViewById(R.id.photo_user_donate);
+        this.buttonRequestDonation = findViewById(R.id.button_request_donation);
 
         WishlistToUserDAO wishlistToUserDAO = WishlistToUserDAO.getInstance();
         wishlistUserLogged = wishlistToUserDAO.getWishByIdUser(userLogged.getId());
@@ -187,5 +228,74 @@ public class BookDonatePage extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    public int countIdRequest() {
+        RequestDAO requestDAO = RequestDAO.getInstance();
+
+        int id = 1;
+
+        int amountRequests = requestDAO.getListRequests().size();
+
+        if (amountRequests > 0) {
+            id = requestDAO.getListRequests().get(amountRequests - 1).getId() + 1;
+        }
+
+        return id;
+    }
+
+    public String getCurrentDate() {
+        Date currentDate = new Date();
+
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+
+        return format.format(currentDate);
+    }
+
+    public int countIdItemRequest() {
+        ItemRequestDAO itemRequestDAO = ItemRequestDAO.getInstance();
+
+        int id = 1;
+
+        int amountItems = itemRequestDAO.getListItemRequests().size();
+
+        if (amountItems > 0) {
+            id = itemRequestDAO.getListItemRequests().get(amountItems - 1).getId() + 1;
+        }
+
+        return id;
+    }
+
+    public void showModal() {
+        final Dialog modal = new Dialog(BookDonatePage.this);
+
+        modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        modal.setCancelable(true);
+        modal.setContentView(R.layout.custom_modal);
+
+        final TextView tvTitleModal = modal.findViewById(R.id.title_modal);
+        final TextView tvTextModal = modal.findViewById(R.id.text_modal);
+        TextView tvButtonModal = modal.findViewById(R.id.button_modal);
+
+        tvTitleModal.setText("Doação Solicitada");
+        tvTextModal.setText("Notificamos ao vendedor sobre sua solicitação de receber o produto, você pode visualizar o status no seu perfil");
+        tvButtonModal.setText("Ver no perfil");
+
+        tvButtonModal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+
+                if (loginSessionManager.getCurrentUserCommon() == null) {
+                    intent = new Intent(BookDonatePage.this, PerfilUserInstitutional.class);
+                } else {
+                    intent = new Intent(BookDonatePage.this, PerfilUserCommon.class);
+                }
+
+                startActivity(intent);
+            }
+        });
+
+        modal.show();
     }
 }

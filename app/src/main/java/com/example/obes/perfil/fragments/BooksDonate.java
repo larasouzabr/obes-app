@@ -40,7 +40,7 @@ public class BooksDonate extends Fragment {
             }
         }
 
-        donateAdapter = new MyAdapterRecyclerView(getContext(), booksForDonate, true);
+        donateAdapter = new MyAdapterRecyclerView(getContext(), booksForDonate, "edit");
 
         this.rvBookDonate.setLayoutManager(linearLayoutManagerDonate);
         this.rvBookDonate.setAdapter(donateAdapter);

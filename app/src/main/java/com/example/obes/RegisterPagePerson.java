@@ -10,10 +10,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.obes.dao.UserCommonDAO;
+import com.example.obes.dao.UserInstitutionalDAO;
+import com.example.obes.model.User.User;
 import com.example.obes.model.User.UserCommon;
+import com.example.obes.model.User.UserInstitutional;
 //import com.example.obes.model.user.UserInstitutional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RegisterPagePerson extends AppCompatActivity {
     private EditText etName;
@@ -23,6 +27,7 @@ public class RegisterPagePerson extends AppCompatActivity {
     private Button button_cancel;
     private Button sign_in;
     private UserCommonDAO userCommonDAO = UserCommonDAO.getInstance();
+    private UserInstitutionalDAO userInstitutionalDAO = UserInstitutionalDAO.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,15 +91,27 @@ public class RegisterPagePerson extends AppCompatActivity {
     }
 
     public int countId() {
+        ArrayList<User> allUsers = new ArrayList<User>();
         ArrayList<UserCommon> listUsersCommon = this.userCommonDAO.getListUsers();
+        ArrayList<UserInstitutional> listUsersInstitutional = this.userInstitutionalDAO.getListUsers();
+
+        allUsers.addAll(listUsersCommon);
+        allUsers.addAll(listUsersInstitutional);
+
+        ArrayList<Integer> listIds = new ArrayList<Integer>();
+
+        for (User user : allUsers) {
+            if (!listIds.contains(user.getId())) {
+                listIds.add(user.getId());
+            }
+        }
 
         int id = 1;
 
-        int amountUsersCommon = listUsersCommon.size();
+        int amountUsers = allUsers.size();
 
-        if(amountUsersCommon > 0) {
-            UserCommon lastUserCommon = listUsersCommon.get(amountUsersCommon - 1);
-            id = lastUserCommon.getId() + 1;
+        if(amountUsers > 0) {
+            id = Collections.max(listIds) + 1;
         }
 
         return id;

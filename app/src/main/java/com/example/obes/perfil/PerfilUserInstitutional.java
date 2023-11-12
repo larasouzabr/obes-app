@@ -1,6 +1,7 @@
 package com.example.obes.perfil;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +12,15 @@ import android.widget.TextView;
 import com.example.obes.R;
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.model.User.UserInstitutional;
+import com.google.android.material.tabs.TabLayout;
 
 public class PerfilUserInstitutional extends AppCompatActivity {
     private TextView tvUserName;
     private TextView tvUserAbout;
     private ImageView ivButtonEdit;
+    private ViewPager2 vpTabBooks;
+    private TabLayout tlBooks;
+    private MyViewPageAdapterBooks myViewPageAdapterBooks;
     private LoginSessionManager loginSessionManager;
     private UserInstitutional userLogged;
     @Override
@@ -27,6 +32,8 @@ public class PerfilUserInstitutional extends AppCompatActivity {
         userLogged = this.getUserLogged();
 
         this.setInfUser(userLogged);
+
+        this.showTabLayoutBooks();
 
         this.ivButtonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +48,9 @@ public class PerfilUserInstitutional extends AppCompatActivity {
         this.tvUserAbout = findViewById(R.id.user_about);
         this.ivButtonEdit = findViewById(R.id.button_edit);
         this.loginSessionManager = LoginSessionManager.getInstance();
+        this.vpTabBooks = findViewById(R.id.layout_tab_books_available);
+        this.myViewPageAdapterBooks = new MyViewPageAdapterBooks(this);
+        this.tlBooks = findViewById(R.id.tab_books_available);
     }
     private UserInstitutional getUserLogged() {
         UserInstitutional user = loginSessionManager.getCurrentUserInstitutional();
@@ -54,5 +64,39 @@ public class PerfilUserInstitutional extends AppCompatActivity {
         } else {
             this.tvUserAbout.setText(this.userLogged.getAbout());
         }
+    }
+
+    private void showTabLayoutBooks() {
+        // TabLayout Books
+        vpTabBooks.setAdapter(this.myViewPageAdapterBooks);
+
+        vpTabBooks.setUserInputEnabled(false);
+
+        tlBooks.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                vpTabBooks.setCurrentItem(1);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        vpTabBooks.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                tlBooks.getTabAt(0).select();
+            }
+        });
+
+        vpTabBooks.setCurrentItem(1);
     }
 }

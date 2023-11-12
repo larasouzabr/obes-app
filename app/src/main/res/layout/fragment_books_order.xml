@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".perfil.fragments.BooksRequest">
+    tools:context=".perfil.fragments.BooksOrder">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_books_request"
+        android:id="@+id/rv_books_order"
         android:layout_width="match_parent"
-        android:layout_height="205dp"
+        android:layout_height="wrap_content"
         android:scrollbars="horizontal" />
 
-</RelativeLayout>
+</FrameLayout>
