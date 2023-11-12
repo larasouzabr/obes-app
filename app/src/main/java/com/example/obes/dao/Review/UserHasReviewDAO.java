@@ -83,6 +83,18 @@ public class UserHasReviewDAO {
         return reviewsSenderUser;
     }
 
+    public ArrayList<Review> getReviewsReceivedByIdUser(int idUser) {
+        ArrayList<Review> reviewsReceivedUser = new ArrayList<Review>();
+
+        for (UserHasReview userHasReview : this.getListUserHasReview()) {
+            if (userHasReview.getUserReceiverId() == idUser) {
+                reviewsReceivedUser.add(ReviewDAO.getInstance().getReviewById(userHasReview.getReviewId()));
+            }
+        }
+
+        return reviewsReceivedUser;
+    }
+
     class UserHasReview {
         private int userSenderId;
         private int userReceiverId;
