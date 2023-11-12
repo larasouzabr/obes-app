@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.dao.Review.ReviewDAO;
@@ -19,6 +20,8 @@ import com.example.obes.dao.UserCommonDAO;
 import com.example.obes.dao.UserInstitutionalDAO;
 import com.example.obes.model.Review.Review;
 import com.example.obes.model.User.User;
+import com.example.obes.perfil.PerfilUserCommon;
+import com.example.obes.perfil.PerfilUserInstitutional;
 
 import java.util.Date;
 
@@ -62,52 +65,62 @@ public class ReviewPage extends AppCompatActivity {
         this.button_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog modal = new Dialog(ReviewPage.this);
+                if (etComment.getText().toString().isEmpty()) {
+                    Toast.makeText(ReviewPage.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
+                } else {
+                    final Dialog modal = new Dialog(ReviewPage.this);
 
-                modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                modal.setCancelable(true);
-                modal.setContentView(R.layout.modal_delete_book);
+                    modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    modal.setCancelable(true);
+                    modal.setContentView(R.layout.modal_delete_book);
 
-                Button buttonCancel = modal.findViewById(R.id.button_cancel);
-                Button buttonSave = modal.findViewById(R.id.button_delete);
-                TextView tvDescription = modal.findViewById(R.id.description);
+                    Button buttonCancel = modal.findViewById(R.id.button_cancel);
+                    Button buttonSave = modal.findViewById(R.id.button_delete);
+                    TextView tvDescription = modal.findViewById(R.id.description);
 
-                tvDescription.setText("Tem certeza que deseja salvar o comentário?");
-                buttonSave.setText("Salvar");
+                    tvDescription.setText("Tem certeza que deseja salvar o comentário?");
+                    buttonSave.setText("Salvar");
 
-                buttonCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        modal.dismiss();
-                    }
-                });
-
-                buttonSave.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int newId = countIdReview();
-                        double newRate = rbRating.getRating();
-                        String newComment = String.valueOf(etComment.getText());
-                        Date newDate = new Date();
-
-                        if (review == null) {
-                            Review newReview = new Review(newId, newRate, newComment, newDate);
-
-                            ReviewDAO.getInstance().addReview(newReview);
-                            UserHasReviewDAO.getInstance().addUserReview(userLogged.getId(), userReceiving.getId(), newReview.getId());
-                        } else {
-                            review.setRate(newRate);
-                            review.setComment(newComment);
-                            review.setDateUpdated(newDate);
-
-                            ReviewDAO.getInstance().editReview(review);
+                    buttonCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            modal.dismiss();
                         }
+                    });
 
-                        finish();
-                    }
-                });
+                    buttonSave.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int newId = countIdReview();
+                            double newRate = rbRating.getRating();
+                            String newComment = etComment.getText().toString();
+                            Date newDate = new Date();
 
-                modal.show();
+                            if (review == null) {
+                                Review newReview = new Review(newId, newRate, newComment, newDate);
+
+                                ReviewDAO.getInstance().addReview(newReview);
+                                UserHasReviewDAO.getInstance().addUserReview(userLogged.getId(), userReceiving.getId(), newReview.getId());
+                            } else {
+                                review.setRate(newRate);
+                                review.setComment(newComment);
+                                review.setDateUpdated(newDate);
+
+                                ReviewDAO.getInstance().editReview(review);
+                            }
+
+                            Intent intent;
+                            if (userLogged == LoginSessionManager.getInstance().getCurrentUserCommon()) {
+                                intent = new Intent(ReviewPage.this, PerfilUserCommon.class);
+                            } else {
+                                intent = new Intent(ReviewPage.this, PerfilUserInstitutional.class);
+                            }
+                            startActivity(intent);
+                        }
+                    });
+
+                    modal.show();
+                }
             }
         });
     }
