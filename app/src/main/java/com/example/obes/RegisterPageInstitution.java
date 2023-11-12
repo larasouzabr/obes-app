@@ -11,10 +11,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.obes.dao.UserCommonDAO;
 import com.example.obes.dao.UserInstitutionalDAO;
+import com.example.obes.model.User.User;
+import com.example.obes.model.User.UserCommon;
 import com.example.obes.model.User.UserInstitutional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RegisterPageInstitution extends AppCompatActivity {
     private EditText etName;
@@ -24,6 +28,7 @@ public class RegisterPageInstitution extends AppCompatActivity {
     private RadioGroup rgType;
     private Button button_cancel;
     private Button button_sign_in;
+    private UserCommonDAO userCommonDAO = UserCommonDAO.getInstance();
     private UserInstitutionalDAO userInstitutionalDAO = UserInstitutionalDAO.getInstance();
 
     @Override
@@ -93,15 +98,27 @@ public class RegisterPageInstitution extends AppCompatActivity {
     }
 
     public int countId() {
+        ArrayList<User> allUsers = new ArrayList<User>();
+        ArrayList<UserCommon> listUsersCommon = this.userCommonDAO.getListUsers();
         ArrayList<UserInstitutional> listUsersInstitutional = this.userInstitutionalDAO.getListUsers();
+
+        allUsers.addAll(listUsersCommon);
+        allUsers.addAll(listUsersInstitutional);
+
+        ArrayList<Integer> listIds = new ArrayList<Integer>();
+
+        for (User user : allUsers) {
+            if (!listIds.contains(user.getId())) {
+                listIds.add(user.getId());
+            }
+        }
 
         int id = 1;
 
-        int amountUsersInstitutional = listUsersInstitutional.size();
+        int amountUsers = allUsers.size();
 
-        if(amountUsersInstitutional > 0) {
-            UserInstitutional lastUserInstitutional = listUsersInstitutional.get(amountUsersInstitutional - 1);
-            id = lastUserInstitutional.getId() + 1;
+        if(amountUsers > 0) {
+            id = Collections.max(listIds) + 1;
         }
 
         return id;

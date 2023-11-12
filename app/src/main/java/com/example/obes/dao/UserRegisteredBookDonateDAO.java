@@ -1,6 +1,7 @@
 package com.example.obes.dao;
 
 import com.example.obes.model.Book.Book;
+import com.example.obes.model.User.UserCommon;
 
 import java.util.ArrayList;
 
@@ -62,5 +63,18 @@ public class UserRegisteredBookDonateDAO implements IUserRegisteredBookDAO {
         }
 
         return listBooks;
+    }
+
+    public UserCommon getUserByIdBook(int idBook) {
+        UserCommon user = null;
+
+        for (UserBook ub : this.listUserBook) {
+            if (ub.getId_book() == idBook) {
+                user = UserCommonDAO.getInstance().getUserById(ub.getId_user());
+                break;
+            }
+        }
+
+        return user;
     }
 }

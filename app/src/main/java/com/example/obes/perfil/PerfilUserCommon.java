@@ -3,24 +3,27 @@ package com.example.obes.perfil;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.obes.BottomMenuHandler;
 import com.example.obes.R;
 import com.example.obes.dao.LoginSessionManager;
+import com.example.obes.dao.Review.UserHasReviewDAO;
+import com.example.obes.model.Review.Review;
 import com.example.obes.model.User.UserCommon;
 import com.google.android.material.tabs.TabLayout;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class PerfilUserCommon extends AppCompatActivity {
     private TextView tvUserName;
     private TextView tvUserAbout;
+    private TextView tvUserRate;
     private TabLayout tlReviews;
     private ViewPager2 vpTabReviews;
     private TabLayout tlBooks;
@@ -30,6 +33,7 @@ public class PerfilUserCommon extends AppCompatActivity {
     private MyViewPageAdapterBooks myViewPageAdapterBooks;
     private LoginSessionManager loginSessionManager;
     private UserCommon userLogged;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,16 +71,19 @@ public class PerfilUserCommon extends AppCompatActivity {
         this.myViewPageAdapterBooks = new MyViewPageAdapterBooks(this);
         this.loginSessionManager = LoginSessionManager.getInstance();
         this.ivButtonEdit = findViewById(R.id.button_edit);
+        this.tvUserRate = findViewById(R.id.user_rate);
     }
 
     private void setInfUser(UserCommon user) {
         this.tvUserName.setText(user.getName());
 
-        if(this.userLogged.getAbout().isEmpty()) {
+        if (this.userLogged.getAbout().isEmpty()) {
             this.tvUserAbout.setText("Olá! Sou apaixonado por doar livros e compartilhar conhecimento.");
         } else {
             this.tvUserAbout.setText(this.userLogged.getAbout());
         }
+
+        this.tvUserRate.setText(this.getRatingUser());
     }
 
     private UserCommon getUserLogged() {
@@ -118,6 +125,8 @@ public class PerfilUserCommon extends AppCompatActivity {
         // TabLayout Books
         vpTabBooks.setAdapter(this.myViewPageAdapterBooks);
 
+        vpTabBooks.setUserInputEnabled(false);
+
         tlBooks.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -142,5 +151,30 @@ public class PerfilUserCommon extends AppCompatActivity {
                 tlBooks.getTabAt(position).select();
             }
         });
+    }
+
+    public String getRatingUser() {
+        float rating = 0;
+
+        ArrayList<Review> reviewsUser = UserHasReviewDAO.getInstance().getReviewsReceivedByIdUser(this.userLogged.getId());
+
+        for (Review review : reviewsUser) {
+            rating += review.getRate();
+        }
+
+        int amountReviews = reviewsUser.size();
+
+        if (amountReviews > 0) {
+            rating /= amountReviews;
+
+            DecimalFormat formato = new DecimalFormat("#0.0");
+
+            String ratingFormatado = formato.format(rating);
+
+            return ratingFormatado;
+        } else {
+            return "0.0";
+
+        }
     }
 }
