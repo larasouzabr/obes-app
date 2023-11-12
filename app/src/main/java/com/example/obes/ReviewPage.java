@@ -2,8 +2,12 @@ package com.example.obes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -16,10 +20,14 @@ import com.example.obes.dao.UserInstitutionalDAO;
 import com.example.obes.model.Review.Review;
 import com.example.obes.model.User.User;
 
+import java.util.Date;
+
 public class ReviewPage extends AppCompatActivity {
     private TextView tvTitlePage;
     private EditText etComment;
     private RatingBar rbRating;
+    private Button button_cancel;
+    private Button button_save;
     private User userReceiving;
     private User userLogged;
 
@@ -43,12 +51,73 @@ public class ReviewPage extends AppCompatActivity {
             this.etComment.setText(review.getComment());
             this.rbRating.setRating((float) review.getRate());
         }
+
+        this.button_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        this.button_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog modal = new Dialog(ReviewPage.this);
+
+                modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                modal.setCancelable(true);
+                modal.setContentView(R.layout.modal_delete_book);
+
+                Button buttonCancel = modal.findViewById(R.id.button_cancel);
+                Button buttonSave = modal.findViewById(R.id.button_delete);
+                TextView tvDescription = modal.findViewById(R.id.description);
+
+                tvDescription.setText("Tem certeza que deseja salvar o comentário?");
+                buttonSave.setText("Salvar");
+
+                buttonCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        modal.dismiss();
+                    }
+                });
+
+                buttonSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int newId = countIdReview();
+                        double newRate = rbRating.getRating();
+                        String newComment = String.valueOf(etComment.getText());
+                        Date newDate = new Date();
+
+                        if (review == null) {
+                            Review newReview = new Review(newId, newRate, newComment, newDate);
+
+                            ReviewDAO.getInstance().addReview(newReview);
+                            UserHasReviewDAO.getInstance().addUserReview(userLogged.getId(), userReceiving.getId(), newReview.getId());
+                        } else {
+                            review.setRate(newRate);
+                            review.setComment(newComment);
+                            review.setDateUpdated(newDate);
+
+                            ReviewDAO.getInstance().editReview(review);
+                        }
+
+                        finish();
+                    }
+                });
+
+                modal.show();
+            }
+        });
     }
 
     public void startComponents() {
         this.tvTitlePage = findViewById(R.id.title_page);
         this.etComment = findViewById(R.id.comment);
         this.rbRating = findViewById(R.id.rating);
+        this.button_cancel = findViewById(R.id.button_cancel);
+        this.button_save = findViewById(R.id.button_save);
     }
 
     public User getUserReceiving(int idUserReceiving) {
@@ -69,5 +138,17 @@ public class ReviewPage extends AppCompatActivity {
         }
 
         return user;
+    }
+
+    public int countIdReview() {
+        int id = 1;
+
+        int amountComments = ReviewDAO.getInstance().getListReviews().size();
+
+        if (amountComments > 0) {
+            id = ReviewDAO.getInstance().getListReviews().get(amountComments - 1).getId() + 1;
+        }
+
+        return id;
     }
 }
