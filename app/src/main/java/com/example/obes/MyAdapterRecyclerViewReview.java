@@ -15,8 +15,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.obes.dao.Review.ReviewDAO;
 import com.example.obes.dao.Review.UserHasReviewDAO;
 import com.example.obes.dao.UserCommonDAO;
 import com.example.obes.dao.UserInstitutionalDAO;
@@ -39,7 +41,13 @@ public class MyAdapterRecyclerViewReview extends RecyclerView.Adapter<MyAdapterR
     @NonNull
     @Override
     public MyAdapterRecyclerViewReview.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.review_item, parent, false);
+        View view;
+
+        if (isReceived) {
+            view = LayoutInflater.from(context).inflate(R.layout.review_item, parent, false);
+        } else {
+            view = LayoutInflater.from(context).inflate(R.layout.review_item_granted, parent, false);
+        }
 
         return new MyAdapterRecyclerViewReview.MyHolder(view);
     }
@@ -74,6 +82,15 @@ public class MyAdapterRecyclerViewReview extends RecyclerView.Adapter<MyAdapterR
                 }
             }
         });
+
+        if (!this.isReceived) {
+            holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showModalDeleteReview(review, finalUserReview);
+                }
+            });
+        }
     }
 
     @Override
@@ -86,6 +103,7 @@ public class MyAdapterRecyclerViewReview extends RecyclerView.Adapter<MyAdapterR
         ImageView ivPhoto;
         TextView tvName;
         RatingBar rbRating;
+        CardView buttonDelete;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -93,6 +111,7 @@ public class MyAdapterRecyclerViewReview extends RecyclerView.Adapter<MyAdapterR
             ivPhoto = itemView.findViewById(R.id.photo_user_sender);
             tvName = itemView.findViewById(R.id.name_user_sender);
             rbRating = itemView.findViewById(R.id.rating);
+            buttonDelete = itemView.findViewById(R.id.delete);
         }
     }
 
@@ -112,6 +131,44 @@ public class MyAdapterRecyclerViewReview extends RecyclerView.Adapter<MyAdapterR
         tvNameUserSender.setText(userSender.getName());
         tvCommentUserSender.setText(reviewSender.getComment());
         rbRating.setRating((float) reviewSender.getRate());
+
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    public void showModalDeleteReview(Review reviewDelete, User userSender) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.modal_delete_book, null);
+
+        builder.setView(dialogView);
+        final AlertDialog dialog = builder.create();
+
+        TextView tvDescription = dialogView.findViewById(R.id.description);
+        Button buttonDelete = dialogView.findViewById(R.id.button_delete);
+        Button buttonCancel = dialogView.findViewById(R.id.button_cancel);
+
+        tvDescription.setText("Tem certeza de que deseja excluir este comentário?");
+
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReviewDAO.getInstance().deleteReview(reviewDelete);
+                UserHasReviewDAO.getInstance().deleteUserReview(reviewDelete.getId());
+
+                int itemPosition = data.indexOf(reviewDelete);
+                data.remove(itemPosition);
+                notifyItemRemoved(itemPosition);
+
+                dialog.dismiss();
+            }
+        });
 
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
