@@ -242,7 +242,12 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                                 Request request = RequestDAO.getInstance().getRequestById(idRequest);
                                 int idUserReceiving = OrderDAO.getInstance().getIdUserByIdRequest(idRequest);
 
-                                userLogged.cancelDonationRequest(request, userLogged.getId(), idUserReceiving);
+                                if (book.getPrice() == 0) {
+                                    userLogged.cancelDonationRequest(request, userLogged.getId(), idUserReceiving);
+                                } else {
+                                    userLogged.cancelSaleItemRequest(item);
+                                }
+
                             } else if (typeView.equals("request")) {
                                 book.setAvailable(true);
                                 BookDAO.getInstance().editBook(book);
