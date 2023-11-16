@@ -127,7 +127,7 @@
                         android:paddingStart="15dp"
                         android:paddingEnd="15dp"
                         android:layout_marginTop="15dp"
-                        android:text="Finalizar Compra"
+                        android:text="Realizar Pedido"
                         android:textAllCaps="false"
                         android:textColor="@color/purple"
                         app:cornerRadius="2dp" />

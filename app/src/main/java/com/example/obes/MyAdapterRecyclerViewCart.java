@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.obes.dao.CartToItemDAO;
 import com.example.obes.dao.ItemCartDAO;
+import com.example.obes.dao.Request.ItemRequestDAO;
 import com.example.obes.dao.Wishlist.ItemWishlistDAO;
 import com.example.obes.dao.Wishlist.WishlistToItemDAO;
 import com.example.obes.model.Book.Book;
@@ -84,13 +85,24 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
         });
 
         if (this.isShoppingCart) {
+            Activity activity = (Activity) context;
+            TextView tvPriceTotal = activity.findViewById(R.id.price_total);
+            DecimalFormat df = new DecimalFormat("#.00");
+            final String[] newPriceTotal = new String[1];
+
+            ItemCart itemSlc = ItemCartDAO.getInstance().getItemByIdBook(book.getId());
+            holder.ItemCart.setChecked(itemSlc.getIsSelected());
+
+            if (itemSlc.getIsSelected()) {
+                priceTotal = countPriceTotal(book.getPrice());
+                newPriceTotal[0] = "R$ " + (priceTotal > 0 ? df.format(priceTotal) : "0.00");
+                tvPriceTotal.setText(newPriceTotal[0]);
+            }
+
             holder.ItemCart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Activity activity = (Activity) context;
-                    TextView tvPriceTotal = activity.findViewById(R.id.price_total);
-                    DecimalFormat df = new DecimalFormat("#.00");
-                    String newPriceTotal;
+
                     int indexItemCart = -1;
 
                     for (ItemCart itemCart : dataItemCart) {
@@ -104,6 +116,7 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
 
                         if (indexItemCart >= 0) {
                             dataItemCart.get(indexItemCart).setIsSelected(true);
+                            ItemCartDAO.getInstance().editItemCart(dataItemCart.get(indexItemCart));
                         }
                     } else {
                         priceTotal = countPriceTotal(book.getPrice() * -1);
@@ -113,8 +126,8 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
                         }
                     }
 
-                    newPriceTotal = "R$ " + (priceTotal > 0 ? df.format(priceTotal) : "0.00");
-                    tvPriceTotal.setText(newPriceTotal);
+                    newPriceTotal[0] = "R$ " + (priceTotal > 0 ? df.format(priceTotal) : "0.00");
+                    tvPriceTotal.setText(newPriceTotal[0]);
                 }
             });
         }
