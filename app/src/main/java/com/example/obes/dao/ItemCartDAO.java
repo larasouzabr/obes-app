@@ -48,6 +48,26 @@ public class ItemCartDAO {
         return removed;
     }
 
+    public boolean editItemCart(ItemCart item) {
+        ItemCart itemEdited = null;
+        boolean edited = false;
+
+        for (ItemCart i : this.listItensCart) {
+            if (i.getId() == item.getId()) {
+                itemEdited = i;
+                break;
+            }
+        }
+
+        if (itemEdited != null) {
+            itemEdited.setIsSelected(item.getIsSelected());
+
+            edited = true;
+        }
+
+        return edited;
+    }
+
     public ItemCart getItemById(int idItem) {
         ItemCart itemCart = null;
 

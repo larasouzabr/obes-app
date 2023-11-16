@@ -1,6 +1,11 @@
 package com.example.obes.model.Book;
 
-public class Book {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Book implements Parcelable {
     private int id;
     private String title;
     private String description;
@@ -22,6 +27,30 @@ public class Book {
         this.price = price;
         this.condition = condition;
     }
+
+    protected Book(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        description = in.readString();
+        category = in.readString();
+        available = in.readByte() != 0;
+        coverResourceId = in.readInt();
+        author = in.readString();
+        price = in.readDouble();
+        condition = in.readString();
+    }
+
+    public static final Creator<Book> CREATOR = new Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -96,5 +125,23 @@ public class Book {
 
     public void setCondition(String condition) {
         this.condition = condition;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(category);
+        dest.writeByte((byte) (available ? 1 : 0));
+        dest.writeInt(coverResourceId);
+        dest.writeString(author);
+        dest.writeDouble(price);
+        dest.writeString(condition);
     }
 }

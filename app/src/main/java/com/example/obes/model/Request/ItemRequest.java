@@ -1,8 +1,13 @@
 package com.example.obes.model.Request;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.example.obes.model.Book.Book;
 
-public class ItemRequest {
+public class ItemRequest implements Parcelable {
     private int id;
     private int amount;
     private double price;
@@ -16,6 +21,25 @@ public class ItemRequest {
         this.item = item;
         this.status = status;
     }
+
+    protected ItemRequest(Parcel in) {
+        id = in.readInt();
+        amount = in.readInt();
+        price = in.readDouble();
+        status = in.readString();
+    }
+
+    public static final Creator<ItemRequest> CREATOR = new Creator<ItemRequest>() {
+        @Override
+        public ItemRequest createFromParcel(Parcel in) {
+            return new ItemRequest(in);
+        }
+
+        @Override
+        public ItemRequest[] newArray(int size) {
+            return new ItemRequest[size];
+        }
+    };
 
     public double calcSubTotal() {
         return this.getPrice() * this.getAmount();
@@ -47,5 +71,22 @@ public class ItemRequest {
 
     public Book getItem() {
         return item;
+    }
+
+    public void setItem(Book item) {
+        this.item = item;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(amount);
+        dest.writeDouble(price);
+        dest.writeString(status);
     }
 }

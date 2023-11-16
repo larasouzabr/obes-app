@@ -33,6 +33,7 @@ import com.example.obes.model.Request.ItemRequest;
 import com.example.obes.model.Request.Request;
 import com.example.obes.model.User.User;
 import com.example.obes.model.User.UserCommon;
+import com.example.obes.payment.BookPaymentPage;
 import com.example.obes.perfil.PerfilUserCommon;
 
 import java.util.ArrayList;
@@ -86,7 +87,11 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                     intent = new Intent(context, BookRequestPage.class);
                 } else {
                     if (book.getPrice() > 0) {
-                        intent = new Intent(context, BookSalePage.class);
+                        if (typeView.equals("myRequest")) {
+                            intent = new Intent(context, BookPaymentPage.class);
+                        } else {
+                            intent = new Intent(context, BookSalePage.class);
+                        }
                     } else {
                         intent = new Intent(context, BookDonatePage.class);
                     }
@@ -237,7 +242,12 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                                 Request request = RequestDAO.getInstance().getRequestById(idRequest);
                                 int idUserReceiving = OrderDAO.getInstance().getIdUserByIdRequest(idRequest);
 
-                                userLogged.cancelDonationRequest(request, userLogged.getId(), idUserReceiving);
+                                if (book.getPrice() == 0) {
+                                    userLogged.cancelDonationRequest(request, userLogged.getId(), idUserReceiving);
+                                } else {
+                                    userLogged.cancelSaleItemRequest(item);
+                                }
+
                             } else if (typeView.equals("request")) {
                                 book.setAvailable(true);
                                 BookDAO.getInstance().editBook(book);

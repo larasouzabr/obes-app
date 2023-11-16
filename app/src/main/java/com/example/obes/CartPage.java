@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -29,6 +30,7 @@ import com.example.obes.model.Cart.ItemCart;
 import com.example.obes.model.Request.ItemRequest;
 import com.example.obes.model.Request.Request;
 import com.example.obes.model.User.User;
+import com.example.obes.payment.PaymentPage;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -106,17 +108,25 @@ public class CartPage extends AppCompatActivity {
             public void onClick(View v) {
                 Request newRequest = new Request(countIdRequest(), getCurrentDate(), "Pendente");
                 ArrayList<ItemRequest> newItems = new ArrayList<ItemRequest>();
+                ArrayList<Book> booksSelected = new ArrayList<Book>();
 
                 int newId = countIdItemRequest();
                 for (ItemCart item : listItemsCart) {
                     if (item.getIsSelected()) {
                         newItems.add(new ItemRequest(newId, 1, item.getItem(), "Pendente"));
                         newId++;
+                        booksSelected.add(item.getItem());
                     }
                 }
 
                 if (newItems.size() > 0) {
-                    showModalConfirmBuy(newRequest, newItems);
+                    Intent intent = new Intent(CartPage.this, PaymentPage.class);
+
+                    intent.putExtra("new_request", newRequest);
+                    intent.putParcelableArrayListExtra("new_items", newItems);
+                    intent.putParcelableArrayListExtra("books_selected", booksSelected);
+
+                    startActivity(intent);
                 } else {
                     Toast.makeText(CartPage.this, "Por favor, selecione algum item", Toast.LENGTH_SHORT).show();
                 }
@@ -213,48 +223,5 @@ public class CartPage extends AppCompatActivity {
         }
 
         return id;
-    }
-
-    public void showModalConfirmBuy(Request newRequest,  ArrayList<ItemRequest> newItems) {
-        final Dialog modal = new Dialog(CartPage.this);
-
-        modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        modal.setCancelable(true);
-        modal.setContentView(R.layout.modal_delete_book);
-
-        Button buttonCancel = modal.findViewById(R.id.button_cancel);
-        Button buttonDelete = modal.findViewById(R.id.button_delete);
-        TextView tvDescription = modal.findViewById(R.id.description);
-
-        tvDescription.setText("Tem certeza que deseja finalizar a compra?");
-        buttonDelete.setText("Comprar");
-
-        buttonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                modal.dismiss();
-            }
-        });
-
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userLogged.saleRequest(newRequest, newItems);
-
-                button_clean.performClick();
-
-                for (Request request : RequestToUserDAO.getInstance().getRequestsByIdUser(userLogged.getId())) {
-                    System.out.println("Id do pedido " + request.getId());
-                    System.out.println("    Itens do pedido ");
-                    for (ItemRequest item : RequestToItemDAO.getInstance().getItemsByIdRequest(request.getId())) {
-                        System.out.println("        " + item.getId() + " - " + item.getItem().getTitle());
-                    }
-                }
-
-                modal.dismiss();
-            }
-        });
-
-        modal.show();
     }
 }

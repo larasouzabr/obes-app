@@ -1,8 +1,13 @@
 package com.example.obes.model.Request;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
-public class Request {
+public class Request implements Parcelable {
     private int id;
     private String date;
     private String status;
@@ -14,6 +19,24 @@ public class Request {
         this.status = status;
         this.listItems = new ArrayList<ItemRequest>();
     }
+
+    protected Request(Parcel in) {
+        id = in.readInt();
+        date = in.readString();
+        status = in.readString();
+    }
+
+    public static final Creator<Request> CREATOR = new Creator<Request>() {
+        @Override
+        public Request createFromParcel(Parcel in) {
+            return new Request(in);
+        }
+
+        @Override
+        public Request[] newArray(int size) {
+            return new Request[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -33,5 +56,17 @@ public class Request {
 
     public ArrayList<ItemRequest> getListItems() {
         return this.listItems;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(date);
+        dest.writeString(status);
     }
 }

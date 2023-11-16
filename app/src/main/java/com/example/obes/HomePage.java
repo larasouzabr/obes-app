@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.BookSaleDAO;
@@ -103,6 +106,14 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
+        Button buttonLogout = findViewById(R.id.button_logout);
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showModalLogout();
+            }
+        });
+
         // =================
     }
 
@@ -112,5 +123,40 @@ public class HomePage extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    public void showModalLogout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomePage.this);
+        LayoutInflater inflater = (LayoutInflater) HomePage.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.modal_delete_book, null);
+
+        builder.setView(dialogView);
+        final AlertDialog dialog = builder.create();
+
+        TextView tvDescription = dialogView.findViewById(R.id.description);
+        Button buttonConfirm = dialogView.findViewById(R.id.button_delete);
+        Button buttonCancel = dialogView.findViewById(R.id.button_cancel);
+
+        tvDescription.setText("Tem certeza de que deseja sair?");
+        buttonConfirm.setText("Sair");
+
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginSessionManager.logout();
+                Intent intentLogout = new Intent(HomePage.this, MainActivity.class);
+                startActivity(intentLogout);
+                finish();
+            }
+        });
+
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }
