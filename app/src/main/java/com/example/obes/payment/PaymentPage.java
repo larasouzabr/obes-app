@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.obes.CartPage;
 import com.example.obes.R;
@@ -21,11 +22,17 @@ import com.example.obes.dao.CartToItemDAO;
 import com.example.obes.dao.CartToUserDAO;
 import com.example.obes.dao.ItemCartDAO;
 import com.example.obes.dao.LoginSessionManager;
+import com.example.obes.dao.Payment.PaymentToItemDAO;
+import com.example.obes.dao.Payment.PaymentToUserDAO;
 import com.example.obes.dao.Review.ReviewDAO;
 import com.example.obes.dao.Review.UserHasReviewDAO;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.Cart.Cart;
 import com.example.obes.model.Cart.ItemCart;
+import com.example.obes.model.Payment.BoletoPayment;
+import com.example.obes.model.Payment.CreditCardPayment;
+import com.example.obes.model.Payment.IPayment;
+import com.example.obes.model.Payment.PixPayment;
 import com.example.obes.model.Request.ItemRequest;
 import com.example.obes.model.Request.Request;
 import com.example.obes.model.User.User;
@@ -83,7 +90,13 @@ public class PaymentPage extends AppCompatActivity {
         this.buttonBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showModalConfirmBuy(newRequest, newItems);
+                boolean hasPayment = userHasPayment();
+
+                if (hasPayment) {
+                    showModalConfirmBuy(newRequest, newItems);
+                } else {
+                    Toast.makeText(PaymentPage.this, "Por favor, confirme os dados do pagamento", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -201,6 +214,32 @@ public class PaymentPage extends AppCompatActivity {
 
     public void buy(Request newRequest,  ArrayList<ItemRequest> newItems) {
         userLogged.saleRequest(newRequest, newItems);
+        ArrayList<IPayment> paymentsUser = PaymentToUserDAO.getInstance().getPaymentsByIdUser(userLogged.getId());
+
+        for (ItemRequest item : newItems) {
+            if (PAYMENT_SELECTED == 0) {
+                for (IPayment p : paymentsUser) {
+                    if (p instanceof CreditCardPayment) {
+                        PaymentToItemDAO.getInstance().addPaymentToItem(p.getId(), item.getId());
+                        break;
+                    }
+                }
+            } else if (PAYMENT_SELECTED == 1) {
+                for (IPayment p : paymentsUser) {
+                    if (p instanceof BoletoPayment) {
+                        PaymentToItemDAO.getInstance().addPaymentToItem(p.getId(), item.getId());
+                        break;
+                    }
+                }
+            } else {
+                for (IPayment p : paymentsUser) {
+                    if (p instanceof PixPayment) {
+                        PaymentToItemDAO.getInstance().addPaymentToItem(p.getId(), item.getId());
+                        break;
+                    }
+                }
+            }
+        }
 
         cleanCart();
 
@@ -232,11 +271,39 @@ public class PaymentPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buy(newRequest, newItems);
-
-                modal.dismiss();
             }
         });
 
         modal.show();
+    }
+
+    public boolean userHasPayment() {
+        boolean hasPayment = false;
+        ArrayList<IPayment> paymentsUser = PaymentToUserDAO.getInstance().getPaymentsByIdUser(this.userLogged.getId());
+
+        if (PAYMENT_SELECTED == 0) {
+            for (IPayment p : paymentsUser) {
+                if (p instanceof CreditCardPayment) {
+                    hasPayment = true;
+                    break;
+                }
+            }
+        } else if (PAYMENT_SELECTED == 1) {
+            for (IPayment p : paymentsUser) {
+                if (p instanceof BoletoPayment) {
+                    hasPayment = true;
+                    break;
+                }
+            }
+        } else {
+            for (IPayment p : paymentsUser) {
+                if (p instanceof PixPayment) {
+                    hasPayment = true;
+                    break;
+                }
+            }
+        }
+
+        return hasPayment;
     }
 }
