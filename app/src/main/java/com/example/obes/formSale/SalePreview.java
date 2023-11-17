@@ -2,9 +2,12 @@ package com.example.obes.formSale;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -14,6 +17,7 @@ import com.example.obes.R;
 import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.LoginSessionManager;
+import com.example.obes.formDonate.DonatePreview;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.User.UserCommon;
 import com.example.obes.perfil.PerfilUserCommon;
@@ -100,15 +104,16 @@ public class SalePreview extends AppCompatActivity {
     }
 
     private void showModal() {
-        final Dialog modal = new Dialog(SalePreview.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SalePreview.this);
+        LayoutInflater inflater = (LayoutInflater) SalePreview.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.custom_modal, null);
 
-        modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        modal.setCancelable(true);
-        modal.setContentView(R.layout.custom_modal);
+        builder.setView(dialogView);
+        final AlertDialog dialog = builder.create();
 
-        final TextView tvTitleModal = modal.findViewById(R.id.title_modal);
-        final TextView tvTextModal = modal.findViewById(R.id.text_modal);
-        TextView tvButtonModal = modal.findViewById(R.id.button_modal);
+        final TextView tvTitleModal = dialogView.findViewById(R.id.title_modal);
+        final TextView tvTextModal = dialogView.findViewById(R.id.text_modal);
+        TextView tvButtonModal = dialogView.findViewById(R.id.button_modal);
 
         tvTitleModal.setText("Obrigado por vender no Obes");
         tvTextModal.setText("Você receberá um e-mail quando alguém solicitar a compra. Atente-se ao seu telefone e realize a entrega com responsabilidade!");
@@ -121,6 +126,6 @@ public class SalePreview extends AppCompatActivity {
             }
         });
 
-        modal.show();
+        dialog.show();
     }
 }

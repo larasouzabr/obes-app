@@ -2,14 +2,18 @@ package com.example.obes.formDonate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.obes.BookDonatePage;
 import com.example.obes.R;
 import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.BookSaleDAO;
@@ -102,15 +106,16 @@ public class DonatePreview extends AppCompatActivity {
     }
 
     private void showModal() {
-        final Dialog modal = new Dialog(DonatePreview.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(DonatePreview.this);
+        LayoutInflater inflater = (LayoutInflater) DonatePreview.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.custom_modal, null);
 
-        modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        modal.setCancelable(true);
-        modal.setContentView(R.layout.custom_modal);
+        builder.setView(dialogView);
+        final AlertDialog dialog = builder.create();
 
-        final TextView tvTitleModal = modal.findViewById(R.id.title_modal);
-        final TextView tvTextModal = modal.findViewById(R.id.text_modal);
-        TextView tvButtonModal = modal.findViewById(R.id.button_modal);
+        final TextView tvTitleModal = dialogView.findViewById(R.id.title_modal);
+        final TextView tvTextModal = dialogView.findViewById(R.id.text_modal);
+        TextView tvButtonModal = dialogView.findViewById(R.id.button_modal);
 
         tvTitleModal.setText("Obrigado por doar no Obes");
         tvTextModal.setText("Você receberá um e-mail quando alguém solicitar a doação. Atente-se ao seu telefone e realize a entrega com responsabilidade!");
@@ -123,6 +128,6 @@ public class DonatePreview extends AppCompatActivity {
             }
         });
 
-        modal.show();
+        dialog.show();
     }
 }

@@ -247,15 +247,16 @@ public class PaymentPage extends AppCompatActivity {
     }
 
     public void showModalConfirmBuy(Request newRequest,  ArrayList<ItemRequest> newItems) {
-        final Dialog modal = new Dialog(PaymentPage.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(PaymentPage.this);
+        LayoutInflater inflater = (LayoutInflater) PaymentPage.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.modal_delete_book, null);
 
-        modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        modal.setCancelable(true);
-        modal.setContentView(R.layout.modal_delete_book);
+        builder.setView(dialogView);
+        final AlertDialog dialog = builder.create();
 
-        Button buttonCancel = modal.findViewById(R.id.button_cancel);
-        Button buttonDelete = modal.findViewById(R.id.button_delete);
-        TextView tvDescription = modal.findViewById(R.id.description);
+        Button buttonCancel = dialogView.findViewById(R.id.button_cancel);
+        Button buttonDelete = dialogView.findViewById(R.id.button_delete);
+        TextView tvDescription = dialogView.findViewById(R.id.description);
 
         tvDescription.setText("Tem certeza que deseja finalizar a compra?");
         buttonDelete.setText("Comprar");
@@ -263,7 +264,7 @@ public class PaymentPage extends AppCompatActivity {
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modal.dismiss();
+                dialog.dismiss();
             }
         });
 
@@ -274,7 +275,7 @@ public class PaymentPage extends AppCompatActivity {
             }
         });
 
-        modal.show();
+        dialog.show();
     }
 
     public boolean userHasPayment() {

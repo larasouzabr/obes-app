@@ -2,9 +2,12 @@ package com.example.obes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -32,6 +35,7 @@ import com.example.obes.model.User.User;
 import com.example.obes.model.User.UserCommon;
 import com.example.obes.model.Wishlist.ItemWishlist;
 import com.example.obes.model.Wishlist.Wishlist;
+import com.example.obes.payment.PaymentPage;
 
 import java.util.ArrayList;
 
@@ -224,15 +228,16 @@ public class BookSalePage extends AppCompatActivity {
     }
 
     private void showModal() {
-        final Dialog modal = new Dialog(BookSalePage.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(BookSalePage.this);
+        LayoutInflater inflater = (LayoutInflater) BookSalePage.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.custom_modal, null);
 
-        modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        modal.setCancelable(true);
-        modal.setContentView(R.layout.custom_modal);
+        builder.setView(dialogView);
+        final AlertDialog dialog = builder.create();
 
-        final TextView tvTitleModal = modal.findViewById(R.id.title_modal);
-        final TextView tvTextModal = modal.findViewById(R.id.text_modal);
-        TextView tvButtonModal = modal.findViewById(R.id.button_modal);
+        final TextView tvTitleModal = dialogView.findViewById(R.id.title_modal);
+        final TextView tvTextModal = dialogView.findViewById(R.id.text_modal);
+        TextView tvButtonModal = dialogView.findViewById(R.id.button_modal);
 
         tvTitleModal.setText("Produto adicionado ao carrinho");
         tvTextModal.setText("Seu produto foi adicionado ao carrinho para finalização da compra");
@@ -246,7 +251,7 @@ public class BookSalePage extends AppCompatActivity {
             }
         });
 
-        modal.show();
+        dialog.show();
     }
     private boolean bookIsFavorite(int idBook, int idUser) {
         ItemWishlist item = null;

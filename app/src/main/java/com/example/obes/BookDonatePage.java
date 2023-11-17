@@ -2,9 +2,12 @@ package com.example.obes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -273,15 +276,16 @@ public class BookDonatePage extends AppCompatActivity {
     }
 
     public void showModal() {
-        final Dialog modal = new Dialog(BookDonatePage.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(BookDonatePage.this);
+        LayoutInflater inflater = (LayoutInflater) BookDonatePage.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.custom_modal, null);
 
-        modal.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        modal.setCancelable(true);
-        modal.setContentView(R.layout.custom_modal);
+        builder.setView(dialogView);
+        final AlertDialog dialog = builder.create();
 
-        final TextView tvTitleModal = modal.findViewById(R.id.title_modal);
-        final TextView tvTextModal = modal.findViewById(R.id.text_modal);
-        TextView tvButtonModal = modal.findViewById(R.id.button_modal);
+        final TextView tvTitleModal = dialogView.findViewById(R.id.title_modal);
+        final TextView tvTextModal = dialogView.findViewById(R.id.text_modal);
+        TextView tvButtonModal = dialogView.findViewById(R.id.button_modal);
 
         tvTitleModal.setText("Doação Solicitada");
         tvTextModal.setText("Notificamos ao vendedor sobre sua solicitação de receber o produto, você pode visualizar o status no seu perfil");
@@ -302,7 +306,7 @@ public class BookDonatePage extends AppCompatActivity {
             }
         });
 
-        modal.show();
+        dialog.show();
     }
 
     public float getRatingUserDonating(User userDonate) {

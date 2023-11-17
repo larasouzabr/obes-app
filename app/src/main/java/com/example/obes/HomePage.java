@@ -144,6 +144,7 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginSessionManager.logout();
+                dialog.dismiss();
                 Intent intentLogout = new Intent(HomePage.this, MainActivity.class);
                 startActivity(intentLogout);
                 finish();

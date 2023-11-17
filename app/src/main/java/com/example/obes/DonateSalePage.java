@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,10 +14,13 @@ import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.formDonate.DonateFormPage;
 import com.example.obes.formSale.SaleFormPage;
 import com.example.obes.model.Address.Address;
+import com.example.obes.perfil.PerfilUserCommon;
+import com.example.obes.perfil.PerfilUserInstitutional;
 
 public class DonateSalePage extends AppCompatActivity {
     private TextView button_donate;
     private TextView button_sell;
+    private ImageView foto_perfil;
     private LoginSessionManager loginSessionManager = LoginSessionManager.getInstance();
 
     @Override
@@ -67,6 +71,25 @@ public class DonateSalePage extends AppCompatActivity {
                 }
             }
         });
+
+        // =========================
+
+        foto_perfil = findViewById(R.id.foto_perfil);
+
+        foto_perfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean userLoggedIsCommon = checkedUserLoggedIsCommon();
+
+                Intent intent;
+                if (userLoggedIsCommon) {
+                    intent = new Intent(DonateSalePage.this, PerfilUserCommon.class);
+                } else {
+                    intent = new Intent(DonateSalePage.this, PerfilUserInstitutional.class);
+                }
+                startActivity(intent);
+            }
+        });
     }
 
     private void startComponents() {
@@ -94,4 +117,11 @@ public class DonateSalePage extends AppCompatActivity {
         return true;
     }
 
+    private boolean checkedUserLoggedIsCommon() {
+        if (loginSessionManager.getCurrentUserCommon() != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
