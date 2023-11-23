@@ -7,12 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.obes.BottomMenuHandler;
+import com.example.obes.LocationPage;
 import com.example.obes.R;
+import com.example.obes.dao.AddressDAO;
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.dao.Review.UserHasReviewDAO;
+import com.example.obes.model.Address.Address;
 import com.example.obes.model.Review.Review;
 import com.example.obes.model.User.UserCommon;
 import com.google.android.material.tabs.TabLayout;
@@ -29,6 +33,8 @@ public class PerfilUserCommon extends AppCompatActivity {
     private TabLayout tlBooks;
     private ViewPager2 vpTabBooks;
     private ImageView ivButtonEdit;
+    private LinearLayout location;
+    private TextView tvUserLocation;
     private MyViewPageAdapterReview myViewPageAdapter;
     private MyViewPageAdapterBooks myViewPageAdapterBooks;
     private LoginSessionManager loginSessionManager;
@@ -58,6 +64,14 @@ public class PerfilUserCommon extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        this.location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PerfilUserCommon.this, LocationPage.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void startComponents() {
@@ -71,11 +85,22 @@ public class PerfilUserCommon extends AppCompatActivity {
         this.myViewPageAdapterBooks = new MyViewPageAdapterBooks(this);
         this.loginSessionManager = LoginSessionManager.getInstance();
         this.ivButtonEdit = findViewById(R.id.button_edit);
+        this.location = findViewById(R.id.location);
+        this.tvUserLocation = findViewById(R.id.user_location);
         this.tvUserRate = findViewById(R.id.user_rate);
     }
 
     private void setInfUser(UserCommon user) {
         this.tvUserName.setText(user.getName());
+
+        Address addressUser = AddressDAO.getInstance().getAddressByIdUser(this.userLogged.getId());
+
+        if (addressUser == null) {
+            this.tvUserLocation.setText("Localização");
+        } else {
+            String location = addressUser.getCidade() + " - " + addressUser.getEstado();
+            this.tvUserLocation.setText(location);
+        }
 
         if (this.userLogged.getAbout().isEmpty()) {
             this.tvUserAbout.setText("Olá! Sou apaixonado por doar livros e compartilhar conhecimento.");

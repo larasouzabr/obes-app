@@ -58,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edit_text_background"
-                    android:inputType="date"
+                    android:inputType="textLongMessage"
                     android:hint="MM/DD/YYYY"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
@@ -242,6 +242,35 @@
                         </LinearLayout>
 
                     </LinearLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        android:layout_marginStart="10dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rua/Avenida"
+                            android:textColor="@color/purple_700"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <EditText
+                        android:id="@+id/street"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/edit_text_background"
+                        android:inputType="textLongMessage"
+                        android:hint="Rua/Avenida"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:layout_marginBottom="30dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"

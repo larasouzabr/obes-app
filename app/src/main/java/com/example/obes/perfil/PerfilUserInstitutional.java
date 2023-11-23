@@ -7,11 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.obes.BottomMenuHandler;
+import com.example.obes.LocationPage;
 import com.example.obes.R;
+import com.example.obes.dao.AddressDAO;
 import com.example.obes.dao.LoginSessionManager;
+import com.example.obes.model.Address.Address;
 import com.example.obes.model.User.UserInstitutional;
 import com.google.android.material.tabs.TabLayout;
 
@@ -23,6 +27,8 @@ public class PerfilUserInstitutional extends AppCompatActivity {
     private ViewPager2 vpTabReviews;
     private TabLayout tlBooks;
     private TabLayout tlReviews;
+    private LinearLayout location;
+    private TextView tvUserLocation;
     private MyViewPageAdapterBooks myViewPageAdapterBooks;
     private MyViewPageAdapterReview myViewPageAdapter;
     private LoginSessionManager loginSessionManager;
@@ -50,6 +56,14 @@ public class PerfilUserInstitutional extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        this.location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PerfilUserInstitutional.this, LocationPage.class);
+                startActivity(intent);
+            }
+        });
     }
     private void startComponents() {
         this.tvUserName = findViewById(R.id.user_name);
@@ -62,6 +76,8 @@ public class PerfilUserInstitutional extends AppCompatActivity {
         this.myViewPageAdapter = new MyViewPageAdapterReview(this);
         this.tlBooks = findViewById(R.id.tab_books_available);
         this.tlReviews = findViewById(R.id.tab_reviews);
+        this.location = findViewById(R.id.location);
+        this.tvUserLocation = findViewById(R.id.user_location);
     }
     private UserInstitutional getUserLogged() {
         UserInstitutional user = loginSessionManager.getCurrentUserInstitutional();
@@ -69,6 +85,15 @@ public class PerfilUserInstitutional extends AppCompatActivity {
     }
     private void setInfUser(UserInstitutional user) {
         this.tvUserName.setText(user.getName());
+
+        Address addressUser = AddressDAO.getInstance().getAddressByIdUser(this.userLogged.getId());
+
+        if (addressUser == null) {
+            this.tvUserLocation.setText("Localização");
+        } else {
+            String location = addressUser.getCidade() + " - " + addressUser.getEstado();
+            this.tvUserLocation.setText(location);
+        }
 
         if(this.userLogged.getAbout().isEmpty()) {
             this.tvUserAbout.setText("Olá! Sou apaixonado por doar livros e compartilhar conhecimento.");

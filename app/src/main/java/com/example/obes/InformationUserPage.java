@@ -28,6 +28,7 @@ public class InformationUserPage extends AppCompatActivity {
     private EditText etCep;
     private EditText etState;
     private EditText etCity;
+    private EditText etStreet;
     private EditText etNeighborhood;
     private EditText etNumber;
     private LoginSessionManager loginSessionManager;
@@ -45,6 +46,8 @@ public class InformationUserPage extends AppCompatActivity {
         this.etDate.setText(this.userLogged.getDateOfBirth());
         this.etCpf.setText(this.userLogged.getCpf());
         this.etPhone.setText(this.userLogged.getContact());
+
+        this.setInfAddress();
 
         this.button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,10 +74,11 @@ public class InformationUserPage extends AppCompatActivity {
                     String cep = etCep.getText().toString();
                     String state = etState.getText().toString();
                     String city = etCity.getText().toString();
+                    String street = etStreet.getText().toString();
                     String neighborhood = etNeighborhood.getText().toString();
-                    int number = Integer.parseInt(etNumber.getText().toString());
+                    String number = etNumber.getText().toString();
 
-                    Address newAddress = new Address(countIdAddress(), userLogged.getId(), cep, state, city, neighborhood, number);
+                    Address newAddress = new Address(countIdAddress(), userLogged.getId(), cep, state, city, street, neighborhood, number);
 
                     if (addressDAO.getAddressByIdUser(userLogged.getId()) == null) {
                         addressDAO.addAddress(newAddress);
@@ -108,6 +112,7 @@ public class InformationUserPage extends AppCompatActivity {
         this.etCep = findViewById(R.id.cep);
         this.etState = findViewById(R.id.state);
         this.etCity = findViewById(R.id.city);
+        this.etStreet = findViewById(R.id.street);
         this.etNeighborhood = findViewById(R.id.neighborhood);
         this.etNumber = findViewById(R.id.number);
         this.loginSessionManager = LoginSessionManager.getInstance();
@@ -141,5 +146,18 @@ public class InformationUserPage extends AppCompatActivity {
         }
 
         return idAddress;
+    }
+
+    private void setInfAddress() {
+        Address userAddress = AddressDAO.getInstance().getAddressByIdUser(this.userLogged.getId());
+
+        if (userAddress != null) {
+            this.etCep.setText(userAddress.getCep());
+            this.etState.setText(userAddress.getEstado());
+            this.etCity.setText(userAddress.getCidade());
+            this.etStreet.setText(userAddress.getRua());
+            this.etNeighborhood.setText(userAddress.getBairro());
+            this.etNumber.setText(userAddress.getNumero());
+        }
     }
 }

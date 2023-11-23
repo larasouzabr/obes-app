@@ -67,20 +67,21 @@
 
                     <TextView
                         android:id="@+id/user_name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="Rafaella Santos"
                         android:textSize="24sp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_weight="2"/>
+                        android:textColor="@color/black"/>
 
                     <LinearLayout
-                        android:layout_width="90dp"
+                        android:id="@+id/location"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_weight="1"
-                        android:layout_gravity="center">
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -90,7 +91,7 @@
 
                         <TextView
                             android:id="@+id/user_location"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"
                             android:text="Quixadá - CE"

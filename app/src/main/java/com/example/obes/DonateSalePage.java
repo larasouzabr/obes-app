@@ -14,6 +14,7 @@ import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.formDonate.DonateFormPage;
 import com.example.obes.formSale.SaleFormPage;
 import com.example.obes.model.Address.Address;
+import com.example.obes.model.User.UserCommon;
 import com.example.obes.perfil.PerfilUserCommon;
 import com.example.obes.perfil.PerfilUserInstitutional;
 
