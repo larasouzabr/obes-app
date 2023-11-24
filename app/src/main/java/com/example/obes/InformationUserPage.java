@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,12 +27,7 @@ public class InformationUserPage extends AppCompatActivity {
     private EditText etPhone;
     private Button button_cancel;
     private Button button_save;
-    private EditText etCep;
-    private EditText etState;
-    private EditText etCity;
-    private EditText etStreet;
-    private EditText etNeighborhood;
-    private EditText etNumber;
+    private Button button_address;
     private LoginSessionManager loginSessionManager;
     private UserCommon userLogged;
     @Override
@@ -47,12 +44,25 @@ public class InformationUserPage extends AppCompatActivity {
         this.etCpf.setText(this.userLogged.getCpf());
         this.etPhone.setText(this.userLogged.getContact());
 
-        this.setInfAddress();
-
         this.button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        this.button_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentAddress = new Intent(InformationUserPage.this, LocationPage.class);
+
+                Intent intentExtra = getIntent();
+                String nextPage = intentExtra.getStringExtra("next_page");
+
+                intentAddress.putExtra("flow", "donateSale");
+                intentAddress.putExtra("next_page", nextPage);
+
+                startActivity(intentAddress);
             }
         });
 
@@ -71,33 +81,35 @@ public class InformationUserPage extends AppCompatActivity {
 
                     AddressDAO addressDAO = AddressDAO.getInstance();
 
-                    String cep = etCep.getText().toString();
-                    String state = etState.getText().toString();
-                    String city = etCity.getText().toString();
-                    String street = etStreet.getText().toString();
-                    String neighborhood = etNeighborhood.getText().toString();
-                    String number = etNumber.getText().toString();
-
-                    Address newAddress = new Address(countIdAddress(), userLogged.getId(), cep, state, city, street, neighborhood, number);
-
                     if (addressDAO.getAddressByIdUser(userLogged.getId()) == null) {
-                        addressDAO.addAddress(newAddress);
+                        Button buttonAddress = findViewById(R.id.button_address);
+
+                        TextView newTextView = new TextView(InformationUserPage.this);
+                        newTextView.setText("Adicione/Edite seu endereço");
+                        newTextView.setTextColor(getResources().getColor(R.color.red));
+
+                        LinearLayout linearLayout = findViewById(R.id.layout_data);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        layoutParams.gravity = Gravity.CENTER;
+                        newTextView.setLayoutParams(layoutParams);
+
+                        linearLayout.addView(newTextView, linearLayout.indexOfChild(buttonAddress) + 1);
+
+                        Toast.makeText(InformationUserPage.this, "Por favor, cadastre um endereço", Toast.LENGTH_SHORT).show();
                     } else {
-                        addressDAO.editAddress(newAddress);
+                        Intent intentExtra = getIntent();
+                        String nextPage = intentExtra.getStringExtra("next_page");
+
+                        Intent intent;
+
+                        if (nextPage.equals("formDonate")) {
+                            intent = new Intent(InformationUserPage.this, DonateFormPage.class);
+                        } else {
+                            intent = new Intent(InformationUserPage.this, SaleFormPage.class);
+                        }
+
+                        startActivity(intent);
                     }
-
-                    Intent intentExtra = getIntent();
-                    String nextPage = intentExtra.getStringExtra("next_page");
-
-                    Intent intent;
-
-                    if (nextPage.equals("formDonate")) {
-                        intent = new Intent(InformationUserPage.this, DonateFormPage.class);
-                    } else {
-                        intent = new Intent(InformationUserPage.this, SaleFormPage.class);
-                    }
-
-                    startActivity(intent);
                 }
             }
         });
@@ -109,12 +121,7 @@ public class InformationUserPage extends AppCompatActivity {
         this.etPhone = findViewById(R.id.phone);
         this.button_cancel = findViewById(R.id.button_cancel);
         this.button_save = findViewById(R.id.button_save);
-        this.etCep = findViewById(R.id.cep);
-        this.etState = findViewById(R.id.state);
-        this.etCity = findViewById(R.id.city);
-        this.etStreet = findViewById(R.id.street);
-        this.etNeighborhood = findViewById(R.id.neighborhood);
-        this.etNumber = findViewById(R.id.number);
+        this.button_address = findViewById(R.id.button_address);
         this.loginSessionManager = LoginSessionManager.getInstance();
     }
 
@@ -124,13 +131,8 @@ public class InformationUserPage extends AppCompatActivity {
         String date = this.etDate.getText().toString();
         String cpf = this.etCpf.getText().toString();
         String contact = this.etPhone.getText().toString();
-        String cep = this.etCep.getText().toString();
-        String state = this.etState.getText().toString();
-        String city = this.etCity.getText().toString();
-        String neighborhood = this.etNeighborhood.getText().toString();
-        String number = this.etNumber.getText().toString();
 
-        if (date.isEmpty() || cpf.isEmpty() || contact.isEmpty() || cep.isEmpty() || state.isEmpty() || city.isEmpty() || neighborhood.isEmpty() || number.isEmpty()) {
+        if (date.isEmpty() || cpf.isEmpty() || contact.isEmpty()) {
             someEmpty = true;
         }
 
@@ -146,18 +148,5 @@ public class InformationUserPage extends AppCompatActivity {
         }
 
         return idAddress;
-    }
-
-    private void setInfAddress() {
-        Address userAddress = AddressDAO.getInstance().getAddressByIdUser(this.userLogged.getId());
-
-        if (userAddress != null) {
-            this.etCep.setText(userAddress.getCep());
-            this.etState.setText(userAddress.getEstado());
-            this.etCity.setText(userAddress.getCidade());
-            this.etStreet.setText(userAddress.getRua());
-            this.etNeighborhood.setText(userAddress.getBairro());
-            this.etNumber.setText(userAddress.getNumero());
-        }
     }
 }

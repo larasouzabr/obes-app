@@ -61,6 +61,7 @@ public class PerfilUserInstitutional extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PerfilUserInstitutional.this, LocationPage.class);
+                intent.putExtra("flow", "profile");
                 startActivity(intent);
             }
         });

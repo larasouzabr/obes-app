@@ -2,12 +2,16 @@ package com.example.obes;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,9 +51,11 @@ public class LocationPage extends AppCompatActivity implements OnMapReadyCallbac
     private Button buttonCancel;
     private Button buttonSave;
     private Button buttonSearch;
+    private TextView buttonMyLocation;
     private GoogleMap mMap;
     private LoginSessionManager loginSessionManager;
     private User userLogged;
+    private static final int MY_PERMISSIONS_REQUEST_LOCATION = 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +101,13 @@ public class LocationPage extends AppCompatActivity implements OnMapReadyCallbac
                     addMarkerWithAddress(newAddress);
                 }
 
+            }
+        });
+
+        this.buttonMyLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateLocation();
             }
         });
 
@@ -162,6 +175,7 @@ public class LocationPage extends AppCompatActivity implements OnMapReadyCallbac
         this.buttonCancel = findViewById(R.id.button_cancel);
         this.buttonSave = findViewById(R.id.button_save);
         this.buttonSearch = findViewById(R.id.button_search);
+        this.buttonMyLocation = findViewById(R.id.button_my_location);
         this.loginSessionManager = LoginSessionManager.getInstance();
     }
 
@@ -280,17 +294,24 @@ public class LocationPage extends AppCompatActivity implements OnMapReadyCallbac
                 com.example.obes.model.Address.Address newAddress = getAddressForm();
 
                 if (addressDAO.getAddressByIdUser(userLogged.getId()) == null) {
-                    System.out.println("não tem endereço " + addressDAO.getAddressByIdUser(userLogged.getId()));
                     addressDAO.addAddress(newAddress);
                 } else {
-                    System.out.println("Tem endereço " + addressDAO.getAddressByIdUser(userLogged.getId()));
                     addressDAO.editAddress(newAddress);
                 }
 
                 Intent intent;
 
                 if (loginSessionManager.getCurrentUserCommon() != null) {
-                    intent = new Intent(LocationPage.this, PerfilUserCommon.class);
+                    if (getIntent().getStringExtra("flow").equals("donateSale")) {
+                        intent = new Intent(LocationPage.this, InformationUserPage.class);
+
+                        Intent intentExtra = getIntent();
+                        String nextPage = intentExtra.getStringExtra("next_page");
+
+                        intent.putExtra("next_page", nextPage);
+                    } else {
+                        intent = new Intent(LocationPage.this, PerfilUserCommon.class);
+                    }
                 } else {
                     intent = new Intent(LocationPage.this, PerfilUserInstitutional.class);
                 }
@@ -320,5 +341,76 @@ public class LocationPage extends AppCompatActivity implements OnMapReadyCallbac
         com.example.obes.model.Address.Address newAddress = new com.example.obes.model.Address.Address(countIdAddress(), userLogged.getId(), cep, state, city, street, neighborhood, number);
 
         return newAddress;
+    }
+
+    private void updateLocation() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(LocationPage.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(LocationPage.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            if (lastKnownLocation != null) {
+                LatLng currentLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+
+                mMap.clear();
+                mMap.addMarker(new MarkerOptions().position(currentLocation).title("Sua Localização"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
+
+                com.example.obes.model.Address.Address address = getAddressFromLocation(lastKnownLocation);
+                setInfAddress(address);
+            } else {
+                Toast.makeText(LocationPage.this, "Não foi possível obter a localização atual", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // Solicitar permissões se não estiverem concedidas
+            ActivityCompat.requestPermissions(LocationPage.this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_LOCATION);
+        }
+    }
+
+    private com.example.obes.model.Address.Address getAddressFromLocation(Location location) {
+        com.example.obes.model.Address.Address addressMarker = null;
+        Geocoder geocoder = new Geocoder(LocationPage.this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            // String fullAddress = "";
+            if (!addresses.isEmpty()) {
+                Address address = addresses.get(0);
+
+                String cep = address.getPostalCode();
+                String estado = address.getAdminArea();
+                String cidade = address.getSubAdminArea();
+                String rua = address.getThoroughfare();
+                String bairro = address.getSubLocality();
+                String numero = address.getSubThoroughfare();
+
+                // fullAddress = String.format("CEP: %s\nEstado: %s\nCidade: %s\nBairro: %s\nRua: %s\nNúmero: %s", cep, estado, cidade, bairro, numero);
+
+                addressMarker = new com.example.obes.model.Address.Address(0, 0, cep, estado, cidade, rua, bairro, (numero == null ? "" : numero));
+                setInfAddress(addressMarker);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return addressMarker;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permissão concedida, você pode chamar sua lógica para obter a localização aqui
+                updateLocation();
+            } else {
+                Toast.makeText(LocationPage.this, "Permissão de localização não concedida", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
