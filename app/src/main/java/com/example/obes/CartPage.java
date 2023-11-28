@@ -112,7 +112,7 @@ public class CartPage extends AppCompatActivity {
 
                 int newId = countIdItemRequest();
                 for (ItemCart item : listItemsCart) {
-                    if (item.getIsSelected()) {
+                    if (item.getSelected()) {
                         newItems.add(new ItemRequest(newId, 1, item.getItem(), "Pendente"));
                         newId++;
                         booksSelected.add(item.getItem());

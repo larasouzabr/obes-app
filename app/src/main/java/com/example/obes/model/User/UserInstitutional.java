@@ -24,6 +24,7 @@ public class UserInstitutional extends User {
         this.password = password;
         this.type = type;
         this.about = "";
+        this.contact = "";
 
         this.listMyBooks = new ArrayList<Book>();
     }

@@ -73,7 +73,7 @@ public class UserCommonDAO {
     }
 
     public boolean addUser(UserCommon user) {
-        // this.listUsersCommon.add(user);
+        this.listUsersCommon.add(user);
 
         this.reference.child(String.valueOf(user.getId())).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -89,6 +89,8 @@ public class UserCommonDAO {
         return true;
     }
     public boolean deleteUser(UserCommon user) {
+        this.listUsersCommon.remove(user);
+
         this.reference.child(String.valueOf(user.getId())).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -104,6 +106,18 @@ public class UserCommonDAO {
     }
 
     public boolean editUser(UserCommon user) {
+        for (UserCommon u : this.listUsersCommon) {
+            if (u.getId() == user.getId()) {
+                u.setName(user.getName());
+                u.setAbout(user.getAbout());
+                u.setContact(user.getContact());
+                u.setEmail(user.getEmail());
+                u.setPassword(user.getPassword());
+                u.setCpf(user.getCpf());
+                u.setDateOfBirth(user.getDateOfBirth());
+            }
+        }
+
         DatabaseReference userReference = this.reference.child(String.valueOf(user.getId()));
 
         LoginSessionManager.getInstance().loginUserCommon(user);
@@ -136,7 +150,7 @@ public class UserCommonDAO {
     public UserCommon getUserById(int idUser) {
         UserCommon user = null;
 
-        for(UserCommon u : this.getListUsers()){
+        for(UserCommon u : this.listUsersCommon){
             if( u.getId() == idUser ){
                 user = u;
                 break;

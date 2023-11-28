@@ -91,9 +91,9 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
             final String[] newPriceTotal = new String[1];
 
             ItemCart itemSlc = ItemCartDAO.getInstance().getItemByIdBook(book.getId());
-            holder.ItemCart.setChecked(itemSlc.getIsSelected());
+            holder.ItemCart.setChecked(itemSlc.getSelected());
 
-            if (itemSlc.getIsSelected()) {
+            if (itemSlc.getSelected()) {
                 priceTotal = countPriceTotal(book.getPrice());
                 newPriceTotal[0] = "R$ " + (priceTotal > 0 ? df.format(priceTotal) : "0.00");
                 tvPriceTotal.setText(newPriceTotal[0]);
@@ -115,14 +115,15 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
                         priceTotal = countPriceTotal(book.getPrice());
 
                         if (indexItemCart >= 0) {
-                            dataItemCart.get(indexItemCart).setIsSelected(true);
+                            dataItemCart.get(indexItemCart).setSelected(true);
                             ItemCartDAO.getInstance().editItemCart(dataItemCart.get(indexItemCart));
                         }
                     } else {
                         priceTotal = countPriceTotal(book.getPrice() * -1);
 
                         if (indexItemCart >= 0) {
-                            dataItemCart.get(indexItemCart).setIsSelected(false);
+                            dataItemCart.get(indexItemCart).setSelected(false);
+                            ItemCartDAO.getInstance().editItemCart(dataItemCart.get(indexItemCart));
                         }
                     }
 

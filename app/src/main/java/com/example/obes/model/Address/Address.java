@@ -19,6 +19,7 @@ public class Address {
         this.cidade = cidade;
         this.rua = rua;
         this.bairro = bairro;
+        this.complemento = "";
         this.numero = numero;
     }
 
