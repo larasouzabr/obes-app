@@ -30,12 +30,18 @@ public class UserCommon extends User {
 
     private ArrayList<Book> listBooksAvailable;
 
+    public UserCommon() {
+
+    }
+
     public UserCommon(int id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.about = "";
+        this.cpf = "";
+        this.dateOfBirth = "";
 
         this.listBooksAvailable = new ArrayList<Book>();
     }
