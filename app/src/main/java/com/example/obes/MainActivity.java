@@ -13,6 +13,15 @@ import com.example.obes.dao.CartDAO;
 import com.example.obes.dao.CartToItemDAO;
 import com.example.obes.dao.CartToUserDAO;
 import com.example.obes.dao.ItemCartDAO;
+import com.example.obes.dao.Payment.PaymentDAO;
+import com.example.obes.dao.Payment.PaymentToItemDAO;
+import com.example.obes.dao.Payment.PaymentToUserDAO;
+import com.example.obes.dao.Request.ItemRequestDAO;
+import com.example.obes.dao.Request.OrderDAO;
+import com.example.obes.dao.Request.OrderItemDAO;
+import com.example.obes.dao.Request.RequestDAO;
+import com.example.obes.dao.Request.RequestToItemDAO;
+import com.example.obes.dao.Request.RequestToUserDAO;
 import com.example.obes.dao.Review.ReviewDAO;
 import com.example.obes.dao.Review.UserHasReviewDAO;
 import com.example.obes.dao.UserCommonDAO;
@@ -59,43 +68,9 @@ public class MainActivity extends AppCompatActivity {
         // setContentView(R.layout.activity_book_sale_page);
 
         // Fake Data =====================================
-        if (UserCommonDAO.getInstance().getListUsers().size() == 0 || UserInstitutionalDAO.getInstance().getListUsers().size() == 0) {
-            FakeData.generateFakeUsers();
-        }
 
-        UserCommonDAO.getInstance().getListUsers();
-
-        UserInstitutionalDAO.getInstance().getListUsers();
-
-        BookDAO.getInstance().getListBooks();
-
-        UserRegisteredBookDonateDAO.getInstance().getListUserBook();
-
-        BookSaleDAO.getInstance().getListBooks();
-
-        UserRegisteredBookSaleDAO.getInstance().getListUserBook();
-
-        CartDAO.getInstance().getListCarts();
-
-        ItemCartDAO.getInstance().getListItensCart();
-
-        CartToItemDAO.getInstance().getListCartsItems();
-
-        CartToUserDAO.getInstance().getListCartUser();
-
-        AddressDAO.getInstance().getListAddress();
-
-        WishlistDAO.getInstance().getWishlists();
-
-        ItemWishlistDAO.getInstance().getListItems();
-
-        WishlistToItemDAO.getInstance().getListWishItem();
-
-        WishlistToUserDAO.getInstance().getListWishUser();
-
-        ReviewDAO.getInstance().getListReviews();
-
-        UserHasReviewDAO.getInstance().getListUserHasReview();
+        // FakeData.generateFakeUsers();
+        FakeData.generateData();
 
         // =====================================
 

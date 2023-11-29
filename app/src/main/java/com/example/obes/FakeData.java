@@ -1,6 +1,31 @@
 package com.example.obes;
 
+import com.example.obes.dao.AddressDAO;
+import com.example.obes.dao.BookDAO;
+import com.example.obes.dao.BookSaleDAO;
+import com.example.obes.dao.CartDAO;
+import com.example.obes.dao.CartToItemDAO;
+import com.example.obes.dao.CartToUserDAO;
+import com.example.obes.dao.ItemCartDAO;
+import com.example.obes.dao.Payment.PaymentDAO;
+import com.example.obes.dao.Payment.PaymentToItemDAO;
+import com.example.obes.dao.Payment.PaymentToUserDAO;
+import com.example.obes.dao.Request.ItemRequestDAO;
+import com.example.obes.dao.Request.OrderDAO;
+import com.example.obes.dao.Request.OrderItemDAO;
+import com.example.obes.dao.Request.RequestDAO;
+import com.example.obes.dao.Request.RequestToItemDAO;
+import com.example.obes.dao.Request.RequestToUserDAO;
+import com.example.obes.dao.Review.ReviewDAO;
+import com.example.obes.dao.Review.UserHasReviewDAO;
 import com.example.obes.dao.UserCommonDAO;
+import com.example.obes.dao.UserInstitutionalDAO;
+import com.example.obes.dao.UserRegisteredBookDonateDAO;
+import com.example.obes.dao.UserRegisteredBookSaleDAO;
+import com.example.obes.dao.Wishlist.ItemWishlistDAO;
+import com.example.obes.dao.Wishlist.WishlistDAO;
+import com.example.obes.dao.Wishlist.WishlistToItemDAO;
+import com.example.obes.dao.Wishlist.WishlistToUserDAO;
 import com.example.obes.model.Book.Book;
 import com.example.obes.model.User.UserCommon;
 
@@ -37,5 +62,59 @@ public class FakeData {
         user3.donateABook(new Book(9, "O Diário de Anne Frank", "O relato de uma jovem durante o Holocausto", "Biografia", true, R.drawable.cover_book1, "Anne Frank", 0.0, "Usado"));
         user3.donateABook(new Book(10, "Cem Anos de Solidão", "Um épico da literatura latino-americana", "Ficção", true, R.drawable.cover_book2, "Gabriel García Márquez", 0.0, "Novo"));
         user3.donateABook(new Book(11, "A Revolução dos Bichos", "Uma alegoria política", "Fábula", true, R.drawable.cover_book1, "George Orwell", 0.0, "Usado"));
+    }
+
+    public static void generateData() {
+        UserCommonDAO.getInstance().getListUsers();
+
+        UserInstitutionalDAO.getInstance().getListUsers();
+
+        BookDAO.getInstance().getListBooks();
+
+        UserRegisteredBookDonateDAO.getInstance().getListUserBook();
+
+        BookSaleDAO.getInstance().getListBooks();
+
+        UserRegisteredBookSaleDAO.getInstance().getListUserBook();
+
+        CartDAO.getInstance().getListCarts();
+
+        ItemCartDAO.getInstance().getListItensCart();
+
+        CartToItemDAO.getInstance().getListCartsItems();
+
+        CartToUserDAO.getInstance().getListCartUser();
+
+        AddressDAO.getInstance().getListAddress();
+
+        WishlistDAO.getInstance().getWishlists();
+
+        ItemWishlistDAO.getInstance().getListItems();
+
+        WishlistToItemDAO.getInstance().getListWishItem();
+
+        WishlistToUserDAO.getInstance().getListWishUser();
+
+        ReviewDAO.getInstance().getListReviews();
+
+        UserHasReviewDAO.getInstance().getListUserHasReview();
+
+        PaymentDAO.getInstance().getListPayment();
+
+        PaymentToUserDAO.getInstance().getListPaymentToUser();
+
+        PaymentToItemDAO.getInstance().getListPaymentToItem();
+
+        RequestDAO.getInstance().getListRequests();
+
+        ItemRequestDAO.getInstance().getListItemRequests();
+
+        RequestToItemDAO.getInstance().getListRequestItems();
+
+        RequestToUserDAO.getInstance().getListRequestUser();
+
+        OrderDAO.getInstance().getListRequestUser();
+
+        OrderItemDAO.getInstance().getListItemsUser();
     }
 }

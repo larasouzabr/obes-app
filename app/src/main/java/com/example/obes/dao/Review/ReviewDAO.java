@@ -155,7 +155,7 @@ public class ReviewDAO {
             edited = true;
         }
 
-        DatabaseReference bookReference = this.reference.child(String.valueOf(review.getId()));
+        DatabaseReference reviewReference = this.reference.child(String.valueOf(review.getId()));
 
         Map<String, Object> data = new HashMap<>();
         data.put("id", review.getId());
@@ -164,7 +164,7 @@ public class ReviewDAO {
         data.put("dateCreated", review.getDateCreated());
         data.put("dateUpdated", review.getDateUpdated());
 
-        bookReference.setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+        reviewReference.setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
