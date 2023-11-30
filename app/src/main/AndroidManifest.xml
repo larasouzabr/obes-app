@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,10 +15,90 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Obes"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBCHQcFBwTwFFYcxA4oqsb_rFHMlGP884g"></meta-data>
+        <activity
+            android:name=".LocationPage"
+            android:exported="false" />
+        <activity
+            android:name=".payment.BookPaymentPage"
+            android:exported="false" />
+        <activity
+            android:name=".payment.PaymentPage"
+            android:exported="false" />
+        <activity
+            android:name=".ReviewPage"
+            android:exported="false" />
+        <activity
+            android:name=".BookRequestPage"
+            android:exported="false" />
+        <activity
+            android:name=".WishlistPage"
+            android:exported="false" />
+        <activity
+            android:name=".CartPage"
+            android:exported="false"
+            android:label="@string/title_activity_cart_page"
+            android:theme="@style/Theme.Obes" />
+        <activity
+            android:name=".InformationUserPage"
+            android:exported="false" />
+        <activity
+            android:name=".perfil.EditPerfilUserInstitutional"
+            android:exported="false" />
+        <activity
+            android:name=".perfil.PerfilUserInstitutional"
+            android:exported="false" />
+        <activity
+            android:name=".perfil.EditPerfilUserCommon"
+            android:exported="false"
+            android:label="@string/title_activity_edit_perfil_user_common"
+            android:theme="@style/Theme.Obes" />
+        <activity
+            android:name=".perfil.PerfilUserCommon"
+            android:exported="false" />
+        <activity
+            android:name=".formSale.SalePreview"
+            android:exported="false" />
+        <activity
+            android:name=".formSale.SaleFormPage"
+            android:exported="false" />
+        <activity
+            android:name=".formDonate.DonatePreview"
+            android:exported="false" />
+        <activity
+            android:name=".formDonate.DonateFormPage"
+            android:exported="false" />
+        <activity
+            android:name=".DonateSalePage"
+            android:exported="false" />
+        <activity
+            android:name=".HomePage"
+            android:exported="false" />
+        <activity
+            android:name=".BookSalePage"
+            android:exported="false" />
+        <activity
+            android:name=".BookDonatePage"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterPageInstitution"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterPagePerson"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterPage"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

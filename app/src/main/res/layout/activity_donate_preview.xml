@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".formDonate.DonatePreview"
+    android:background="@color/purple_150">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/menu_top"
+                layout="@layout/menu_top_form"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:contentDescription="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="0dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <include
+                        android:id="@+id/cover"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        layout="@layout/book_item"
+                        android:layout_width="155dp"
+                        android:layout_height="205dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp">
+
+                        <TextView
+                            android:id="@+id/title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Memórias Póstumas de Brás Cubas"
+                            android:textSize="20sp"
+                            android:textColor="@color/purple_900"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="6dp"/>
+
+                        <TextView
+                            android:id="@+id/author"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Machado de Assis"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="6dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="6dp">
+
+                            <TextView
+                                android:id="@+id/price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/container_price"
+                                android:paddingLeft="12dp"
+                                android:paddingTop="6dp"
+                                android:paddingRight="12dp"
+                                android:paddingBottom="6dp"
+                                android:text="Disponível"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Descrição"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Seu protagonista é Simão Bacamarte, médico que, após conquistar respeito na Europa, retorna à sua cidade natal, Itaguaí. Lá, ele aprofunda seus estudos de psiquiatria e empreende uma busca sobre os caminhos da mente e as patologias cerebrais. Livro em perfeito estado foi usado apenas por 1 semana"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Doado por:"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_foto_perfil"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp">
+
+                            <TextView
+                                android:id="@+id/user_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rafaella Santos"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/purple_900"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="(00) 00000-0000"
+                                android:textSize="16sp"
+                                android:textColor="@color/purple_900"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Quixadá, Ceará"
+                                android:textSize="16sp"
+                                android:textColor="@color/purple_900"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/purple_700"
+            android:visibility="invisible"/>
+
+        <View
+            style="@style/LinhaHorizontal" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/button_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/purple_50"
+                android:text="Voltar"
+                android:textAllCaps="false"
+                android:textColor="@color/purple"
+                app:cornerRadius="@dimen/button_corner_radius"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"/>
+
+            <Button
+                android:id="@+id/button_donate"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/purple_800"
+                android:text="Colocar à doação"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:cornerRadius="@dimen/button_corner_radius"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="14dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/purple_100">
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Editar Livro" android:textSize="28sp" android:textColor="@color/purple_700" android:textStyle="bold" android:layout_margin="10dp" android:layout_gravity="center"/>
+    <View style="@style/LinhaHorizontal"/>
+    <ScrollView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="10dp">
+            <androidx.cardview.widget.CardView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TÍTULO DO LIVRO" android:textColor="@color/purple_700" android:layout_marginStart="5dp" android:layout_marginEnd="5dp"/>
+            </androidx.cardview.widget.CardView>
+            <EditText android:id="@+id/book_title" android:layout_width="match_parent" android:layout_height="50dp" android:background="@drawable/edit_text_background" android:inputType="text" android:autofillHints="name" android:hint="Digite o título do livro" android:paddingStart="15dp" android:paddingEnd="15dp" android:paddingTop="15dp" android:paddingBottom="15dp" android:layout_marginBottom="30dp" android:textColor="@color/black" android:textColorHint="@color/black"/>
+            <androidx.cardview.widget.CardView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="DESCRIÇÃO DO LIVRO" android:textColor="@color/purple_700" android:layout_marginStart="5dp" android:layout_marginEnd="5dp"/>
+            </androidx.cardview.widget.CardView>
+            <EditText android:id="@+id/book_description" android:layout_width="match_parent" android:layout_height="50dp" android:background="@drawable/edit_text_background" android:inputType="text" android:autofillHints="name" android:hint="Digite a descrição do livro" android:paddingStart="15dp" android:paddingEnd="15dp" android:paddingTop="15dp" android:paddingBottom="15dp" android:layout_marginBottom="30dp" android:textColor="@color/black" android:textColorHint="@color/black"/>
+            <androidx.cardview.widget.CardView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CATEGORIA DO LIVRO" android:textColor="@color/purple_700" android:layout_marginStart="5dp" android:layout_marginEnd="5dp"/>
+            </androidx.cardview.widget.CardView>
+            <EditText android:id="@+id/book_category" android:layout_width="match_parent" android:layout_height="50dp" android:background="@drawable/edit_text_background" android:inputType="text" android:autofillHints="name" android:hint="Ação, aventura..." android:paddingStart="15dp" android:paddingEnd="15dp" android:paddingTop="15dp" android:paddingBottom="15dp" android:layout_marginBottom="30dp" android:textColor="@color/black" android:textColorHint="@color/black"/>
+            <androidx.cardview.widget.CardView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="AUTOR DO LIVRO" android:textColor="@color/purple_700" android:layout_marginStart="5dp" android:layout_marginEnd="5dp"/>
+            </androidx.cardview.widget.CardView>
+            <EditText android:id="@+id/book_author" android:layout_width="match_parent" android:layout_height="50dp" android:background="@drawable/edit_text_background" android:inputType="text" android:autofillHints="name" android:hint="Digite o autor do livro" android:paddingStart="15dp" android:paddingEnd="15dp" android:paddingTop="15dp" android:paddingBottom="15dp" android:layout_marginBottom="30dp" android:textColor="@color/black" android:textColorHint="@color/black"/>
+            <androidx.cardview.widget.CardView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CONDIÇÃO DO LIVRO" android:textColor="@color/purple_700" android:layout_marginStart="5dp" android:layout_marginEnd="5dp"/>
+            </androidx.cardview.widget.CardView>
+            <EditText android:id="@+id/book_condition" android:layout_width="match_parent" android:layout_height="50dp" android:background="@drawable/edit_text_background" android:inputType="text" android:autofillHints="name" android:hint="Novo, usado..." android:paddingStart="15dp" android:paddingEnd="15dp" android:paddingTop="15dp" android:paddingBottom="15dp" android:layout_marginBottom="30dp" android:textColor="@color/black" android:textColorHint="@color/black"/>
+            <androidx.cardview.widget.CardView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="PREÇO" android:textColor="@color/purple_700" android:layout_marginStart="5dp" android:layout_marginEnd="5dp"/>
+            </androidx.cardview.widget.CardView>
+            <EditText android:id="@+id/book_price" android:layout_width="100dp" android:layout_height="50dp" android:background="@drawable/edit_text_background" android:inputType="numberDecimal" android:autofillHints="name" android:hint="0.00" android:paddingStart="15dp" android:paddingEnd="15dp" android:paddingTop="15dp" android:paddingBottom="15dp" android:layout_marginBottom="30dp" android:layout_gravity="center" android:textColor="@color/black" android:textColorHint="@color/black"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="155dp"
+                android:layout_height="205dp"
+                app:cardCornerRadius="28dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/iv_cover"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/cover_empty"
+                        android:scaleType="centerCrop" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="155x205"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"/>
+            <Button android:id="@+id/image" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAllCaps="false" android:text="Buscar Imagem" android:layout_gravity="center"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="Anexe uma imagem do livro"/>
+        </LinearLayout>
+    </ScrollView>
+    <View style="@style/LinhaHorizontal"/>
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:paddingLeft="25dp" android:paddingRight="25dp" android:layout_marginTop="20dp" android:layout_marginBottom="20dp">
+        <Button android:id="@+id/button_cancel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:backgroundTint="@color/purple_50" android:paddingStart="25dp" android:paddingEnd="25dp" android:text="Cancelar" android:textAllCaps="false" android:textColor="@color/purple"/>
+        <Button android:id="@+id/button_save" android:layout_width="wrap_content" android:layout_height="48dp" android:backgroundTint="@color/purple_800" android:text="Salvar" android:textAllCaps="false" android:textColor="@color/white" android:paddingStart="25dp" android:paddingEnd="25dp" android:layout_marginStart="14dp" android:layout_marginEnd="14dp"/>
+    </LinearLayout>
+</LinearLayout>

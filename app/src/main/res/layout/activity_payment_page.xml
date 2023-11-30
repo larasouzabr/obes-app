@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".payment.PaymentPage"
+    android:background="@color/purple_150">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/menu_top"
+                layout="@layout/menu_top_page_book"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:contentDescription="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="0dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Escolha um Método de Pagamento"
+                    android:textColor="@color/purple_700"
+                    android:textSize="24sp"
+                    android:layout_marginBottom="20dp"/>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_payments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/purple_25">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cartão" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Botelo"/>
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pix"/>
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/layout_tab_payments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <View
+            style="@style/LinhaHorizontal" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/button_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/purple_50"
+                android:text="Cancelar"
+                android:textAllCaps="false"
+                android:textColor="@color/purple"
+                app:cornerRadius="@dimen/button_corner_radius"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"/>
+
+            <Button
+                android:id="@+id/button_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/purple_800"
+                android:text="Finalizar Compra"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:cornerRadius="@dimen/button_corner_radius"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="14dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

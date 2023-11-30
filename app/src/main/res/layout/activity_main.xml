@@ -5,4 +5,77 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="?attr/actionBarSize" />
+    android:background="@color/purple_150">
+
+    <ImageView
+        android:id="@+id/image_welcome_page"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:contentDescription="@string/content_desc_background_welcome"
+        android:scaleType="center"
+        android:src="@drawable/image_welcome_page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/background_degrade_welcome_page"
+        android:contentDescription="@string/content_desc_background_degrade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/degrade_welcome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/image_welcome_page"/>
+
+    <ImageView
+        android:id="@+id/obes_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/content_desc_logo_obes"
+        app:layout_constraintBottom_toBottomOf="@+id/image_welcome_page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_welcome_page"
+        app:srcCompat="@drawable/obes_logo_2" />
+
+    <ImageView
+        android:id="@+id/obes_name"
+        android:contentDescription="@string/content_desc_name_obes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/obes_logo"
+        app:srcCompat="@drawable/obes_logo_name"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/sign_in"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="124dp"
+        android:backgroundTint="@color/purple_800"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        app:cornerRadius="@dimen/button_corner_radius"
+        app:layout_constraintTop_toBottomOf="@id/obes_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/sign_out"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/cadastre_se"
+        android:textColor="@color/black"
+        app:cornerRadius="@dimen/button_corner_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sign_in"
+        app:strokeColor="#1C0C38"
+        tools:layout_editor_absoluteY="636dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
