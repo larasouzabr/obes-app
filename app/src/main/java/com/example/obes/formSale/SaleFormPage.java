@@ -4,16 +4,21 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,8 +29,12 @@ import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.formDonate.DonateFormPage;
 import com.example.obes.model.Book.Book;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 public class SaleFormPage extends AppCompatActivity {
     private TextView tvTitlePage;
@@ -42,7 +51,10 @@ public class SaleFormPage extends AppCompatActivity {
     private final BookSaleDAO bookSaleDAO = BookSaleDAO.getInstance();
     private Uri imageUri;
     private ImageView ivCover;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private String currentPhotoPath;
     private Button buttonImage;
+    private ImageButton buttonCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +88,13 @@ public class SaleFormPage extends AppCompatActivity {
                 photoPicker.setAction(Intent.ACTION_GET_CONTENT);
                 photoPicker.setType("image/*");
                 activityResultLauncher.launch(photoPicker);
+            }
+        });
+
+        this.buttonCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
             }
         });
 
@@ -124,6 +143,7 @@ public class SaleFormPage extends AppCompatActivity {
         this.cbTerms = findViewById(R.id.terms);
         this.ivCover = findViewById(R.id.iv_cover);
         this.buttonImage = findViewById(R.id.button_image);
+        this.buttonCamera = findViewById(R.id.button_camera);
     }
 
     private boolean checkingInputs() {
@@ -198,5 +218,48 @@ public class SaleFormPage extends AppCompatActivity {
         }
 
         return id;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                Toast.makeText(this, "Erro ao criar arquivo de imagem", Toast.LENGTH_SHORT).show();
+            }
+            if (photoFile != null) {
+                Uri photoUri = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
+
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            imageUri = Uri.fromFile(new File(currentPhotoPath));
+            ivCover.setImageURI(imageUri);
+        }
     }
 }
