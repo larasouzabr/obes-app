@@ -1,19 +1,27 @@
 package com.example.obes.formSale;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.obes.R;
 import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.BookSaleDAO;
+import com.example.obes.formDonate.DonateFormPage;
 import com.example.obes.model.Book.Book;
 
 import java.util.ArrayList;
@@ -32,6 +40,9 @@ public class SaleFormPage extends AppCompatActivity {
     private Button button_next;
     private final BookDAO bookDonateDAO = BookDAO.getInstance();
     private final BookSaleDAO bookSaleDAO = BookSaleDAO.getInstance();
+    private Uri imageUri;
+    private ImageView ivCover;
+    private Button buttonImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +52,32 @@ public class SaleFormPage extends AppCompatActivity {
         this.startComponents();
 
         this.tvTitlePage.setText("Vender um livro");
+
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK){
+                            Intent data = result.getData();
+                            imageUri = data.getData();
+                            ivCover.setImageURI(imageUri);
+                        } else {
+                            Toast.makeText(SaleFormPage.this, "No Image Selected", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+
+        this.buttonImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPicker = new Intent();
+                photoPicker.setAction(Intent.ACTION_GET_CONTENT);
+                photoPicker.setType("image/*");
+                activityResultLauncher.launch(photoPicker);
+            }
+        });
 
         this.button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +122,8 @@ public class SaleFormPage extends AppCompatActivity {
         this.etAuthor = findViewById(R.id.author);
         this.etCondition = findViewById(R.id.condition);
         this.cbTerms = findViewById(R.id.terms);
+        this.ivCover = findViewById(R.id.iv_cover);
+        this.buttonImage = findViewById(R.id.button_image);
     }
 
     private boolean checkingInputs() {
@@ -101,6 +140,9 @@ public class SaleFormPage extends AppCompatActivity {
         } else if(!terms) {
             Toast.makeText(SaleFormPage.this, "Por favor, concorde com Termos de Venda e Doação", Toast.LENGTH_SHORT).show();
             return false;
+        } else if (this.imageUri == null) {
+            Toast.makeText(SaleFormPage.this, "Por favor, adicione uma imagem", Toast.LENGTH_SHORT).show();
+            return false;
         }
 
         return true;
@@ -112,7 +154,12 @@ public class SaleFormPage extends AppCompatActivity {
         String description = this.etDescription.getText().toString();
         String category = this.etCategory.getText().toString();
         boolean available = true;
-        int coverResourceId = R.drawable.cover_book1;
+
+        String coverResourceId = null;
+        if (this.imageUri != null) {
+            coverResourceId = this.imageUri.toString();
+        }
+
         String author = this.etAuthor.getText().toString();
         double price = 0.0;
         String condition = this.etCondition.getText().toString();

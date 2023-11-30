@@ -11,12 +11,12 @@ public class Book implements Parcelable {
     private String description;
     private String category;
     private boolean available;
-    private int coverResourceId;
+    private String coverResourceId;
     private String author;
     private double price;
     private String condition;
 
-    public Book(int id, String title, String description, String category, boolean available, int coverResourceId, String author, double price, String condition) {
+    public Book(int id, String title, String description, String category, boolean available, String coverResourceId, String author, double price, String condition) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -34,7 +34,7 @@ public class Book implements Parcelable {
         description = in.readString();
         category = in.readString();
         available = in.readByte() != 0;
-        coverResourceId = in.readInt();
+        coverResourceId = in.readString();
         author = in.readString();
         price = in.readDouble();
         condition = in.readString();
@@ -95,11 +95,11 @@ public class Book implements Parcelable {
         return this.available;
     }
 
-    public int getCoverResourceId() {
+    public String getCoverResourceId() {
         return coverResourceId;
     }
 
-    public void setCoverResourceId(int coverResourceId) {
+    public void setCoverResourceId(String coverResourceId) {
         this.coverResourceId = coverResourceId;
     }
 
@@ -139,7 +139,7 @@ public class Book implements Parcelable {
         dest.writeString(description);
         dest.writeString(category);
         dest.writeByte((byte) (available ? 1 : 0));
-        dest.writeInt(coverResourceId);
+        dest.writeString(coverResourceId);
         dest.writeString(author);
         dest.writeDouble(price);
         dest.writeString(condition);

@@ -3,6 +3,7 @@ package com.example.obes;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.obes.dao.CartToItemDAO;
 import com.example.obes.dao.ItemCartDAO;
 import com.example.obes.dao.Request.ItemRequestDAO;
@@ -56,7 +59,12 @@ public class MyAdapterRecyclerViewCart extends RecyclerView.Adapter<MyAdapterRec
     @Override
     public void onBindViewHolder(@NonNull MyAdapterRecyclerViewCart.MyHolder holder, int position) {
         Book book = data.get(position);
-        holder.ivCover.setImageResource(book.getCoverResourceId());
+
+        Glide.with(context)
+                .load(book.getCoverResourceId())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(holder.ivCover);
+
         holder.tvTitleBook.setText(book.getTitle());
         holder.tvAuthorBook.setText(book.getAuthor());
         String priceBook = "R$ " + book.getPrice();

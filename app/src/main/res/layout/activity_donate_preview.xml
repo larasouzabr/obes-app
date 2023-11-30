@@ -189,6 +189,15 @@
 
         </ScrollView>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/purple_700"
+            android:visibility="invisible"/>
+
         <View
             style="@style/LinhaHorizontal" />
 
@@ -228,6 +237,7 @@
                 android:paddingEnd="25dp"
                 android:layout_marginStart="14dp"
                 android:layout_marginEnd="14dp"/>
+
         </LinearLayout>
 
     </LinearLayout>

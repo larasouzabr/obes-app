@@ -51,7 +51,7 @@ public class ItemWishlistDAO {
                     String description = itemSnapshot.child("description").getValue(String.class);
                     String category = itemSnapshot.child("category").getValue(String.class);
                     boolean available = Boolean.TRUE.equals(itemSnapshot.child("available").getValue(boolean.class));
-                    int coverResourceId = itemSnapshot.child("coverResourceId").getValue(int.class);
+                    String coverResourceId = itemSnapshot.child("coverResourceId").getValue(String.class);
                     String author = itemSnapshot.child("author").getValue(String.class);
                     double price = itemSnapshot.child("price").getValue(double.class);
                     String condition = itemSnapshot.child("condition").getValue(String.class);

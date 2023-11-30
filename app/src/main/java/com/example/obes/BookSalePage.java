@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.CartDAO;
 import com.example.obes.dao.CartToItemDAO;
@@ -68,7 +70,7 @@ public class BookSalePage extends AppCompatActivity {
         Intent intent = getIntent();
 
         int bookId = intent.getIntExtra("book_id", 0);
-        int bookCoverResourceId = intent.getIntExtra("book_cover", 0);
+        String bookCoverResourceId = intent.getStringExtra("book_cover");
         String bookTitle = intent.getStringExtra("book_title");
         String bookAuthor = intent.getStringExtra("book_author");
         double bookPrice = intent.getDoubleExtra("book_price", 0.0);
@@ -78,7 +80,12 @@ public class BookSalePage extends AppCompatActivity {
 
         this.tvTitlePage.setText(bookTitle);
         titleTextView.setText(bookTitle);
-        coverImageView.setImageResource(bookCoverResourceId);
+
+        Glide.with(BookSalePage.this)
+                .load(bookCoverResourceId)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(coverImageView);
+
         authorTextView.setText(bookAuthor);
         priceTextView.setText("R$ " + String.format("%.2f", bookPrice));
         descriptionTextView.setText(bookDescription);

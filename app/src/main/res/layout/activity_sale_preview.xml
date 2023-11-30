@@ -32,6 +32,14 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/purple_700"
+            android:visibility="invisible"/>
         <View style="@style/LinhaHorizontal"/>
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" android:paddingLeft="25dp" android:paddingRight="25dp" android:layout_marginTop="20dp" android:layout_marginBottom="20dp">
             <Button android:id="@+id/button_back" android:layout_width="wrap_content" android:layout_height="wrap_content" android:backgroundTint="@color/purple_50" android:text="Voltar" android:textAllCaps="false" android:textColor="@color/purple" app:cornerRadius="@dimen/button_corner_radius" android:paddingStart="25dp" android:paddingEnd="25dp"/>

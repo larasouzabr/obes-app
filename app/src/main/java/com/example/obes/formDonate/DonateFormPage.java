@@ -1,13 +1,20 @@
 package com.example.obes.formDonate;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.obes.R;
@@ -24,11 +31,14 @@ public class DonateFormPage extends AppCompatActivity {
     private EditText etCategory;
     private EditText etAuthor;
     private EditText etCondition;
+    private ImageView ivCover;
+    private Button buttonImage;
     private CheckBox cbTerms;
     private Button button_cancel;
     private Button button_next;
     private BookDAO bookDonateDAO = BookDAO.getInstance();
     private BookSaleDAO bookSaleDAO = BookSaleDAO.getInstance();
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +46,32 @@ public class DonateFormPage extends AppCompatActivity {
         setContentView(R.layout.activity_donate_form_page);
 
         this.startComponents();
+
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK){
+                            Intent data = result.getData();
+                            imageUri = data.getData();
+                            ivCover.setImageURI(imageUri);
+                        } else {
+                            Toast.makeText(DonateFormPage.this, "No Image Selected", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+
+        this.buttonImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPicker = new Intent();
+                photoPicker.setAction(Intent.ACTION_GET_CONTENT);
+                photoPicker.setType("image/*");
+                activityResultLauncher.launch(photoPicker);
+            }
+        });
 
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +113,8 @@ public class DonateFormPage extends AppCompatActivity {
         this.etCategory = findViewById(R.id.category);
         this.etAuthor = findViewById(R.id.author);
         this.etCondition = findViewById(R.id.condition);
+        this.ivCover = findViewById(R.id.iv_cover);
+        this.buttonImage = findViewById(R.id.button_image);
         this.cbTerms = findViewById(R.id.terms);
     }
 
@@ -90,6 +128,9 @@ public class DonateFormPage extends AppCompatActivity {
             return false;
         } else if(!terms) {
             Toast.makeText(DonateFormPage.this, "Por favor, concorde com Termos de Venda e Doação", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (this.imageUri == null) {
+            Toast.makeText(DonateFormPage.this, "Por favor, adicione uma imagem", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -129,7 +170,12 @@ public class DonateFormPage extends AppCompatActivity {
         String description = this.etDescription.getText().toString();
         String category = this.etCategory.getText().toString();
         boolean available = true;
-        int coverResourceId = R.drawable.cover_book1;
+
+        String coverResourceId = null;
+        if (this.imageUri != null) {
+            coverResourceId = this.imageUri.toString();
+        }
+
         String author = this.etAuthor.getText().toString();
         double price = 0.00;
         String condition = this.etCondition.getText().toString();

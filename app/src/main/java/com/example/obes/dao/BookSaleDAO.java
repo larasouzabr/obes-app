@@ -46,7 +46,7 @@ public class BookSaleDAO implements IBookDAO {
                     String description = dataSnapshot.child("description").getValue(String.class);
                     String category = dataSnapshot.child("category").getValue(String.class);
                     boolean available = Boolean.TRUE.equals(dataSnapshot.child("available").getValue(boolean.class));
-                    int coverResourceId = dataSnapshot.child("coverResourceId").getValue(int.class);
+                    String coverResourceId = dataSnapshot.child("coverResourceId").getValue(String.class);
                     String author = dataSnapshot.child("author").getValue(String.class);
                     double price = dataSnapshot.child("price").getValue(double.class);
                     String condition = dataSnapshot.child("condition").getValue(String.class);
@@ -70,30 +70,6 @@ public class BookSaleDAO implements IBookDAO {
 
     public boolean addBook(Book book) {
         this.listBooks.add(book);
-
-        DatabaseReference bookReference = this.reference.child(String.valueOf(book.getId()));
-
-        Map<String, Object> bookData = new HashMap<>();
-        bookData.put("id", book.getId());
-        bookData.put("title", book.getTitle());
-        bookData.put("description", book.getDescription());
-        bookData.put("category", book.getCategory());
-        bookData.put("available", book.isAvailable());
-        bookData.put("coverResourceId", book.getCoverResourceId());
-        bookData.put("author", book.getAuthor());
-        bookData.put("price", book.getPrice());
-        bookData.put("condition", book.getCondition());
-
-        bookReference.setValue(bookData).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("TAG", "Livro cadastrado com sucesso");
-                } else {
-                    Log.e("TAG", "Ocorreu um erro ao cadastrar o livro: " + task.getException().getMessage());
-                }
-            }
-        });
 
         return true;
     }

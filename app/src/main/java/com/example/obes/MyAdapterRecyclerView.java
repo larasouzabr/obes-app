@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,9 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.BookSaleDAO;
 import com.example.obes.dao.LoginSessionManager;
@@ -70,7 +74,12 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         Book book = data.get(position);
-        holder.ivCover.setImageResource(book.getCoverResourceId());
+        // holder.ivCover.setImageURI(Uri.parse(book.getCoverResourceId()));
+
+        Glide.with(context)
+                .load(book.getCoverResourceId())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(holder.ivCover);
 
         LoginSessionManager loginSessionManager = LoginSessionManager.getInstance();
 
@@ -302,12 +311,18 @@ public class MyAdapterRecyclerView extends RecyclerView.Adapter<MyAdapterRecycle
                         EditText tvCategory = modal.findViewById(R.id.book_category);
                         EditText tvAuthor = modal.findViewById(R.id.book_author);
                         EditText tvCondition = modal.findViewById(R.id.book_condition);
+                        ImageView ivCoverModal = modal.findViewById(R.id.iv_cover);
 
                         tvTitle.setText(book.getTitle());
                         tvDescription.setText(book.getDescription());
                         tvCategory.setText(book.getCategory());
                         tvAuthor.setText((book.getAuthor()));
                         tvCondition.setText(book.getCondition());
+
+                        Glide.with(context)
+                                .load(book.getCoverResourceId())
+                                .transition(DrawableTransitionOptions.withCrossFade())
+                                .into(ivCoverModal);
 
                         Button buttonSave = modal.findViewById(R.id.button_save);
                         Button buttonCancel = modal.findViewById(R.id.button_cancel);

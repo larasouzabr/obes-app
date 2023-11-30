@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.obes.dao.BookDAO;
 import com.example.obes.dao.LoginSessionManager;
 import com.example.obes.dao.Request.DonationRequestManager;
@@ -70,14 +72,19 @@ public class BookDonatePage extends AppCompatActivity {
         Intent intent = getIntent();
 
         int bookId = intent.getIntExtra("book_id", 0);
-        int bookCoverResourceId = intent.getIntExtra("book_cover", 0);
+        String bookCoverResourceId = intent.getStringExtra("book_cover");
         String bookTitle = intent.getStringExtra("book_title");
         String bookAuthor = intent.getStringExtra("book_author");
         String bookDescription = intent.getStringExtra("book_description");
 
         this.tvTitlePage.setText(bookTitle);
         titleTextView.setText(bookTitle);
-        coverImageView.setImageResource(bookCoverResourceId);
+
+        Glide.with(BookDonatePage.this)
+                .load(bookCoverResourceId)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(coverImageView);
+
         authorTextView.setText(bookAuthor);
         descriptionTextView.setText(bookDescription);
 
