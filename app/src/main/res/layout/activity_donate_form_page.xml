@@ -222,6 +222,23 @@
                     android:text="Buscar Imagem"
                     android:layout_gravity="center"/>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="5dp">
+
+                    <ImageButton
+                        android:id="@+id/button_camera"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="Acessar câmera"
+                        android:src="@drawable/ic_camera"
+                        android:background="@color/teal_200" />
+
+                </androidx.cardview.widget.CardView>
+
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -81,7 +81,22 @@ public class BookDAO implements IBookDAO {
     }
 
     public boolean deleteBook(Book book) {
-        this.listBooks.remove(book);
+        Book bookDelete = null;
+        boolean removed = false;
+
+        for( Book b : listBooks ){
+            if( book.getId() == b.getId() ){
+                bookDelete = b;
+                break;
+            }
+        }
+
+        if( bookDelete != null ){
+            listBooks.remove( bookDelete );
+            removed = true;
+
+        }
+
         this.reference.child(String.valueOf(book.getId())).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -93,7 +108,7 @@ public class BookDAO implements IBookDAO {
             }
         });
 
-        return true;
+        return removed;
     }
 
     public boolean editBook(Book book) {
